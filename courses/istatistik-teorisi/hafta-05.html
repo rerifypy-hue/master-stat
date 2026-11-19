@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5. Hafta: Örnekleme Dağılımları (t, F, Ki-Kare) - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="active">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 5</span>
+        <h1 class="course-main-title">5. Hafta: Örnekleme Dağılımları (t, F, Ki-Kare)</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 5. haftasında yer alan <strong>Örnekleme Dağılımları</strong> (\(\chi^2\), Student-\(t\), Fisher-\(F\)), <strong>İki Değişkenli Dönüşümler ve Konvolüsyon</strong>, <strong>Sürekli Eşleme Teoremi (CMT)</strong> ve <strong>Hata Kareler Ortalaması (MSE) Optimizasyonu</strong> konularını içermektedir. Ağır matematiksel türetimler sezgisel şemalar ve adım adım örneklerle basitleştirilmiştir.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-5-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 5. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Normal Dağılımın Çekirdek Ailesi (\(\chi^2\), \(t\) ve \(F\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    İstatistikte en sık kullandığımız testler (\(t\)-testi, ANOVA, Ki-Kare testi) gökten zembille inmemiştir; hepsi tek bir kaynaktan: **Standart Normal Dağılımdan (\(Z \sim N(0,1)\))** türetilmiştir!
+</p>
+<ul class="course-list">
+<li>Standart normal değişkenlerin karelerini toplarsanız \(\longrightarrow\) <strong>Ki-Kare Dağılımı</strong> (\(\chi^2\)) doğar.</li>
+<li>Kitle varyansı bilinmediğinde \(\sigma\) yerine örneklem varyansı \(S\) koyarsanız \(\longrightarrow\) <strong>Student-\(t\) Dağılımı</strong> doğar.</li>
+<li>İki farklı grubun varyanslarını birbirine oranlarsanız \(\longrightarrow\) <strong>Fisher-\(F\) Dağılımı</strong> doğar.</li>
+</ul>
+<p class="course-paragraph">
+Haftanın ikinci kısmında ise istatistiksel tahmin edicilerin kalitesini ölçen en temel kriter olan <strong>Hata Kareler Ortalamasını (MSE)</strong> ve sapma-varyans dengesini (bias-variance tradeoff) öğreniriz.
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Normal dağılımdan türetilen örnekleme dağılımları arasındaki hiyerarşik ilişkiler.</p>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="rnekleme-da-l-mlar-sampling-distributions" class="section-title"><span class="title-anchor">§</span> Örnekleme Dağılımları (Sampling Distributions)</h2>
+<h3 id="1-standart-normalin-karesi-ve-math-inl-45-da-l-m" class="subsection-title">1. Standart Normalin Karesi ve \(\chi^2_1\) Dağılımı</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Teorem: \(Z \sim N(0, 1) \implies Y = Z^2 \sim \chi^2_1\)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(Z \sim N(0, 1)\) olsun. \(Y = Z^2\) karesel dönüşümünün dağılım fonksiyonu simetriden \(F_Y(y) = P(Z^2 \le y) = 2F_Z(\sqrt{y}) - 1\)'dir (\(y > 0\)).  
+Türevi alınırsa:
+</p>
+<div class="math-display">\[ f_Y(y) = 2 f_Z(\sqrt{y}) \frac{1}{2\sqrt{y}} = \frac{1}{\sqrt{y}} \frac{1}{\sqrt{2\pi}} e^{-y/2} = \frac{1}{2^{1/2} \Gamma(1/2)} y^{1/2 - 1} e^{-y/2} \]</div>
+<p class="course-paragraph">
+Bu yoğunluk \(k=1\) serbestlik dereceli <strong>Ki-Kare (\(\chi^2_1\))</strong> dağılımıdır.
+</p>
+  </div>
+</div>
+<h3 id="2-ba-ms-z-ki-karelerin-toplam" class="subsection-title">2. Bağımsız Ki-Karelerin Toplamı</h3>
+<p class="course-paragraph">
+\(Z_i \overset{\text{i.i.d.}}{\sim} N(0, 1)\) ise \(X_i = Z_i^2 \sim \chi^2_1\) değişkeninin MÇF'si:
+</p>
+<div class="math-display">\[ M_{X_i}(t) = \int_{-\infty}^{\infty} e^{tz^2} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} dz = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{z^2}{2}(1 - 2t)} dz = (1 - 2t)^{-1/2} \]</div>
+<p class="course-paragraph">
+Bağımsız \(k\) tanesinin toplamı \(Y = \sum_{i=1}^k Z_i^2\) için MÇF:
+</p>
+<div class="math-display">\[ M_Y(t) = \prod_{i=1}^k M_{X_i}(t) = \left[ (1 - 2t)^{-1/2} \right]^k = (1 - 2t)^{-k/2} \implies \boxed{Y = \sum_{i=1}^k Z_i^2 \sim \chi^2_k} \]</div>
+<h3 id="3-rneklem-varyans-n-n-da-l-m-math-inl-57" class="subsection-title">3. Örneklem Varyansının Dağılımı: \(\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}\)</h3>
+<p class="course-paragraph">
+\(X_i \overset{\text{i.i.d.}}{\sim} N(\mu, \sigma^2)\) olsun. Cebirsel toplam kareler özdeşliğini yazalım:
+</p>
+<div class="math-display">\[ \sum_{i=1}^n (X_i - \mu)^2 = \sum_{i=1}^n (X_i - \bar{X})^2 + n(\bar{X} - \mu)^2 \]</div>
+<p class="course-paragraph">
+Her iki tarafı kitle varyansı \(\sigma^2\)'ye bölelim:
+</p>
+<div class="math-display">\[ \underbrace{\sum_{i=1}^n \left(\frac{X_i - \mu}{\sigma}\right)^2}_{A \sim \chi^2_n} = \underbrace{\frac{(n-1)S^2}{\sigma^2}}_{B} + \underbrace{\left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right)^2}_{C \sim \chi^2_1} \]</div>
+<p class="course-paragraph">
+Normal kitlelerde örneklem ortalaması (\(\bar{X}\)) ile örneklem varyansı (\(S^2\)) Cochran teoremi gereği <strong>bağımsızdır</strong>. Dolayısıyla \(B\) ile \(C\) bağımsızdır:
+</p>
+<div class="math-display">\[ M_A(t) = M_B(t) \cdot M_C(t) \implies M_B(t) = \frac{M_A(t)}{M_C(t)} = \frac{(1 - 2t)^{-n/2}}{(1 - 2t)^{-1/2}} = (1 - 2t)^{-\frac{n-1}{2}} \]</div>
+<p class="course-paragraph">
+Teklik teoremi gereğince:
+</p>
+<div class="math-display">\[ \boxed{\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}} \]</div>
+<p class="course-paragraph">
+<em>Sezgisel Anlamı:</em> Serbestlik derecesi \(n\) değil \(n-1\)'dir; çünkü örneklem ortalaması \(\bar{X}\) tahmin edildiğinde 1 serbestlik derecesi (bilgi) harcanmıştır!
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="student-math-inl-67-ve-fisher-math-inl-68-da-l-mlar-n-n-t-retilmesi" class="section-title"><span class="title-anchor">§</span> Student-\(t\) ve Fisher-\(F\) Dağılımlarının Türetilmesi</h2>
+<h3 id="1-student-math-inl-69-da-l-m-n-n-jacobiyen-i-le-t-retimi" class="subsection-title">1. Student-\(t\) Dağılımının Jacobiyen İle Türetimi</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Student-\(t\) Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(Z \sim N(0, 1)\) ve \(V \sim \chi^2_r\) bağımsız iki değişken olsun.  
+</p>
+<div class="math-display">\[ T = \frac{Z}{\sqrt{V/r}} \]</div>
+<p class="course-paragraph">
+değişkenine \(r\) serbestlik dereceli <strong>Student-\(t\)</strong> dağılımı denir (\(T \sim t_r\)).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Türetim Adımları:</strong>  
+\(T = \frac{Z}{\sqrt{V/r}}\) ve \(U = V\) dönüşümü yapalım:
+</p>
+<div class="math-display">\[ z = t \sqrt{u/r}, \quad v = u \implies |J| = \left| \begin{matrix} \sqrt{u/r} & \frac{t}{2\sqrt{ur}} \\ 0 & 1 \end{matrix} \right| = \sqrt{\frac{u}{r}} \]</div>
+<p class="course-paragraph">
+Bileşik yoğunluk \(f(t, u) = f_Z(z(t, u)) f_V(u) |J|\):
+</p>
+<div class="math-display">\[ f(t, u) = \frac{1}{\sqrt{2\pi}} \frac{1}{2^{r/2}\Gamma(r/2)} u^{r/2 - 1} \exp\left( -\frac{u}{2}\left( 1 + \frac{t^2}{r} \right) \right) u^{1/2} r^{-1/2} \]</div>
+<p class="course-paragraph">
+\(u \in (0, \infty)\) üzerinden Gamma integrali (\(\int_0^\infty u^{\alpha-1} e^{-\beta u} du = \frac{\Gamma(\alpha)}{\beta^\alpha}\)) ile marjinal yoğunluk hesaplanırsa:
+</p>
+<div class="math-display">\[ \boxed{f(t) = \frac{\Gamma\left(\frac{r+1}{2}\right)}{\sqrt{r\pi} \, \Gamma\left(\frac{r}{2}\right)} \left( 1 + \frac{t^2}{r} \right)^{-\frac{r+1}{2}}, \quad -\infty < t < \infty} \]</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Student-\(t\) dağılımlarının Normal dağılımla karşılaştırması (\(r \to \infty\) iken \(t_r \xrightarrow{d} N(0, 1)\), \(r=1\) iken Cauchy dağılımıdır).</p>
+</div>
+<h3 id="2-fisher-math-inl-85-da-l-m-n-n-t-retimi" class="subsection-title">2. Fisher-\(F\) Dağılımının Türetimi</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Fisher-\(F\) Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(U \sim \chi^2_{r_1}\) ve \(V \sim \chi^2_{r_2}\) bağımsız iki ki-kare değişkeni olsun.
+</p>
+<div class="math-display">\[ W = \frac{U / r_1}{V / r_2} \]</div>
+<p class="course-paragraph">
+oranına \(r_1\) ve \(r_2\) serbestlik dereceli <strong>Snedecor-Fisher \(F\)</strong> dağılımı denir (\(W \sim F_{r_1, r_2}\)).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+Jacobiyen dönüşümü yapılıp marjinal integral alındığında:
+</p>
+<div class="math-display">\[ \boxed{f(w) = \frac{\Gamma\left(\frac{r_1 + r_2}{2}\right)}{\Gamma\left(\frac{r_1}{2}\right) \Gamma\left(\frac{r_2}{2}\right)} \left(\frac{r_1}{r_2}\right)^{r_1/2} \frac{w^{\frac{r_1}{2} - 1}}{\left(1 + \frac{r_1}{r_2}w\right)^{\frac{r_1+r_2}{2}}}, \quad w > 0} \]</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="i-ki-de-i-kenli-d-n-mler-ve-konvol-syon" class="section-title"><span class="title-anchor">§</span> İki Değişkenli Dönüşümler ve Konvolüsyon</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Konvolüsyon İntegrali (Toplamın Yoğunluğu)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X\) ve \(Y\) bağımsız sürekli rastgele değişkenler olsun. Toplamları olan \(U = X + Y\) değişkeninin olasılık yoğunluk fonksiyonu:
+</p>
+<div class="math-display">\[ f_U(u) = (f_X * f_Y)(u) = \int_{-\infty}^{\infty} f_X(v) \, f_Y(u - v) \, dv \]</div>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: \(f(x) = 2x, \; 0 < x < 1\) İçin \(Y = X_1 + X_2\)'nin Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(f(x_1, x_2) = 4x_1 x_2\). \(Y_1 = X_1 + X_2, Y_2 = X_2 \implies |J| = 1\).  
+Sınırlar: \(0 < y_1 - y_2 < 1\) ve \(0 < y_2 < 1\).
+</p>
+<ul class="course-list">
+<li><strong>Bölge I (\(0 < y_1 < 1\)):</strong> \(y_2 \in (0, y_1)\)
+<div class="math-display">\[ f(y_1) = \int_{0}^{y_1} 4(y_1 y_2 - y_2^2) dy_2 = \left[ 2y_1 y_2^2 - \frac{4}{3}y_2^3 \right]_0^{y_1} = \boxed{\frac{2}{3}y_1^3} \]</div></li>
+<li><strong>Bölge II (\(1 \le y_1 < 2\)):</strong> \(y_2 \in (y_1 - 1, 1)\)
+<div class="math-display">\[ f(y_1) = \int_{y_1 - 1}^{1} 4(y_1 y_2 - y_2^2) dy_2 = \boxed{\frac{2}{3}\left( -y_1^3 + 6y_1 - 4 \right)} \]</div></li>
+</ul>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: Üçgensel Dağılım (\(Y = X_2 - X_1\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(f(x_1, x_2) = 1/2, \; x_1 + x_2 < 2, \; x_1, x_2 > 0\) bölgesinde \(Y = X_2 - X_1\) dönüşümü:
+</p>
+<div class="math-display">\[ f_Y(y) = \frac{2 - |y|}{4}, \quad -2 < y < 2 \]</div>
+<p class="course-paragraph">
+şeklinde simetrik bir üçgensel dağılım üretir.
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Grafik:</strong> \(Y=X_2-X_1\) değişkeninin simetrik üçgensel olasılık yoğunluğu.</p>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="5-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 5. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Sürekli Eşleme Teoremi (Continuous Mapping Theorem - CMT)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(g: \mathbb{R} \to \mathbb{R}\) fonksiyonu sürekli ve \(\hat{\theta}_n \xrightarrow{P} \theta\) olsun. O hâlde:
+</p>
+<div class="math-display">\[ g(\hat{\theta}_n) \xrightarrow{P} g(\theta) \]</div>
+<p class="course-paragraph">
+olduğunu ispatlayınız.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Adım Adım Detaylı İspat:</strong>
+Göstermemiz gereken matematiksel hedef:
+</p>
+<div class="math-display">\[ \forall \epsilon > 0 \quad \text{için} \quad \lim_{n \to \infty} P\left( |g(\hat{\theta}_n) - g(\theta)| \ge \epsilon \right) = 0 \]</div>
+<ol class="course-ordered-list">
+<li>Herhangi bir \(\epsilon > 0\) sabitlensin.</li>
+<li>\(g\) fonksiyonu \(\theta\) noktasında sürekli olduğundan analizin \(\epsilon-\delta\) tanımı gereği:
+<div class="math-display">\[ |x - \theta| < \delta \implies |g(x) - g(\theta)| < \epsilon \]</div>
+<p class="course-paragraph">
+    olacak şekilde bir \(\delta > 0\) sayısı mevcuttur.</li>
+</p>
+<li>Mantık kurallarına göre \((P \implies Q) \iff (\neg Q \implies \neg P)\) karşıt-tersi denktir:
+<div class="math-display">\[ |g(x) - g(\theta)| \ge \epsilon \implies |x - \theta| \ge \delta \]</div></li>
+<li>Bu bağıntı rastgele değişkenlerin olay kümeleri için bir alt küme ilişkisi tanımlar:
+<div class="math-display">\[ \left\{ \omega : |g(\hat{\theta}_n(\omega)) - g(\theta)| \ge \epsilon \right\} \subseteq \left\{ \omega : |\hat{\theta}_n(\omega) - \theta| \ge \delta \right\} \]</div></li>
+<li>Olasılık ölçüsünün monotonluğundan (\(A \subseteq B \implies P(A) \le P(B)\)):
+<div class="math-display">\[ P\left( |g(\hat{\theta}_n) - g(\theta)| \ge \epsilon \right) \le P\left( |\hat{\theta}_n - \theta| \ge \delta \right) \]</div></li>
+<li>Hipotez gereği \(\hat{\theta}_n \xrightarrow{P} \theta\) olduğundan sabit \(\delta > 0\) için sağ taraf sıfıra gider:
+<div class="math-display">\[ \lim_{n \to \infty} P\left( |\hat{\theta}_n - \theta| \ge \delta \right) = 0 \]</div></li>
+<li>Sandviç Teoremi gereğince:
+<div class="math-display">\[ 0 \le \lim_{n \to \infty} P\left( |g(\hat{\theta}_n) - g(\theta)| \ge \epsilon \right) \le 0 \implies \boxed{g(\hat{\theta}_n) \xrightarrow{P} g(\theta)} \]</div></li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="hata-kareler-ortalamas-mse-ve-optimal-tahmin" class="section-title"><span class="title-anchor">§</span> Hata Kareler Ortalaması (MSE) ve Optimal Tahmin</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Hata Kareler Ortalaması (Mean Squared Error - MSE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir \(\theta\) parametresinin tahmin edicisi \(\hat{\theta}\) olsun.
+</p>
+<div class="math-display">\[ \boxed{\text{MSE}_\theta(\hat{\theta}) = E\left[ (\hat{\theta} - \theta)^2 \right] = V(\hat{\theta}) + \left[ \text{Bias}(\hat{\theta}) \right]^2} \]</div>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Yansızlık mı, Düşük MSE mi? (Bias-Variance Tradeoff)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Geleneksel olarak tahmin edicinin ortalamasının kitle parametresine eşit olması istenir (\(E(\hat{\theta})=\theta\), Yansızlık / Unbiasedness).  
+Ancak bir tahmin edici yansız olsa bile varyansı (savrulması) çok büyük olabilir!  
+Bazen birazcık yanlılığa (bias) izin vermek varyansı öyle muazzam düşürür ki, toplam hata karesi (MSE) çok daha küçük kalır. Modern istatistik ve yapay zekanın (Ridge Regresyon vb.) kalbinde bu ilke yatar.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Normal Dağılımda \(\sigma^2\) İçin En Küçük MSE'li Tahmin Edici</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(T = \sum_{i=1}^n (X_i - \bar{X})^2 \sim \sigma^2 \chi^2_{n-1}\) olsun. \(\hat{\sigma}^2 = a T\) biçimindeki tahmin ediciler arasında MSE'yi minimize eden \(a\) değerini bulunuz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+\(E(T) = (n-1)\sigma^2\) ve \(V(T) = 2(n-1)\sigma^4\).
+</p>
+<div class="math-display">\[ \begin{aligned} \text{MSE}(aT) &= V(aT) + [E(aT) - \sigma^2]^2 = a^2 2(n-1)\sigma^4 + [a(n-1)\sigma^2 - \sigma^2]^2 \notag \\
+    &= \sigma^4 \left[ 2(n-1)a^2 + ((n-1)a - 1)^2 \right] \end{aligned} \]</div>
+<p class="course-paragraph">
+\(a\)'ya göre türev alıp sıfıra eşitleyelim:
+</p>
+<div class="math-display">\[ \frac{d}{da} \text{MSE}(aT) = \sigma^4 \left[ 4(n-1)a + 2(n-1)((n-1)a - 1) \right] = 0 \]</div>
+<p class="course-paragraph">
+\(2(n-1)\) çarpanını sadeleştirelim (\(n > 1\)):
+</p>
+<div class="math-display">\[ 2a + (n-1)a - 1 = 0 \implies a(n + 1) = 1 \implies \boxed{a = \frac{1}{n+1}} \]</div>
+<p class="course-paragraph">
+<strong>Çarpıcı Sonuç:</strong>
+</p>
+<ul class="course-list">
+<li>Klasik yansız tahmin edici: \(S^2 = \frac{T}{n-1}\)</li>
+<li>En küçük MSE'ye sahip tahmin edici: \(\hat{\sigma}^2_{\text{MSE}} = \frac{T}{n+1}\)</li>
+</ul>
+<p class="course-paragraph">
+\(n+1\)'e bölünen tahmin edici yansız değildir (bir miktar sapmalıdır); ancak varyansı çok daha küçük olduğu için ortalama hata karesi (MSE) \(S^2\)'den daha düşüktür!
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> \(n=10\) için MSE parabolü. \(a=\frac{1}{n+1}\) noktasında MSE global minimum yapar.</p>
+</div>
+<h2 id="5-hafta-h-zl-tekrar-ve-form-l-tablosu" class="section-title"><span class="title-anchor">§</span> 5. Hafta Hızlı Tekrar ve Formül Tablosu</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Dağılım / Teorem</strong></th><th scope="col"><strong>Tanım ve Formül</strong></th><th scope="col"><strong>Pratik Anlamı / Kullanım Alanı</strong></th></tr></thead><tbody>
+<tr><td><strong>Ki-Kare (\(\chi^2_k\))</strong></td><td>\(\sum_{i=1}^k Z_i^2, \quad Z_i \sim N(0,1)\)</td><td>Standart normallerin kareler toplamı; varyans testlerinin temeli.</td></tr>
+<tr><td><strong>Örneklem Varyansı</strong></td><td>\(\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}\)</td><td>Normal kitlede \(S^2\)'nin kitle varyansına oranı \(n-1\) serbestlikli ki-karedir.</td></tr>
+<tr><td><strong>Student-\(t_r\)</strong></td><td>\(\frac{Z}{\sqrt{V/r}}, \quad Z \sim N(0,1), V \sim \chi^2_r\)</td><td>Kitle varyansı \(\sigma\) bilinmediğinde ortalama testleri (\(t\)-testi).</td></tr>
+<tr><td><strong>Fisher-\(F_{r_1, r_2}\)</strong></td><td>\(\frac{U/r_1}{V/r_2}, \quad U \sim \chi^2_{r_1}, V \sim \chi^2_{r_2}\)</td><td>İki bağımsız varyansın karşılaştırılması (ANOVA testi).</td></tr>
+<tr><td><strong>CMT Teoremi</strong></td><td>\(\hat{\theta}_n \xrightarrow{P} \theta \implies g(\hat{\theta}_n) \xrightarrow{P} g(\theta)\)</td><td>Sürekli fonksiyonlar olasılıkta yakınsamayı korur.</td></tr>
+<tr><td><strong>MSE Ayrışımı</strong></td><td>\(\text{MSE}(\hat{\theta}) = V(\hat{\theta}) + \text{Bias}^2\)</td><td>Sapma ile varyans arasındaki değiş-tokuş kriteri.</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 5. Haftanın Temel Örnekleme Dağılımları, Dönüşümleri ve Tahmin Kriterleri</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-04.html" class="btn-secondary">⬅️ Hafta 4</a>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-06.html" class="btn-primary">Hafta 6 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-charts.js"></script>
+</body>
+</html>

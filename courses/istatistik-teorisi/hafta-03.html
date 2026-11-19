@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3. Hafta: Rassal Değişken Dizilerinde Yakınsama Türleri ve CLT - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="active">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 3</span>
+        <h1 class="course-main-title">3. Hafta: Rassal Değişken Dizilerinde Yakınsama Türleri ve CLT</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 3. haftasında yer alan <strong>Yakınsama Türleri</strong> (Olasılıkta, Hemen Hemen Her Yerde, Momentte ve Dağılımda), <strong>Merkezi Limit Teoremi (CLT / MLT)</strong>, <strong>Slutsky Teoremi</strong>, <strong>Sıra İstatistiklerinin Limitleri</strong> ve <strong>Ki-Kare Dağılımının Normale Yakınsaması</strong> konularını içermektedir. Ağır matematiksel teoremler sezgisel benzetmeler ve çözümlü örneklerle basitleştirilmiştir.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-rneklem-b-y-d-k-e-math-inl-28-ne-olur" class="section-title"><span class="title-anchor">§</span> Büyük Resim: Örneklem Büyüdükçe (\(n \to \infty\)) Ne Olur?</h2>
+<p class="course-paragraph">
+Lisede veya kalkülüste bir sayı dizisinin limitini biliriz: Örneğin \(a_n = \frac{1}{n} \to 0\). Sayılar sabittir ve nereye gittikleri bellidir.  
+Ancak istatistikte elimizde sayılar değil, **rastgele değişkenler** (\(X_1, X_2, \dots, X_n\)) vardır!  
+Her denemede farklı bir sonuç üreten bir sürecin "limiti" ne demektir?
+</p>
+<ul class="course-list">
+<li>Değişkenin kendisi tek bir sabit sayıya mı yaklaşır? \(\longrightarrow\) <strong>Olasılıkta Yakınsama</strong> (\(X_n \xrightarrow{P} c\))</li>
+<li>Her bir deneme kesinlikle aynı hedefe mi varır? \(\longrightarrow\) <strong>Hemen Hemen Her Yerde Yakınsama</strong> (\(X_n \xrightarrow{a.s.} X\))</li>
+<li>Değişkenin kendisi sabit kalmasa bile, çizdiği olasılık eğrisi (grafiği) tanıdık bir şekle mi bürünür? \(\longrightarrow\) <strong>Dağılımda Yakınsama</strong> (\(X_n \xrightarrow{d} X\))</li>
+</ul>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="rastgele-de-i-ken-dizilerinde-yak-nsama-t-rleri" class="section-title"><span class="title-anchor">§</span> Rastgele Değişken Dizilerinde Yakınsama Türleri</h2>
+<h3 id="1-olas-l-kta-yak-nsama-convergence-in-probability" class="subsection-title">1. Olasılıkta Yakınsama (Convergence in Probability)</h3>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Olasılıkta Yakınsamanın Anlamı: Hedefte Toplanma</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir hedef tahtasına sürekli ok attığınızı hayal edin (\(n\) ok sayısı). \(n\) büyüdükçe merkezin \(\epsilon\) kadar uzağına düşme ihtimaliniz sıfıra iniyorsa, yani atışlarınızın \%99.999'u hedefin minicik bir çevresine sıkışıyorsa bu dizi hedefe **olasılıkta yakınsıyor** demektir.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olasılıkta Yakınsama (\(X_n \xrightarrow{P} X\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Her \(\epsilon > 0\) için:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} P\left( |X_n - X| \ge \epsilon \right) = 0 \quad \iff \quad \lim_{n \to \infty} P\left( |X_n - X| < \epsilon \right) = 1 \]</div>
+<p class="course-paragraph">
+ise \(X_n\) dizisi \(X\)'e <strong>olasılıkta yakınsar</strong> denir ve \(X_n \xrightarrow{P} X\) ile gösterilir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: Zayıf Büyük Sayılar Yasası (WLLN)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, \dots, X_n \overset{\text{i.i.d.}}{\sim} (\mu, \sigma^2 < \infty)\) olsun. Örneklem ortalaması \(\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\)'nin kitle ortalamasına olasılıkta yakınsadığını (\(\bar{X}_n \xrightarrow{P} \mu\)) gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm (Chebyshev Eşitsizliği ile):</strong>
+Örneklem ortalamasının beklenen değeri ve varyansı:
+</p>
+<div class="math-display">\[ E(\bar{X}_n) = \mu, \quad V(\bar{X}_n) = \frac{\sigma^2}{n} \]</div>
+<p class="course-paragraph">
+Chebyshev eşitsizliğini uygulayalım:
+</p>
+<div class="math-display">\[ P\left( |\bar{X}_n - \mu| \ge \epsilon \right) \le \frac{V(\bar{X}_n)}{\epsilon^2} = \frac{\sigma^2}{n \epsilon^2} \]</div>
+<p class="course-paragraph">
+\(n \to \infty\) iken limit alırsak:
+</p>
+<div class="math-display">\[ 0 \le \lim_{n \to \infty} P\left( |\bar{X}_n - \mu| \ge \epsilon \right) \le \lim_{n \to \infty} \frac{\sigma^2}{n \epsilon^2} = 0 \]</div>
+<p class="course-paragraph">
+Sandviç kuralından sapma olasılığı sıfıra gider. Böylece:
+</p>
+<div class="math-display">\[ \boxed{\bar{X}_n \xrightarrow{P} \mu} \]</div>
+<p class="course-paragraph">
+<em>Sezgisel Anlamı:</em> Madeni parayı 10 kez atarsanız \%70 yazı gelebilir. Ama 10.000 kez atarsanız yazı oranı kesinlikle 0.50'ye kilitlenir!
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: Örneklem Varyansının Tutarlılığı (\(S_n^2 \xrightarrow{P} \sigma^2\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Normal kitlede örneklem varyansı \(S_n^2\)'nin kitle varyansı \(\sigma^2\)'ye olasılıkta yakınsadığını gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+Normal dağılımda \(\frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2_{n-1}\) olduğundan varyansı:
+</p>
+<div class="math-display">\[ V(S_n^2) = \frac{\sigma^4}{(n-1)^2} \cdot 2(n-1) = \frac{2\sigma^4}{n-1} \]</div>
+<p class="course-paragraph">
+Chebyshev eşitsizliğinin tümleyenini yazalım:
+</p>
+<div class="math-display">\[ P\left( |S_n^2 - \sigma^2| < \epsilon \right) \ge 1 - \frac{V(S_n^2)}{\epsilon^2} = 1 - \frac{2\sigma^4}{(n-1)\epsilon^2} \]</div>
+<p class="course-paragraph">
+\(n \to \infty\) iken limit 1 olur. Dolayısıyla \(S_n^2 \xrightarrow{P} \sigma^2\)'dir; yani \(S_n^2\) <strong>tutarlı (consistent)</strong> bir tahmin edicidir.
+</p>
+  </div>
+</div>
+<h3 id="2-kesinlikle-hemen-hemen-her-yerde-yak-nsama-almost-sure" class="subsection-title">2. Kesinlikle / Hemen Hemen Her Yerde Yakınsama (Almost Sure)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Kesinlikle Yakınsama (\(X_n \xrightarrow{a.s.} X\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Örneklem uzayındaki istisnai olayların olasılığı sıfır olmak üzere, sürecin kendisi \(X\)'e yakınsıyorsa:
+</p>
+<div class="math-display">\[ P\left( \lim_{n \to \infty} X_n = X \right) = 1 \]</div>
+<p class="course-paragraph">
+ise \(X_n \xrightarrow{a.s.} X\) denir. (Bu, olasılıkta yakınsamadan çok daha güçlü bir yakınsamadır: \(X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{P} X\)).
+</p>
+  </div>
+</div>
+<h3 id="3-momentlerde-yak-nsama-math-inl-60-yak-nsama" class="subsection-title">3. Momentlerde Yakınsama (\(L^r\) Yakınsama)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Momentlerde Yakınsama (\(X_n \xrightarrow{L^r} X\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(r > 0\) olmak üzere:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} E\left( |X_n - X|^r \right) = 0 \]</div>
+<p class="course-paragraph">
+ise \(X_n \xrightarrow{L^r} X\) denir. Özellikle \(r=2\) durumuna <strong>Ortalama Karede Yakınsama (Mean Square Convergence)</strong> adı verilir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Olasılıkta Yakınsayıp Momentte Yakınsamayan Meşhur Dizi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_n\) rastgele değişkeni şu olasılıklarla tanımlansın:
+</p>
+<div class="math-display">\[ P(X_n = n^3) = \frac{1}{n^2}, \quad P(X_n = 0) = 1 - \frac{1}{n^2} \]</div>
+<p class="course-paragraph">
+Bu dizinin \(X=0\)'a yakınsaklığını inceleyiniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li><strong>Olasılıkta Yakınsama:</strong>  
+<p class="course-paragraph">
+    Sabit bir \(\epsilon > 0\) için yeterince büyük \(n\)'de \(n^3 > \epsilon\) olur:
+</p>
+<div class="math-display">\[ P(|X_n - 0| \ge \epsilon) = P(X_n = n^3) = \frac{1}{n^2} \xrightarrow{n \to \infty} 0 \]</div>
+<p class="course-paragraph">
+    Demek ki <strong>olasılıkta sıfıra yakınsar</strong> (\(X_n \xrightarrow{P} 0\)).</p></li>
+<li><strong>1. Momentte (\(r=1\)) Yakınsama:</strong>
+<div class="math-display">\[ E(|X_n - 0|) = E(X_n) = n^3 \cdot \left(\frac{1}{n^2}\right) + 0 \cdot \left(1 - \frac{1}{n^2}\right) = n \xrightarrow{n \to \infty} \infty \neq 0 \]</div>
+<p class="course-paragraph">
+    Ortalaması sonsuza patladığı için <strong>momentte yakınsamaz</strong>!</li>
+</p>
+</ol>
+<p class="course-paragraph">
+<em>Püf Noktası:</em> Nadir görülen devasa uç değerler (black swan) olasılığı sıfıra çekse de ortalamayı havaya uçurabilir!
+</p>
+  </div>
+</div>
+<h3 id="4-da-l-mda-yak-nsama-convergence-in-distribution" class="subsection-title">4. Dağılımda Yakınsama (Convergence in Distribution)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Dağılımda Yakınsama (\(X_n \xrightarrow{d} X\))</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_n\)'nin birikimli dağılım fonksiyonu \(F_n(x)\), \(X\)'inki \(F(x)\) olsun. \(F\)'nin her süreklilik noktasında:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} F_n(x) = F(x) \]</div>
+<p class="course-paragraph">
+ise \(X_n \xrightarrow{d} X\) denir. Eşdeğer olarak karakteristik fonksiyonlar her \(t\)'de \(\phi_{X_n}(t)\to\phi_X(t)\) yakınsar. Moment çıkaran fonksiyonların yakınsaması ise ancak ayrıca uygun varlık koşulları sağlanırsa kullanılabilir.
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Yakınsama türleri arasındaki hiyerarşik ilişki. Dağılımda yakınsama en zayıf olanıdır.</p>
+</div>
+<h2 id="merkezi-limit-teoremi-clt-mlt-ve-i-spat" class="section-title"><span class="title-anchor">§</span> Merkezi Limit Teoremi (CLT / MLT) ve İspatı</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: İstatistiğin En Büyük Mucizesi: CLT</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Sonlu ve pozitif varyanslı bir kitleden bağımsız örneklemler çekildiğinde, örneklem büyüklüğü arttıkça standartlaştırılmış ortalama dağılımda standart normale yaklaşır. Yaklaşmanın hızı ve sonlu örneklemdeki doğruluğu dağılımın biçimine bağlıdır; \(n \ge 30\) evrensel bir garanti değildir.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Merkezi Limit Teoremi (Central Limit Theorem)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, X_2, \dots\) bağımsız ve özdeş dağılımlı, \(E(X_i)=\mu\) ve \(0<V(X_i)=\sigma^2<\infty\) olsun. Standardize edilmiş toplam \(n \to \infty\) iken:
+</p>
+<div class="math-display">\[ Z_n = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} = \frac{\sum_{i=1}^n (X_i - \mu)}{\sigma \sqrt{n}} \xrightarrow{d} N(0, 1) \]</div>
+  </div>
+</div>
+<h3 id="clt-nin-m-f-i-le-ad-m-ad-m-i-spat" class="subsection-title">CLT'nin Karakteristik Fonksiyon ile İspatı</h3>
+<ol class="course-ordered-list">
+<li>\(Y=(X-\mu)/\sigma\) tanımlayalım. \(E(Y)=0\), \(E(Y^2)=1\) olduğundan karakteristik fonksiyonunun \(0\) çevresindeki açılımı:
+<div class="math-display">\[ \phi_Y(u)=1-\frac{u^2}{2}+o(u^2) \]</div></li>
+<li>Bağımsızlıkla \(Z_n=n^{-1/2}\sum_{i=1}^n Y_i\) için:
+<div class="math-display">\[ \phi_{Z_n}(t)=\left[\phi_Y\left(\frac{t}{\sqrt{n}}\right)\right]^n=\left[1-\frac{t^2}{2n}+o(n^{-1})\right]^n \]</div></li>
+<li>\(n\to\infty\) iken:
+<div class="math-display">\[ \phi_{Z_n}(t)\longrightarrow e^{-t^2/2} \]</div></li>
+<li>\(e^{-t^2/2}\), \(N(0,1)\)'in karakteristik fonksiyonudur. Lévy süreklilik teoreminden:
+<div class="math-display">\[ Z_n \xrightarrow{d} N(0,1) \]</div></li>
+</ol>
+<h2 id="slutsky-teoremi-ve-s-ra-i-statistiklerinin-limitleri" class="section-title"><span class="title-anchor">§</span> Slutsky Teoremi ve Sıra İstatistiklerinin Limitleri</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Slutsky Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_n \xrightarrow{d} X\) (dağılımda yakınsayan) ve \(Y_n \xrightarrow{P} c\) (bir sabite olasılıkta yakınsayan) ise:
+</p>
+<ol class="course-ordered-list">
+<li>\(X_n + Y_n \xrightarrow{d} X + c\)</li>
+<li>\(X_n Y_n \xrightarrow{d} c X\)</li>
+<li>\(\frac{X_n}{Y_n} \xrightarrow{d} \frac{X}{c} \quad (c \neq 0)\)</li>
+</ol>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Uniform Örnekleminde Sıra İstatistikleri</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Uniform Örnekleminde Minimum ve Maksimum:</strong>
+\(X_1,\ldots,X_n\overset{\text{i.i.d.}}{\sim}\operatorname{Uniform}(0,1)\) için minimum \(Y_n\), maksimum \(Z_n\) ile gösterilir:
+</p>
+<div class="math-display">\[ Y_n=\min(X_1,\ldots,X_n),\quad f_{Y_n}(y)=n(1-y)^{n-1};\qquad Z_n=\max(X_1,\ldots,X_n),\quad f_{Z_n}(z)=nz^{n-1},\quad 0<y,z<1. \]</div>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 4: Uniform(0,1) Uç Değerlerinin Yakınsaması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, \dots, X_n \overset{\text{i.i.d.}}{\sim} \text{Uniform}(0, 1)\) olsun.  
+Minimum \(Y_n = \min(X_i)\) ve Maksimum \(Z_n = \max(X_i)\) nereye yakınsar?
+</p>
+<ul class="course-list">
+<li><strong>Minimum:</strong> \(P(Y_n < \epsilon) = 1 - (1-\epsilon)^n \xrightarrow{n \to \infty} 1 \implies \boxed{Y_n \xrightarrow{P} 0}\)</li>
+<li><strong>Maksimum:</strong> \(P(Z_n > 1 - \epsilon) = 1 - (1-\epsilon)^n \xrightarrow{n \to \infty} 1 \implies \boxed{Z_n \xrightarrow{P} 1}\)</li>
+</ul>
+<p class="course-paragraph">
+<em>Sezgisel Anlamı:</em> \((0,1)\) aralığından rastgele 1 milyon sayı seçerseniz; en küçüğü neredeyse \(0\), en büyüğü ise neredeyse \(1\) olmak zorundadır!
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> \(n=5\) için Uniform(0,1) uç değerlerinin yoğunlukları. \(n\) büyüdükçe minimum \(0\)'a, maksimum \(1\)'e doğru sıkışır.</p>
+</div>
+<h2 id="3-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 3. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Ki-Kare Dağılımının Standart Normale Yakınsaması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(Z_n \sim \chi^2_n\) olsun. Standartlaştırılmış değişkenin:
+</p>
+<div class="math-display">\[ Y_n = \frac{Z_n - n}{\sqrt{2n}} \xrightarrow{d} N(0, 1) \]</div>
+<p class="course-paragraph">
+olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>1. Çözüm Yolu (Moment Çıkaran Fonksiyon ve Taylor Açılımı):</strong>
+\(Z_n \sim \chi^2_n\) dağılımının MÇF'si: \(M_{Z_n}(t) = (1 - 2t)^{-n/2}\).  
+\(Y_n = \frac{Z_n - n}{\sqrt{2n}}\) için MÇF'yi kuralım:
+</p>
+<div class="math-display">\[ M_{Y_n}(t) = e^{-t \sqrt{\frac{n}{2}}} M_{Z_n}\left( \frac{t}{\sqrt{2n}} \right) = e^{-t \sqrt{\frac{n}{2}}} \left( 1 - t \sqrt{\frac{2}{n}} \right)^{-n/2} \]</div>
+<p class="course-paragraph">
+Her iki tarafın doğal logaritmasını alalım:
+</p>
+<div class="math-display">\[ \ln M_{Y_n}(t) = -t \sqrt{\frac{n}{2}} - \frac{n}{2} \ln\left( 1 - t \sqrt{\frac{2}{n}} \right) \]</div>
+<p class="course-paragraph">
+\(\ln(1 - u) = -u - \frac{u^2}{2} - \dots\) Taylor açılımını \(u = t \sqrt{\frac{2}{n}}\) için uygulayalım:
+</p>
+<div class="math-display">\[ \begin{aligned} \ln M_{Y_n}(t) &= -t \sqrt{\frac{n}{2}} - \frac{n}{2} \left[ -t \sqrt{\frac{2}{n}} - \frac{t^2}{n} - O(n^{-3/2}) \right] \notag \\
+    &= -t \sqrt{\frac{n}{2}} + t \sqrt{\frac{n}{2}} + \frac{t^2}{2} + O(n^{-1/2}) = \frac{t^2}{2} + O(n^{-1/2}) \end{aligned} \]</div>
+<p class="course-paragraph">
+\(n \to \infty\) limitinde:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} \ln M_{Y_n}(t) = \frac{t^2}{2} \implies \lim_{n \to \infty} M_{Y_n}(t) = \exp\left( \frac{t^2}{2} \right) \]</div>
+<p class="course-paragraph">
+Bu ifade \(N(0, 1)\) dağılımının MÇF'sidir. Dolayısıyla:
+</p>
+<div class="math-display">\[ \boxed{Y_n = \frac{Z_n - n}{\sqrt{2n}} \xrightarrow{d} N(0, 1)} \]</div>
+<p class="course-paragraph">
+<br/>
+<strong>2. Çözüm Yolu (CLT Yardımıyla Tek Satırda Çözüm):</strong>
+\(n\) serbestlik dereceli ki-kare değişkeni, \(n\) adet bağımsız \(W_i \sim \chi^2_1\) değişkeninin toplamıdır:
+</p>
+<div class="math-display">\[ Z_n = \sum_{i=1}^n W_i, \quad E(W_i) = 1, \quad V(W_i) = 2 \]</div>
+<p class="course-paragraph">
+Merkezi Limit Teoremi gereğince:
+</p>
+<div class="math-display">\[ \frac{\sum W_i - n E(W_1)}{\sqrt{n V(W_1)}} = \frac{Z_n - n \cdot 1}{\sqrt{n \cdot 2}} = \boxed{\frac{Z_n - n}{\sqrt{2n}} \xrightarrow{d} N(0, 1)} \]</div>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Grafik:</strong> Serbestlik derecesi (\(n=4 \to n=20\)) arttıkça standartlaştırılmış ki-kare yoğunluklarının \(N(0,1)\)'e yaklaşması.</p>
+</div>
+<h2 id="3-hafta-h-zl-tekrar-ve-yak-nsama-t-rleri-tablosu" class="section-title"><span class="title-anchor">§</span> 3. Hafta Hızlı Tekrar ve Yakınsama Türleri Tablosu</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Yakınsama Türü</strong></th><th scope="col"><strong>Sembol</strong></th><th scope="col"><strong>Matematiksel Kriter / Anlamı</strong></th><th scope="col"><strong>Güç / Hiyerarşi</strong></th></tr></thead><tbody>
+<tr><td><strong>Hemen Hemen H.Y.</strong></td><td>\(X_n \xrightarrow{a.s.} X\)</td><td>\(P(\lim X_n = X) = 1\) (İstisnalar kümesinin olasılığı sıfırdır)</td><td>En Güçlü (\(\implies P\))</td></tr>
+<tr><td><strong>Momentlerde (\(L^r\))</strong></td><td>\(X_n \xrightarrow{L^r} X\)</td><td>\(\lim E(|X_n - X|^r) = 0\) (\(r=2\) Ortalama Karede Yakınsama)</td><td>Güçlü (\(\implies P\))</td></tr>
+<tr><td><strong>Olasılıkta Yakınsama</strong></td><td>\(X_n \xrightarrow{P} X\)</td><td>\(\forall \epsilon > 0, \lim P(|X_n - X| \ge \epsilon) = 0\) (Hedefte sıkışma)</td><td>Orta (\(\implies d\))</td></tr>
+<tr><td><strong>Dağılımda Yakınsama</strong></td><td>\(X_n \xrightarrow{d} X\)</td><td>\(F_n(x)\to F(x)\) süreklilik noktalarında (karakteristik fonksiyonlar için eşdeğer kriter vardır)</td><td>En Zayıf</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 3. Haftada İncelenen 4 Farklı Yakınsama Türünün Özeti ve Hiyerarşik Karşılaştırması</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-02.html" class="btn-secondary">⬅️ Hafta 2</a>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-04.html" class="btn-primary">Hafta 4 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-charts.js"></script>
+</body>
+</html>

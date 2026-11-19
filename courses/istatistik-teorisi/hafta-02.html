@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2. Hafta: Olasılık Çıkaran ve Karakteristik Fonksiyonlar - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="active">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 2</span>
+        <h1 class="course-main-title">2. Hafta: Olasılık Çıkaran ve Karakteristik Fonksiyonlar</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 2. haftasında yer alan <strong>Olasılık Çıkaran Fonksiyon (OÇF / PGF)</strong>, <strong>Karakteristik Fonksiyon (KF / CF)</strong>, <strong>Ters Dönüşüm Teoremi (Inversion)</strong>, <strong>Cauchy Dağılımı</strong>, <strong>Laplace Dönüşümü</strong> ve <strong>Kuyruk Olasılığı ile Beklenen Değer Teoremi</strong> konularını içermektedir. Matematiksel ispatların yanında her aracın "neden" geliştirildiği sezgisel benzetmeler ve çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-2-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 2. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<p class="course-paragraph">
+Geçen hafta gördüğümüz Moment Çıkaran Fonksiyon (\(M_X(t) = E(e^{tX})\)) harika bir araçtı; fakat iki büyük sınırlılığı vardır:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Kesikli Dağılımlarda Olasılıkları Vermez:</strong> MÇF sadece ortalama ve varyans gibi momentleri üretir; doğrudan \(P(X=0), P(X=1), P(X=2)\) olasılık değerlerini vermez. Bunun için kesikli değişkenlere özel <strong>Olasılık Çıkaran Fonksiyon (OÇF)</strong> geliştirilmiştir.</li>
+<li><strong>Bazı Dağılımlarda MÇF Sonsuza Patlar (Yoktur):</strong> Ağır kuyruklu dağılımlarda (örneğin Cauchy veya \(t\)-dağılımı) \(E(e^{tX})\) integrali ıraksar. Bu krizi çözmek için matematiğin en güçlü silahı olan sanal birim \(i = \sqrt{-1}\) devreye sokulur ve <strong>Karakteristik Fonksiyon</strong> (\(\phi(t) = E(e^{itX})\)) tanımlanır. Bu fonksiyon istisnasız <strong>her dağılım için kesinlikle vardır</strong>!</li>
+</ol>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olas-l-k-karan-fonksiyon-o-f-pgf" class="section-title"><span class="title-anchor">§</span> Olasılık Çıkaran Fonksiyon (OÇF / PGF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: OÇF'nin Basit Mantığı (Olasılıkları Raflara Dizmek)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Sayma sayıları üzerinde tanımlı kesikli bir değişkenimiz olsun (\(X \in \{0, 1, 2, \dots\}\); örneğin bir günde gelen çağrı sayısı, atılan yazı sayısı vb.).  
+Bir polinom düşünelim:
+</p>
+<div class="math-display">\[ g(t) = P(X=0) \cdot t^0 + P(X=1) \cdot t^1 + P(X=2) \cdot t^2 + P(X=3) \cdot t^3 + \dots \]</div>
+<p class="course-paragraph">
+Burada \(t\)'nin üsleri olayları (\(x=0, 1, 2, \dots\)), katsayıları ise o olayların olasılıklarını (\(P(X=x)\)) temsil eden etiketlerdir.  
+Biz bu fonksiyona \(t=0\) koyup türev alırsak aradığımız olasılık pat diye elimize düşer!
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olasılık Çıkaran Fonksiyon (Probability Generating Function)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Sayma sayıları üzerinde tanımlı kesikli bir \(X\) rastgele değişkeni (\(X \in \{0, 1, 2, \dots\}\)) için <strong>Olasılık Çıkaran Fonksiyon</strong> \(G_X(t)\) (veya \(g(t)\)) şu şekilde tanımlanır:
+</p>
+<div class="math-display">\[ g(t) = G_X(t) = E(t^X) = \sum_{x=0}^{\infty} t^x P(X = x) \]</div>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Olasılık Çıkaran ve Moment Çıkaran Fonksiyonlar</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Olasılık Çıkaran ve Moment Çıkaran Fonksiyonlar:</strong>
+</p>
+<ul class="course-list">
+<li>Negatif olmayan tam değerli \(X\) için \(G_X(s)=E(s^X)\) olasılık çıkaran fonksiyondur.</li>
+<li>Moment çıkaran fonksiyon \(M_X(t)=E(e^{tX})\), tanımlı olduğu \(t\) değerlerinde \(G_X(e^t)\)'ye eşittir.</li>
+</ul>
+  </div>
+</div>
+<h3 id="olas-l-k-karan-fonksiyonun-3-temel-zelli-i" class="subsection-title">Olasılık Çıkaran Fonksiyonun 3 Temel Özelliği</h3>
+<ol class="course-ordered-list">
+<li><strong>\(t=1\)'deki Değeri (Toplam Olasılık):</strong>
+<div class="math-display">\[ g(1) = E(1^X) = \sum_{x=0}^{\infty} P(X = x) = 1 \]</div></li>
+<li><strong>Olasılıkları Üretme Özelliği (\(t=0\)'daki Türevler):</strong>
+<p class="course-paragraph">
+    \(g(t)\)'nin \(k\) kez türevini alıp \(t=0\) yazarsak, doğrudan \(k\). olasılığı elde ederiz:
+</p>
+<div class="math-display">\[ \boxed{P(X = k) = \frac{1}{k!} \left. \frac{d^k g(t)}{dt^k} \right|_{t=0} = \frac{g^{(k)}(0)}{k!}} \]</div></li>
+<li><strong>Faktöriyel Momentleri Üretme Özelliği (\(t=1\)'deki Türevler):</strong>
+<p class="course-paragraph">
+    \(g(t)\)'nin \(t=1\)'deki türevleri ise faktöriyel momentleri verir:
+</p>
+<div class="math-display">\[ g'(1) = E(X), \quad g''(1) = E[X(X-1)] \]</div>
+<p class="course-paragraph">
+    Buradan varyans şu pratik formülle çıkar:
+</p>
+<div class="math-display">\[ \boxed{V(X) = g''(1) + g'(1) - [g'(1)]^2} \]</div></li>
+</ol>
+<h4 class="subsubsection-title">İspat (Neden \(g^{(k)}(0)/k!\) Olasılığı Verir?)</h4>
+<p class="course-paragraph">
+Polinomu açıkça yazalım:
+</p>
+<div class="math-display">\[ g(t) = P(X=0) + P(X=1)t + P(X=2)t^2 + P(X=3)t^3 + \dots \]</div>
+<ul class="course-list">
+<li>\(t=0\) koyarsak: \(g(0) = P(X=0)\).</li>
+<li>1. Türev: \(g'(t) = P(X=1) + 2P(X=2)t + 3P(X=3)t^2 + \dots \implies g'(0) = 1! P(X=1)\).</li>
+<li>2. Türev: \(g''(t) = 2 \cdot 1 P(X=2) + 3 \cdot 2 P(X=3)t + \dots \implies g''(0) = 2! P(X=2)\).</li>
+<li>\(k\). Türev: \(g^{(k)}(0) = k! P(X=k) \implies P(X=k) = \frac{g^{(k)}(0)}{k!}\).</li>
+</ul>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: Poisson Dağılımının OÇF ve MÇF'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X \sim \text{Poisson}(\lambda)\) olsun. \(X\)'in MÇF ve OÇF'sini bulunuz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+Poisson olasılık kütle fonksiyonu:
+</p>
+<div class="math-display">\[ P(X = x) = \frac{e^{-\lambda} \lambda^x}{x!}, \quad x = 0, 1, 2, \dots \quad (\lambda > 0) \]</div>
+<p class="course-paragraph">
+<strong>1. Olasılık Çıkaran Fonksiyon (OÇF):</strong>
+</p>
+<div class="math-display">\[ \begin{aligned} g(t) = E(t^X) &= \sum_{x=0}^{\infty} t^x \frac{e^{-\lambda} \lambda^x}{x!} = e^{-\lambda} \sum_{x=0}^{\infty} \frac{(\lambda t)^x}{x!} \notag \\
+    &= e^{-\lambda} \cdot e^{\lambda t} = \boxed{e^{\lambda(t - 1)}} \end{aligned} \]</div>
+<p class="course-paragraph">
+<strong>2. Moment Çıkaran Fonksiyon (MÇF):</strong>  
+\(t\) yerine \(e^t\) yazarak:
+</p>
+<div class="math-display">\[ M_X(t) = E(e^{tX}) = g(e^t) = \boxed{e^{\lambda(e^t - 1)}} \]</div>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Poisson Dağılımının Desteği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Poisson Dağılımının Desteği:</strong>
+\(X\sim\operatorname{Poisson}(\lambda)\), \(\lambda>0\), için \(x=0,1,2,\ldots\) değerlerinde \(P(X=x)=e^{-\lambda}\lambda^x/x!\)'tir. Özellikle \(P(X=0)=e^{-\lambda}>0\).
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> \(\text{Poisson}(\lambda=3)\) olasılık kütle fonksiyonu. Dağılım \(x=0\)'da pozitif olasılığa sahiptir (\(P(X=0)=e^{-3}\approx 0.05\)).</p>
+</div>
+<h2 id="karakteristik-fonksiyon-kf-cf" class="section-title"><span class="title-anchor">§</span> Karakteristik Fonksiyon (KF / CF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Neden Karakteristik Fonksiyon? (MÇF'nin Yetmediği Yer)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    MÇF formülü olan \(E(e^{tX}) = \int e^{tx} f(x) dx\) integralinde \(t > 0\) iken \(x \to \infty\) durumunda \(e^{tx}\) üstel olarak devasa hızda büyür. Eğer \(f(x)\) fonksiyonu bu büyümeden daha hızlı sönümlenmiyorsa (örneğin Cauchy, \(t\)-dağılımı veya Pareto gibi kalın kuyruklu dağılımlarda), integral patlar ve MÇF var olmaz!  
+İşte matematikçiler burada devreye \(i = \sqrt{-1}\) sanal birimini sokmuştur:
+</p>
+<div class="math-display">\[ |e^{itx}| = |\cos(tx) + i\sin(tx)| = \sqrt{\cos^2(tx) + \sin^2(tx)} = 1 \]</div>
+<p class="course-paragraph">
+\(e^{itx}\) fonksiyonu reel eksende sonsuza gitmez, sadece birim çember üzerinde döner! Bu sayede integral asla patlamaz.  
+<strong>Altın Kural:</strong> Karakteristik fonksiyon, <strong>istisnasız her olasılık dağılımı için daima vardır ve \(|\phi(t)| \le 1\)'dir!</strong>
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Karakteristik Fonksiyon (Characteristic Function)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir rastgele değişken \(X\) için <strong>Karakteristik Fonksiyon</strong> \(\phi_X(t)\) şu şekilde tanımlanır:
+</p>
+<div class="math-display">\[ \phi(t) = \phi_X(t) = E(e^{itX}) = 
+    \begin{cases}
+        \int_{-\infty}^{\infty} e^{itx} f(x) \, dx, & \text{Sürekli ise} \\
+        \sum_{x} e^{itx} P(X = x), & \text{Kesikli ise}
+    \end{cases} \]</div>
+<p class="course-paragraph">
+Burada \(i = \sqrt{-1}\) sanal birimdir. (Bu dönüşüm aslında \(f(x)\)'in Fourier dönüşümüdür.)
+</p>
+  </div>
+</div>
+<h3 id="karakteristik-fonksiyonun-temel-zellikleri" class="subsection-title">Karakteristik Fonksiyonun Temel Özellikleri</h3>
+<ol class="course-ordered-list">
+<li><strong>Her Dağılım İçin Daima Mevcut ve Sınırlıdır:</strong>
+<div class="math-display">\[ |\phi(t)| \le \int_{-\infty}^\infty |e^{itx}| f(x) dx = \int_{-\infty}^\infty 1 \cdot f(x) dx = 1 \]</div>
+<p class="course-paragraph">
+    Ayrıca her zaman \(\phi(0) = E(e^0) = 1\)'dir.</li>
+</p>
+<li><strong>Simetrik Dağılımlarda Gerçel (Reel) Olma Özelliği:</strong>
+<p class="course-paragraph">
+    Eğer \(f(x)\) orijine göre simetrik bir fonksiyon ise (\(f(-x) = f(x)\)), sanal kısım tek fonksiyon olacağından sıfırlanır ve \(\phi(t)\) tamamen <strong>gerçel (reel)</strong> bir fonksiyondur:
+</p>
+<div class="math-display">\[ \phi(t) = \int_{-\infty}^{\infty} \cos(tx) f(x) dx + i \underbrace{\int_{-\infty}^{\infty} \sin(tx) f(x) dx}_{0 \text{ (tek fonksiyon)}} = 2 \int_{0}^{\infty} \cos(tx) f(x) dx \in \mathbb{R} \]</div></li>
+<li><strong>Doğrusal Dönüşüm:</strong> \(Y = a + bX\) ise:
+<div class="math-display">\[ \phi_Y(t) = e^{ita} \phi_X(bt) \]</div></li>
+<li><strong>Momentlerin Üretilmesi:</strong>
+<div class="math-display">\[ \left. \frac{d^k \phi_X(t)}{dt^k} \right|_{t=0} = i^k E(X^k) \implies \boxed{E(X^k) = (-i)^k \left. \frac{d^k \phi_X(t)}{dt^k} \right|_{t=0}} \]</div></li>
+</ol>
+<h3 id="ters-d-n-m-teoremi-inversion-theorem" class="subsection-title">Ters Dönüşüm Teoremi (Inversion Theorem)</h3>
+<p class="course-paragraph">
+Karakteristik fonksiyon her dağılım için tanımlıdır; ancak her dağılımın yoğunluk fonksiyonu olmak zorunda değildir. Eğer \(\phi\) integrallenebilirse, dağılımın sürekli bir yoğunluğu vardır ve Fourier ters dönüşümü bu yoğunluğu verir:
+</p>
+<div class="math-display">\[ \boxed{f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} \phi(t) \, dt} \]</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: \(\phi(t) = e^{-t^2/2}\) Fonksiyonundan Yoğunluk Fonksiyonunu Bulma</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(\phi(t) = e^{-t^2/2}\) olan sürekli rastgele değişkenin yoğunluk fonksiyonunu bulunuz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+Ters dönüşüm formülünü yazalım:
+</p>
+<div class="math-display">\[ f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} e^{-t^2/2} dt = \frac{1}{2\pi} \int_{-\infty}^{\infty} \exp\left( - \frac{1}{2}(t^2 + 2itx) \right) dt \]</div>
+<p class="course-paragraph">
+Standart normal yoğunluğunun Fourier dönüşümü kullanıldığında:
+</p>
+<div class="math-display">\[ \int_{-\infty}^{\infty} e^{-itx} e^{-t^2/2} \, dt = \sqrt{2\pi} e^{-x^2/2} \implies \boxed{f(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}} \]</div>
+<p class="course-paragraph">
+Bu standart normal dağılım \(X \sim N(0, 1)\)'in olasılık yoğunluk fonksiyonudur.
+</p>
+  </div>
+</div>
+<h2 id="2-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 2. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: \(\phi(t) = e^{-|t|}\) Karakteristik Fonksiyonuna Karşılık Gelen Dağılım</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir \(X\) rastgele değişkeninin karakteristik fonksiyonu \(\phi(t) = e^{-|t|}\) olsun. Bu dağılımın olasılık yoğunluk fonksiyonunu bulunuz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Ters dönüşüm formülünü uygulayalım:
+<div class="math-display">\[ f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-itx} e^{-|t|} dt \]</div></li>
+<li>Euler bağıntısını açalım: \(e^{-itx} = \cos(tx) - i\sin(tx)\).
+<div class="math-display">\[ f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \cos(tx) e^{-|t|} dt - \frac{i}{2\pi} \underbrace{\int_{-\infty}^{\infty} \sin(tx) e^{-|t|} dt}_{0 \text{ (tek fonksiyon)}} \]</div></li>
+<li>\(\cos(tx) e^{-|t|}\) çift fonksiyon olduğundan \([0, \infty)\) aralığına geçip 2 ile çarpalım:
+<div class="math-display">\[ f(x) = \frac{1}{2\pi} \cdot 2 \int_{0}^{\infty} \cos(tx) e^{-t} dt = \frac{1}{\pi} \int_{0}^{\infty} e^{-t} \cos(tx) \, dt \]</div></li>
+<li>\(J = \int_{0}^{\infty} e^{-t} \cos(tx) dt\) integralini kısmi integrasyon ile hesaplayalım:
+<div class="math-display">\[ \begin{aligned} u = \cos(tx), \; dv = e^{-t}dt &\implies J = 1 - x \int_0^\infty e^{-t}\sin(tx) dt \\
+        \text{Tekrar kısmi integrasyon} &\implies \int_0^\infty e^{-t}\sin(tx) dt = x J \\
+        \implies J = 1 - x^2 J &\implies J(1 + x^2) = 1 \implies J = \frac{1}{1 + x^2} \end{aligned} \]</div></li>
+<li>İntegral sonucunu yerine koyalım:
+<div class="math-display">\[ \boxed{f(x) = \frac{1}{\pi (1 + x^2)}, \quad -\infty < x < \infty} \]</div></li>
+</ol>
+<p class="course-paragraph">
+<strong>Çok Önemli Teorik Sonuç:</strong> Bu dağılım <strong>Standart Cauchy Dağılımı</strong>'dır (\(X \sim \text{Cauchy}(0,1)\)).  
+Cauchy dağılımının beklenen değeri ve varyansı yoktur (kuyrukları çok kalındır, \(\int |x|f(x)dx = \infty\)). Bu nedenle Cauchy'nin Moment Çıkaran Fonksiyonu (MGF) mevcut değildir! Ancak Karakteristik Fonksiyonu \(\phi(t) = e^{-|t|}\) sapasağlam mevcuttur.
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Ödevde bulunan Standart Cauchy dağılımı ile Standart Normal dağılımın karşılaştırması. Cauchy dağılımının kalın kuyrukları (heavy tails) açıkça görülmektedir.</p>
+</div>
+<h2 id="laplace-d-n-m-ve-kuyruk-beklenen-de-er-teoremi" class="section-title"><span class="title-anchor">§</span> Laplace Dönüşümü ve Kuyruk Beklenen Değer Teoremi</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Laplace Dönüşümü</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Pozitif sürekli rastgele değişkenler (\(X \ge 0\)) için Laplace dönüşümü:
+</p>
+<div class="math-display">\[ f^*(s) = \mathcal{L}(f(x)) = E(e^{-sX}) = \int_{0}^{\infty} e^{-sx} f(x) \, dx, \quad (s > 0) \]</div>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Kuyruk Olasılığı ile Beklenen Değer (Geometrik Sezgi)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Genelde \(E(X) = \int x f(x) dx\) formülünü biliriz. Fakat \(X \ge 0\) olan pozitif değişkenler için (örneğin bir ampulün ömrü, arıza süresi, bekleme süresi):
+</p>
+<div class="math-display">\[ E(X) = \int_{0}^{\infty} P(X \ge x) \, dx \]</div>
+<p class="course-paragraph">
+şeklinde muhteşem bir alternatif formül vardır!  
+<strong>Anlamı:</strong> Bir cihazın ortalama ömrü (\(E(X)\)), o cihazın \(x\) süresinden fazla hayatta kalma olasılığı fonksiyonunun (\(S(x) = 1 - F(x)\)) altında kalan toplam alana eşittir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Kuyruk Olasılığı Teoreminin İspatı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X \ge 0\) sürekli rastgele değişkeni için \(E(X) = \int_{0}^{\infty} [1 - F(x)] dx\) olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm (Kısmi İntegrasyon İle):</strong>
+\(u = 1 - F(x) \implies du = -f(x)dx\) ve \(dv = dx \implies v = x\) alalım:
+</p>
+<div class="math-display">\[ \begin{aligned} \int_{0}^{\infty} [1 - F(x)] dx &= \left[ x(1 - F(x)) \right]_{0}^{\infty} - \int_{0}^{\infty} x (-f(x)) dx \notag \\
+    &= \left[ \lim_{x \to \infty} x(1 - F(x)) - 0 \right] + \int_{0}^{\infty} x f(x) dx \end{aligned} \]</div>
+<p class="course-paragraph">
+\(E(X) < \infty\) olduğunda sonsuzda \(x[1-F(x)] \to 0\) olduğundan sınır terimi sıfırlanır:
+</p>
+<div class="math-display">\[ \int_{0}^{\infty} P(X \ge x) \, dx = 0 + \int_{0}^{\infty} x f(x) \, dx = \boxed{E(X)} \]</div>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Kuyruk olasılığı fonksiyonu (Hayatta Kalma / Survival Eğrisi) altındaki alan doğrudan ortalamayı verir.</p>
+</div>
+<h2 id="2-hafta-h-zl-tekrar-ve-d-n-m-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 2. Hafta Hızlı Tekrar ve Dönüşüm Karşılaştırma Tablosu</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Dönüşüm</strong></th><th scope="col"><strong>Formül</strong></th><th scope="col"><strong>Tanım Kümesi</strong></th><th scope="col"><strong>Ne İşe Yarar / Temel Üstünlüğü</strong></th></tr></thead><tbody>
+<tr><td><strong>OÇF (PGF)</strong></td><td>\(G(t) = E(t^X)\)</td><td>Kesikli (\(X \in \mathbb{N}_0\))</td><td>\(t=0\)'da türev alarak \(P(X=k)\) olasılığını verir.</td></tr>
+<tr><td><strong>MÇF (MGF)</strong></td><td>\(M(t) = E(e^{tX})\)</td><td>Sonlu momentliler</td><td>\(t=0\)'da türev alarak \(E(X^k)\) momentlerini üretir.</td></tr>
+<tr><td><strong>Karakteristik (CF)</strong></td><td>\(\phi(t) = E(e^{itX})\)</td><td><strong>Her dağılım</strong></td><td>Her zaman vardır (\(|\phi(t)| \le 1\)); Cauchy gibi ağır kuyruklarda çalışır.</td></tr>
+<tr><td><strong>Laplace</strong></td><td>\(f^*(s) = E(e^{-sX})\)</td><td>Pozitif (\(X \ge 0\))</td><td>Güvenilirlik ve ömür analizlerinde integralleri basitleştirir.</td></tr>
+<tr><td><strong>Kuyruk Teoremi</strong></td><td>\(\int_0^\infty P(X \ge x) dx\)</td><td>Pozitif (\(X \ge 0\))</td><td>Yoğunluk yerine hayatta kalma fonksiyonundan \(E(X)\) bulur.</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 2. Haftada İncelenen Bütün Üreteç ve Dönüşüm Fonksiyonlarının Karşılaştırması</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-01.html" class="btn-secondary">⬅️ Hafta 1</a>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-03.html" class="btn-primary">Hafta 3 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1. Hafta: Momentler, Eşitsizlikler ve MÇF - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="active">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 1</span>
+        <h1 class="course-main-title">1. Hafta: Momentler, Eşitsizlikler ve MÇF</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu hafta <strong>Moment Kavramı (Orijine ve Ortalamaya Göre Momentler)</strong>, <strong>Çarpıklık ve Basıklık</strong>, <strong>Markov, Chebyshev ve Jensen Eşitsizlikleri</strong>, <strong>Moment Çıkaran Fonksiyon (MÇF)</strong>, <strong>Bağımsız Toplamlar ve Teklik Teoremi</strong>, <strong>Euler Gamma Fonksiyonu</strong> ve \(\Gamma(1/2) = \sqrt{\pi}\) eşitliğini inceler. Sezgisel açıklamalar, grafikler ve adım adım çözümler konuları pekiştirir.</div>
+<hr class="my-4"/>
+<h2 id="giri-ve-moment-kavram" class="section-title"><span class="title-anchor">§</span> Giriş ve Moment Kavramı</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Moment Nedir ve Neden İhtiyaç Duyarız?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir olasılık dağılımı (\(f(x)\)) elimizde sonsuz sayıda noktadan oluşan karmaşık bir eğri veya veri yığını olarak bulunur. Bu eğrinin tüm geometrik ve istatistiksel karakterini birkaç kritik sayı ile özetlemek isteriz:
+</p>
+<ul class="course-list">
+<li><strong>1. Moment (\(\mu\) - Ortalama):</strong> Dağılımın sayı doğrusundaki <strong>ağırlık merkezidir</strong>. Eğri homojen ağırlıklı bir tahterevalli olsaydı, parmağımızı tam nereye koyarsak dengede kalırdı? İşte bu denge noktası \(E(X)\)'tir.</li>
+<li><strong>2. Merkezsel Moment (\(\sigma^2\) - Varyans):</strong> Verilerin bu ağırlık merkezinden ne kadar uzağa saçıldığını, yani <strong>belirsizliğin ve riskin büyüklüğünü</strong> ölçer.</li>
+<li><strong>3. Moment (Çarpıklık / Skewness):</strong> Dağılımın simetrisini inceler. Kuyruk sağa doğru mu uzanıyor (pozitif çarpık), yoksa sola doğru mu (negatif çarpık)?</li>
+<li><strong>4. Moment (Basıklık / Kurtosis):</strong> Dağılımın tepe noktasının sivriliğini ve kuyrukların kalınlığını (uç değer riskini / black swan olaylarını) ölçer.</li>
+</ul>
+<p class="course-paragraph">
+Kısacası momentler, bir olasılık dağılımının boyunu, kilosunu ve karakteristik hatlarını belirleyen <strong>biyometrik kimlik kartıdır</strong>.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Moment Tanımları</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir \(X\) rastgele değişkeni için:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Orijine Göre \(k\). Moment (\(k\). Ham / Merkezsel Olmayan Moment - Raw Moment):</strong>
+<div class="math-display">\[ \mu'_k = E(X^k) = 
+        \begin{cases}
+            \sum_x x^k P(X = x), & \text{kesikli durumda} \\[0.5em]
+            \int_{-\infty}^{\infty} x^k f(x) \, dx, & \text{sürekli durumda}
+        \end{cases} \]</div>
+<p class="course-paragraph">
+    Özel olarak \(k=1\) için 1. ham moment kitle ortalamasını (\(\mu\)) verir:
+</p>
+<div class="math-display">\[ \mu'_1 = E(X) = \mu \]</div></li>
+<li><strong>\(k\). Merkezsel Moment (Central Moment):</strong>
+<p class="course-paragraph">
+    Ortalama (\(\mu\)) etrafındaki sapmaların kuvvetlerinin beklenen değeridir:
+</p>
+<div class="math-display">\[ \mu_k = E\left[(X - \mu)^k\right] = 
+        \begin{cases}
+            \sum_x (x - \mu)^k P(X = x), & \text{kesikli durumda} \\[0.5em]
+            \int_{-\infty}^{\infty} (x - \mu)^k f(x) \, dx, & \text{sürekli durumda}
+        \end{cases} \]</div>
+<p class="course-paragraph">
+    Özel olarak:
+</p>
+    <ul class="course-list">
+<li>\(k=1\) için: \(\mu_1 = E[X - \mu] = E(X) - \mu = 0\) (Ortalamadan sapmaların beklenen değeri daima sıfırdır).</li>
+<li>\(k=2\) için: \(\mu_2 = E\left[(X - \mu)^2\right] = V(X) = \sigma^2\) (Varyans).</li>
+</ul></li>
+</ol>
+  </div>
+</div>
+<h3 id="merkezsel-momentler-ile-ham-momentler-aras-ndaki-cebirsel-i-li-ki" class="subsection-title">Merkezsel Momentler ile Ham Momentler Arasındaki Cebirsel İlişki</h3>
+<p class="course-paragraph">
+Binom açılımı \((X - \mu)^k = \sum_{j=0}^k \binom{k}{j} X^j (-\mu)^{k-j}\) kullanılarak merkezsel momentler ham momentler cinsinden yazılabilir:
+</p>
+<div class="math-display">\[ \begin{aligned} \mu_2 &= E\left[(X - \mu)^2\right] = E(X^2 - 2\mu X + \mu^2) = E(X^2) - 2\mu E(X) + \mu^2 = \mu'_2 - (\mu'_1)^2 \\
+    \mu_3 &= E\left[(X - \mu)^3\right] = \mu'_3 - 3\mu'_2 \mu'_1 + 2(\mu'_1)^3 \\
+    \mu_4 &= E\left[(X - \mu)^4\right] = \mu'_4 - 4\mu'_3 \mu'_1 + 6\mu'_2 (\mu'_1)^2 - 3(\mu'_1)^4 \end{aligned} \]</div>
+<h3 id="standartla-t-r-lm-momentler-arp-kl-k-ve-bas-kl-k" class="subsection-title">Standartlaştırılmış Momentler: Çarpıklık ve Basıklık</h3>
+<ul class="course-list">
+<li><strong>Çarpıklık Katsayısı (Skewness - \(\alpha_3\)):</strong>
+<div class="math-display">\[ \alpha_3 = \frac{\mu_3}{\sigma^3} = \frac{E\left[(X - \mu)^3\right]}{\sigma^3} \]</div>
+<p class="course-paragraph">
+    \(\alpha_3 = 0\) olması simetriyi tek başına garanti etmez; sonlu üçüncü momenti olan simetrik dağılımlarda \(\alpha_3 = 0\)'dır. Pozitif ve negatif değerler sırasıyla sağa ve sola çarpıklıkla ilişkilidir, ancak dağılımın tamamı değerlendirilmelidir.</p>
+</li>
+<li><strong>Basıklık Katsayısı (Kurtosis - \(\alpha_4\)):</strong>
+<div class="math-display">\[ \alpha_4 = \frac{\mu_4}{\sigma^4} = \frac{E\left[(X - \mu)^4\right]}{\sigma^4} \]</div>
+<p class="course-paragraph">
+    Standart normal dağılım için \(\alpha_4 = 3\)'tür. Fazlalık basıklık \(\gamma_2 = \alpha_4 - 3\) olarak tanımlanır. \(\alpha_4\), özellikle uç değerleri güçlü biçimde ağırlıklandırır; \(\alpha_4 > 3\) veya \(\alpha_4 < 3\) olması tek başına eğrinin tepe sivriliğini ya da her kuyruk davranışını belirlemez.</p>
+</li>
+</ul>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Normal Dağılımın Ortalamasının Doğrudan İntegralle Hesaplanması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X \sim N(\mu, \sigma^2)\) dağılımına sahip sürekli bir rastgele değişkenin olasılık yoğunluk fonksiyonu:
+</p>
+<div class="math-display">\[ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2\right), \quad -\infty < x < \infty \]</div>
+<p class="course-paragraph">
+şeklindedir. \(E(X)\) beklenen değerini doğrudan integral tanımıyla hesaplayınız.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm Adımları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Beklenen değer tanımını yazalım:
+<div class="math-display">\[ E(X) = \int_{-\infty}^{\infty} x f(x) \, dx = \frac{1}{\sqrt{2\pi\sigma^2}} \int_{-\infty}^{\infty} x \, e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2} dx \]</div></li>
+<li>Standartlaştırma (\(z\)-dönüşümü) uygulayalım:
+<div class="math-display">\[ z = \frac{x - \mu}{\sigma} \implies x = \sigma z + \mu \implies dx = \sigma \, dz \]</div></li>
+<li>Bu değişken dönüşümünü integrale yerleştirelim (\(\sqrt{\sigma^2} = \sigma\) çarpanı diferansiyeldeki \(\sigma\) ile tam sadeleşir):
+<div class="math-display">\[ \begin{aligned} E(X) &= \frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^{\infty} (\sigma z + \mu) \, e^{-\frac{1}{2}z^2} (\sigma \, dz) \notag \\
+        &= \underbrace{\frac{\sigma}{\sqrt{2\pi}} \int_{-\infty}^{\infty} z \, e^{-\frac{1}{2}z^2} dz}_{I_1} + \underbrace{\mu \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}z^2} dz}_{I_2} \end{aligned} \]</div></li>
+<li><strong>\(I_2\) İntegralinin Hesabı:</strong>  
+<p class="course-paragraph">
+    Standart normal yoğunluk fonksiyonunun (\(N(0,1)\)) tüm reel eksendeki toplam alanı olasılık aksiyomları gereği 1'dir:
+</p>
+<div class="math-display">\[ \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}z^2} dz = 1 \implies I_2 = \mu \cdot 1 = \mu \]</div></li>
+<li><strong>\(I_1\) İntegrali ve Tek Fonksiyon Püf Noktası:</strong>  
+<p class="course-paragraph">
+    \(g(z) = z \, e^{-\frac{1}{2}z^2}\) fonksiyonunda \(z\) yerine \(-z\) yazalım:
+</p>
+<div class="math-display">\[ g(-z) = (-z) e^{-\frac{1}{2}(-z)^2} = -z e^{-\frac{1}{2}z^2} = -g(z) \]</div>
+<p class="course-paragraph">
+    \(g(z)\) bir <strong>tek (odd) fonksiyondur</strong>. Simetrik \([-\infty, \infty]\) aralığında mutlak integrallenebilir bir tek fonksiyonun negatif taraftaki alanı ile pozitif taraftaki alanı birbirini tam olarak sıfırlar:
+</p>
+<div class="math-display">\[ I_1 = \frac{\sigma}{\sqrt{2\pi}} \int_{-\infty}^{\infty} z e^{-\frac{1}{2}z^2} dz = 0 \]</div></li>
+</ol>
+<p class="course-paragraph">
+Sonuç olarak:
+</p>
+<div class="math-display">\[ E(X) = I_1 + I_2 = 0 + \mu = \mu \]</div>
+<p class="course-paragraph">
+bulunur.
+</p>
+  </div>
+</div>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Tek Fonksiyonların Simetrik Aralıktaki İntegrali</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Tek Fonksiyonların Simetrik Aralıktaki İntegrali:</strong>
+</p>
+<p class="course-paragraph">
+\(z e^{-z^2/2}\) tek fonksiyon olduğundan:
+</p>
+<div class="math-display">\[ I_1 = \frac{\sigma}{\sqrt{2\pi}}\int_{-\infty}^{\infty} z e^{-z^2/2}\,dz = 0. \]</div>
+  </div>
+</div>
+<figure class="week-chart-card">
+<canvas class="week-chart" data-chart="odd-integrand" width="900" height="360" role="img" aria-label="Tek fonksiyon z çarpı e üzeri eksi z kare bölü iki grafiği; sıfır etrafındaki alanlar birbirini götürür.">Tek fonksiyon grafiği: negatif ve pozitif alanlar eşit büyüklükte, zıt işaretlidir.</canvas>
+<figcaption class="table-caption"><strong>Grafik:</strong> \(g(z)=ze^{-z^2/2}\) tek fonksiyondur. Sıfırın solundaki ve sağındaki alanlar eşit büyüklükte, zıt işaretli olduğundan simetrik aralıktaki integrali sıfırdır.</figcaption>
+</figure>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olas-l-k-teorisinde-temel-e-itsizlikler" class="section-title"><span class="title-anchor">§</span> Olasılık Teorisinde Temel Eşitsizlikler</h2>
+<p class="course-paragraph">
+Momentler dağılım hakkında genel sınırlar çizmemize olanak tanır. Dağılımın tam fonksiyonel formunu bilmesek dahi sadece ortalama ve varyans bilgisiyle olasılık sınırları hesaplayabiliriz.
+</p>
+<h3 id="1-markov-e-itsizli-i" class="subsection-title">1. Markov Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Markov Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X\) negatif değer almayan (\(X \ge 0\)), sonlu beklenen değere sahip bir rastgele değişken ve \(a > 0\) olsun. Bu durumda:
+</p>
+<div class="math-display">\[ P(X \ge a) \le \frac{E(X)}{a} \]</div>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Markov Eşitsizliğinin Anlamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    "Bir şirkette çalışanların maaş ortalaması 20.000 TL ise, çalışanların en fazla kaçta kaçı 100.000 TL veya üzerinde kazanıyor olabilir?"  
+Markov kuralına göre: \(P(X \ge 100.000) \le \frac{20.000}{100.000} = \frac{1}{5} = \%20\).  
+Eğer çalışanların \%20'sinden fazlası 100.000 TL alsaydı, sadece onların getireceği pay bile ortalamayı 20.000 TL'nin üzerine fırlatırdı! Dağılım ne olursa olsun bu sınır aşılamaz.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Matematiksel İspat:</strong>
+\(X \ge 0\) sürekli bir değişken olsun (kesikli durum tamamen paraleldir):
+</p>
+<div class="math-display">\[ \begin{aligned} E(X) &= \int_0^\infty x f(x) \, dx = \int_0^a x f(x) \, dx + \int_a^\infty x f(x) \, dx \notag \\
+    &\ge \int_a^\infty x f(x) \, dx \quad (\text{çünkü } x \ge 0 \text{ ve } f(x) \ge 0 \text{ olduğundan } \int_0^a \ge 0) \notag \\
+    &\ge \int_a^\infty a f(x) \, dx \quad (\text{çünkü integral bölgesinde } x \ge a) \notag \\
+    &= a \int_a^\infty f(x) \, dx = a P(X \ge a) \end{aligned} \]</div>
+<p class="course-paragraph">
+Her iki taraf \(a > 0\)'a bölündüğünde \(P(X \ge a) \le \frac{E(X)}{a}\) elde edilir. \(\blacksquare\)
+</p>
+<h3 id="2-chebyshev-e-itsizli-i" class="subsection-title">2. Chebyshev Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Chebyshev Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Ortalaması \(\mu\) ve sonlu varyansı \(\sigma^2\) olan herhangi bir \(X\) rastgele değişkeni için, her \(\epsilon > 0\) için:
+</p>
+<div class="math-display">\[ P(|X - \mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2} \]</div>
+<p class="course-paragraph">
+Eğer \(\sigma > 0\) ise \(\epsilon = k\sigma\) alınarak, her \(k > 0\) için:
+</p>
+<div class="math-display">\[ P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2} \quad \iff \quad P(|X - \mu| < k\sigma) \ge 1 - \frac{1}{k^2} \]</div>
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Matematiksel İspat:</strong>
+\(Y = (X - \mu)^2\) rastgele değişkenini tanımlayalım. \(Y \ge 0\)'dır ve \(E(Y) = E[(X-\mu)^2] = \sigma^2\)'dir.  
+Şimdi \(Y\) değişkenine \(a = \epsilon^2 > 0\) için Markov eşitsizliğini uygulayalım:
+</p>
+<div class="math-display">\[ P(Y \ge \epsilon^2) \le \frac{E(Y)}{\epsilon^2} \implies P\left((X - \mu)^2 \ge \epsilon^2\right) \le \frac{\sigma^2}{\epsilon^2} \]</div>
+<p class="course-paragraph">
+\((X - \mu)^2 \ge \epsilon^2\) olayı ile \(|X - \mu| \ge \epsilon\) olayı tamamen özdeştir. Dolayısıyla:
+</p>
+<div class="math-display">\[ P(|X - \mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2} \]</div>
+<p class="course-paragraph">
+ispatlanır. \(\blacksquare\)
+</p>
+<figure class="week-chart-card">
+<canvas class="week-chart" data-chart="chebyshev" width="900" height="360" role="img" aria-label="Laplace yoğunluğu ve ortalamanın iki standart sapma çevresindeki aralığı.">Chebyshev grafiği: μ−2σ ile μ+2σ arasındaki olasılık en az yüzde 75'tir.</canvas>
+<figcaption class="table-caption"><strong>Grafik:</strong> Örnek olarak varyansı 1 olan Laplace yoğunluğu gösterilmiştir. Dağılım ne olursa olsun Chebyshev eşitsizliği \(\mu\pm2\sigma\) içinde en az \(\%75\), \(\mu\pm3\sigma\) içinde en az \(\%88.9\) olasılık verir; grafikteki eğri genel sınırın kendisi değildir.</figcaption>
+</figure>
+<h3 id="3-jensen-e-itsizli-i" class="subsection-title">3. Jensen Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Jensen Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X\), değerleri \(g\)'nin tanımlı olduğu bir aralıkta bulunan ve sonlu beklenen değere sahip bir rastgele değişken; \(g\) ise bu aralıkta dışbükey bir fonksiyon olsun. Beklenen değerler tanımlı olduğunda:
+</p>
+<div class="math-display">\[ E[g(X)] \ge g(E[X]) \]</div>
+<p class="course-paragraph">
+Eğer \(g(x)\) içbükey (concave, yani \(g''(x) \le 0\)) ise eşitsizlik yön değiştirir: \(E[g(X)] \le g(E[X])\).
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Jensen Eşitsizliği Neden Doğrudur? (Teğet Doğrusu İspatı)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(g\), \(\mu = E(X)\) noktasında türevlenebilir olsun. Dışbükey bir fonksiyonun grafiği bu noktadaki teğetinin üzerinde kalır. Teğet doğrusu \(L(x) = g(\mu) + g'(\mu)(x - \mu)\) olduğundan her \(x\) için \(g(x) \ge L(x)\):
+</p>
+<div class="math-display">\[ g(X) \ge g(\mu) + g'(\mu)(X - \mu) \]</div>
+<p class="course-paragraph">
+Her iki tarafın beklenen değerini alırsak:
+</p>
+<div class="math-display">\[ E[g(X)] \ge g(\mu) + g'(\mu) \underbrace{E(X - \mu)}_{0} = g(\mu) = g(E[X]) \]</div>
+<p class="course-paragraph">
+Türevlenebilirlik yoksa aynı sonuç, \(\mu\)'daki bir destek doğrusu kullanılarak elde edilir.
+</p>
+  </div>
+</div>
+<figure class="week-chart-card">
+<canvas class="week-chart" data-chart="jensen" width="900" height="360" role="img" aria-label="g(x)=x kare eğrisi ve μ=1 noktasındaki teğeti.">Jensen grafiği: g(x)=x² eğrisi, x=1 noktasındaki teğetinin üstünde kalır.</canvas>
+<figcaption class="table-caption"><strong>Grafik:</strong> \(g(x)=x^2\) eğrisi ve \(\mu=1\)'deki destek doğrusu gösterilmiştir; dışbükeylik nedeniyle \(g(x)\ge g(\mu)+g'(\mu)(x-\mu)\).</figcaption>
+</figure>
+<p class="course-paragraph">
+<strong>Jensen Eşitsizliğinin Doğrudan Sonuçları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>\(g(x) = x^2\) dışbükeydir \(\implies E(X^2) \ge [E(X)]^2 \iff V(X) = E(X^2) - [E(X)]^2 \ge 0\). (Varyansın negatif olamayacağının en temel ispatı!)</li>
+<li>\(X > 0\) neredeyse kesin ise \(g(x) = 1/x\) dışbükeydir ve \(E(1/X) \ge 1/E(X)\) (beklenen değerler tanımlı olduğunda).</li>
+<li>\(X > 0\) neredeyse kesin ise \(g(x) = -\ln(x)\) dışbükeydir ve \(E[\ln X] \le \ln(E[X])\) (beklenen değerler tanımlı olduğunda).</li>
+</ol>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="moment-karan-fonksiyon-m-f-mgf" class="section-title"><span class="title-anchor">§</span> Moment Çıkaran Fonksiyon (MÇF / MGF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Neden MÇF? (Türevle Moment Üreten Tohum Fonksiyon)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Her bir \(k\). moment için ayrı ayrı zorlu integraller (\(\int x^k f(x) dx\)) çözmek yerine, bütün momentleri bünyesinde bir katsayı olarak saklayan fonksiyon:
+</p>
+<div class="math-display">\[ M_X(t) = E(e^{tX}) \]</div>
+<p class="course-paragraph">
+şeklinde tanımlanır. Bu fonksiyondan \(t\)'ye göre \(k\) kez türev alıp \(t=0\) koyduğumuzda doğrudan \(k\). moment önümüze düşer.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Moment Çıkaran Fonksiyon Tanımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir \(X\) rastgele değişkeni için moment çıkaran fonksiyon \(M_X(t)\) şu şekilde tanımlanır:
+</p>
+<div class="math-display">\[ M_X(t) = E(e^{tX}) = 
+    \begin{cases}
+        \sum_x e^{tx} P(X = x), & \text{kesikli durumda} \\[0.5em]
+        \int_{-\infty}^{\infty} e^{tx} f(x) \, dx, & \text{sürekli durumda}
+    \end{cases} \]</div>
+<p class="course-paragraph">
+<em>Varlık Koşulu:</em> \(M_X(t)\)'nin var olması için \(0\) civarında en az bir \((-h, h)\) aralığında (\(h > 0\)) bu beklenen değerin sonlu olması şarttır.
+</p>
+  </div>
+</div>
+<h3 id="moment-karan-fonksiyonun-temel-zellikleri" class="subsection-title">Moment Çıkaran Fonksiyonun Temel Özellikleri</h3>
+<ol class="course-ordered-list">
+<li><strong>Sıfır Noktasındaki Değer:</strong>
+<div class="math-display">\[ M_X(0) = E(e^{0 \cdot X}) = E(1) = 1 \]</div>
+<p class="course-paragraph">
+    Bu özellik MÇF türetimlerinde sağlama yapmak için harika bir kontrol aracıdır.</p></li>
+<li><strong>Momentleri Türetme Mekanizması:</strong>
+<p class="course-paragraph">
+    \(e^u = \sum_{k=0}^\infty \frac{u^k}{k!}\) Maclaurin seri açılımından:
+</p>
+<div class="math-display">\[ M_X(t) = E\left[ \sum_{k=0}^\infty \frac{(tX)^k}{k!} \right] = \sum_{k=0}^\infty \frac{t^k}{k!} E(X^k) = 1 + t E(X) + \frac{t^2}{2!} E(X^2) + \dots + \frac{t^k}{k!} E(X^k) + \dots \]</div>
+<p class="course-paragraph">
+    Dolayısıyla \(t\)'ye göre \(k\). türev alınıp \(t=0\) yazıldığında:
+</p>
+<div class="math-display">\[ \left. \frac{d^k M_X(t)}{dt^k} \right|_{t=0} = E(X^k) = \mu'_k \]</div></li>
+<li><strong>Doğrusal Dönüşüm Kuralı:</strong>
+<p class="course-paragraph">
+    Eğer \(Y = aX + b\) ise (\(a, b \in \mathbb{R}\)):
+</p>
+<div class="math-display">\[ M_Y(t) = E(e^{t(aX+b)}) = E(e^{bt} e^{(at)X}) = e^{bt} E(e^{(at)X}) = e^{bt} M_X(at) \]</div></li>
+<li><strong>Teklik Teoremi (Uniqueness Theorem):</strong>
+<p class="course-paragraph">
+    Eğer iki rastgele değişkenin bir \((-h, h)\) aralığında MÇF'leri eşitse (\(M_X(t) = M_Y(t)\)), bu iki değişkenin kitle olasılık dağılımları birebir aynıdır (\(F_X(x) = F_Y(x)\)). MÇF bir dağılımın genetik parmak izidir.</p></li>
+</ol>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Standart Normal \(N(0,1)\) ve Genel Normal \(N(\mu, \sigma^2)\) MÇF'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Adım 1: Standart Normal \(Z \sim N(0,1)\) için:</strong>
+</p>
+<div class="math-display">\[ \begin{aligned} M_Z(t) &= E(e^{tZ}) = \int_{-\infty}^{\infty} e^{tz} \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}} dz = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{1}{2}(z^2 - 2tz)} dz \notag \\
+    &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{1}{2}[(z-t)^2 - t^2]} dz = e^{\frac{t^2}{2}} \underbrace{\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{(z-t)^2}{2}} dz}_{1} = e^{\frac{t^2}{2}} \end{aligned} \]</div>
+<p class="course-paragraph">
+<strong>Adım 2: Genel Normal \(X = \sigma Z + \mu \sim N(\mu, \sigma^2)\) için Doğrusal Dönüşümle:</strong>  
+Doğrusal dönüşüm kuralı \(M_{aZ+b}(t) = e^{bt} M_Z(at)\) kullanılarak integral çözmeden anında:
+</p>
+<div class="math-display">\[ \boxed{M_X(t) = e^{\mu t} M_Z(\sigma t) = e^{\mu t} e^{\frac{(\sigma t)^2}{2}} = \exp\left( \mu t + \frac{1}{2}\sigma^2 t^2 \right)} \]</div>
+<p class="course-paragraph">
+bulunur.
+</p>
+  </div>
+</div>
+<h3 id="k-m-lan-karan-fonksiyon-cumulant-generating-function" class="subsection-title">Kümülan Çıkaran Fonksiyon (Cumulant Generating Function)</h3>
+<p class="course-paragraph">
+MÇF'nin doğal logaritması <strong>Kümülan Çıkaran Fonksiyon</strong> olarak adlandırılır:
+</p>
+<div class="math-display">\[ K_X(t) = \ln M_X(t) \]</div>
+<p class="course-paragraph">
+Bu fonksiyon özellikle varyans ve yüksek momentlerin hesabında türev işlemlerini olağanüstü kolaylaştırır:
+</p>
+<div class="math-display">\[ \begin{aligned} K'_X(t) &= \frac{M'_X(t)}{M_X(t)} \implies K'_X(0) = \frac{M'_X(0)}{M_X(0)} = \frac{E(X)}{1} = \mu \\
+    K''_X(t) &= \frac{M''_X(t) M_X(t) - [M'_X(t)]^2}{[M_X(t)]^2} \implies K''_X(0) = \frac{E(X^2) \cdot 1 - [E(X)]^2}{1^2} = \sigma^2 \end{aligned} \]</div>
+<p class="course-paragraph">
+Normal dağılım için \(K_X(t) = \ln\left( e^{\mu t + \frac{1}{2}\sigma^2 t^2} \right) = \mu t + \frac{1}{2}\sigma^2 t^2\) olur.  
+Görüldüğü üzere \(K'_X(0) = \mu\) ve \(K''_X(0) = \sigma^2\) anında çıkar!
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="bile-ik-m-f-ba-ms-zl-k-ve-toplamlar-n-da-l-m" class="section-title"><span class="title-anchor">§</span> Bileşik MÇF, Bağımsızlık ve Toplamların Dağılımı</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Bileşik Moment Çıkaran Fonksiyon</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(\underline{X} = (X_1, X_2, \dots, X_n)\) sürekli rastgele değişkenler vektörü ve ortak olasılık yoğunluğu \(f(x_1, \dots, x_n)\) olsun:
+</p>
+<div class="math-display">\[ M_{\underline{X}}(t_1, \dots, t_n) = E\left( e^{t_1 X_1 + \dots + t_n X_n} \right) = \int_{-\infty}^\infty \dots \int_{-\infty}^\infty e^{\sum_{i=1}^n t_i x_i} f(x_1, \dots, x_n) dx_1 \dots dx_n \]</div>
+  </div>
+</div>
+<h3 id="ba-ms-zl-k-durumu" class="subsection-title">Bağımsızlık Durumu</h3>
+<p class="course-paragraph">
+Eğer \(X_1, \dots, X_n\) rastgele değişkenleri bağımsız ise ortak yoğunluk marjinal yoğunlukların çarpımıdır: \(f(x_1,\dots,x_n) = \prod_{i=1}^n f_{X_i}(x_i)\).  
+Bu durumda bileşik MÇF, marjinal MÇF'lerin basit bir çarpımına ayrışır:
+</p>
+<div class="math-display">\[ M_{\underline{X}}(t_1, \dots, t_n) = \prod_{i=1}^n M_{X_i}(t_i) \]</div>
+<h3 id="ba-ms-z-de-i-kenlerin-toplam" class="subsection-title">Bağımsız Değişkenlerin Toplamı</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Toplamın MÇF Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, X_2, \dots, X_n\) karşılıklı bağımsız rastgele değişkenler ve toplamları \(Y = \sum_{i=1}^n X_i\) olsun:
+</p>
+<div class="math-display">\[ M_Y(t) = E(e^{tY}) = E\left(e^{t \sum X_i}\right) = E\left( \prod_{i=1}^n e^{t X_i} \right) = \prod_{i=1}^n E(e^{t X_i}) = \prod_{i=1}^n M_{X_i}(t) \]</div>
+<p class="course-paragraph">
+Eğer bu değişkenler bağımsız ve özdeş dağılımlı (i.i.d.) ise:
+</p>
+<div class="math-display">\[ M_Y(t) = \left[ M_X(t) \right]^n \]</div>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Bağımsız Poisson Değişkenlerinin Toplamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1 \sim \text{Poisson}(\lambda_1)\) ve \(X_2 \sim \text{Poisson}(\lambda_2)\) bağımsız olsun. \(Y = X_1 + X_2\)'nin dağılımını MÇF yöntemiyle bulunuz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir Poisson(\(\lambda\)) değişkeninin MÇF'si:
+<div class="math-display">\[ \begin{aligned} M_X(t) &= E(e^{tX}) = \sum_{x=0}^\infty e^{tx} \frac{e^{-\lambda}\lambda^x}{x!} = e^{-\lambda} \sum_{x=0}^\infty \frac{(\lambda e^t)^x}{x!} \notag \\
+        &= e^{-\lambda} e^{\lambda e^t} = \exp\left( \lambda(e^t - 1) \right) \end{aligned} \]</div></li>
+<li>Bağımsız toplamın MÇF'si:
+<div class="math-display">\[ \begin{aligned} M_Y(t) &= M_{X_1}(t) \cdot M_{X_2}(t) = \exp\left(\lambda_1(e^t - 1)\right) \cdot \exp\left(\lambda_2(e^t - 1)\right) \notag \\
+        &= \exp\left( (\lambda_1 + \lambda_2)(e^t - 1) \right) \end{aligned} \]</div></li>
+<li><strong>Teklik Teoremi:</strong> Bu ifade parametresi \((\lambda_1 + \lambda_2)\) olan bir Poisson MÇF'sidir. Dolayısıyla:
+<div class="math-display">\[ \boxed{X_1 + X_2 \sim \text{Poisson}(\lambda_1 + \lambda_2)} \]</div></li>
+</ol>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Üstel Dağılımlı Değişkenlerin Toplamı ve Gamma Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, \dots, X_n \overset{\text{i.i.d.}}{\sim} \text{Üstel}(\lambda)\) olsun: \(f(x) = \lambda e^{-\lambda x}, \; x > 0\). \(Y = \sum_{i=1}^n X_i\)'nin dağılımını belirleyiniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir üstel değişkenin MÇF'si:
+<div class="math-display">\[ M_X(t) = \int_0^\infty e^{tx} \lambda e^{-\lambda x} dx = \lambda \int_0^\infty e^{-(\lambda - t)x} dx = \frac{\lambda}{\lambda - t} = \left( 1 - \frac{t}{\lambda} \right)^{-1}, \quad (t < \lambda) \]</div></li>
+<li>\(n\) bağımsız değişkenin toplamı için:
+<div class="math-display">\[ M_Y(t) = [M_X(t)]^n = \left( 1 - \frac{t}{\lambda} \right)^{-n} = \left( \frac{\lambda}{\lambda - t} \right)^n \]</div></li>
+<li>Bu formül şekil parametresi \(n\) ve oran parametresi \(\lambda\) olan <strong>Gamma Dağılımı</strong>'nın MÇF'sidir:
+<div class="math-display">\[ \boxed{Y = \sum_{i=1}^n X_i \sim \text{Gamma}(n, \lambda)} \]</div></li>
+</ol>
+  </div>
+</div>
+<figure class="week-chart-card">
+<canvas class="week-chart" data-chart="gamma-sum" width="900" height="360" role="img" aria-label="Üstel değişkenlerin toplamı için şekil parametresi 1, 2 ve 4 olan Gamma yoğunlukları.">Gamma yoğunlukları: şekil parametresi büyüdükçe dağılımın modu sağa kayar.</canvas>
+<figcaption class="table-caption"><strong>Grafik:</strong> Oranı \(\lambda=1\) olan \(\text{Gamma}(n,1)\) yoğunlukları karşılaştırılmıştır. \(n=1,2,4\) için toplam dağılımın modu sağa kayar.</figcaption>
+</figure>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="gamma-fonksiyonu-ve-euler-i-ntegrali" class="section-title"><span class="title-anchor">§</span> Gamma Fonksiyonu ve Euler İntegrali</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Gamma Fonksiyonu Nedir?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Gamma fonksiyonu, faktöriyel kavramının tam sayılardan tüm pozitif reel ve karmaşık sayılara genelleştirilmiş halidir:
+</p>
+<ul class="course-list">
+<li>Pozitif tam sayılar için: \(\Gamma(n) = (n-1)!\) (Örn: \(\Gamma(4) = 3! = 6\), \(\Gamma(1) = 0! = 1\)).</li>
+<li>Peki kesirli bir sayının faktöriyeli nedir? Örneğin \(\Gamma(1/2) = \sqrt{\pi}\) çıkar. Bu \(\sqrt{\pi}\) sabiti, normal dağılımın ve Ki-Kare dağılımlarının kalbindeki temel normalize edicidir.</li>
+</ul>
+  </div>
+</div>
+<p class="course-paragraph">
+Euler Gamma fonksiyonu şu integral ile tanımlanır:
+</p>
+<div class="math-display">\[ \Gamma(\alpha) = \int_{0}^{\infty} x^{\alpha - 1} e^{-x} \, dx, \quad (\alpha > 0) \]</div>
+<p class="course-paragraph">
+Ölçek parametresi \(\lambda > 0\) eklendiğinde genel Gamma integrali elde edilir:
+</p>
+<div class="math-display">\[ \int_{0}^{\infty} x^{\alpha - 1} e^{-\lambda x} \, dx = \frac{\Gamma(\alpha)}{\lambda^\alpha} \]</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Gamma Fonksiyonunun Yineleme Bağıntısı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Gamma Fonksiyonunun Yineleme Bağıntısı:</strong>
+</p>
+<ul class="course-list">
+<li>
+<div class="math-display">\[ \boxed{\Gamma(n) = (n-1)\Gamma(n-1)} \quad \text{veya} \quad \boxed{\Gamma(n+1) = n\Gamma(n)} \]</div></li>
+<li>
+<p class="course-paragraph">
+Kısmi integrasyonla:
+</p>
+<div class="math-display">\[ \begin{aligned} \Gamma(n) &= \int_0^\infty x^{n-1} e^{-x} dx \quad \left(u = x^{n-1} \implies du = (n-1)x^{n-2}dx, \; dv = e^{-x}dx \implies v = -e^{-x}\right) \notag \\
+        &= \underbrace{\left[ -x^{n-1} e^{-x} \right]_0^\infty}_{0} + (n-1) \int_0^\infty x^{n-2} e^{-x} dx = (n-1)\Gamma(n-1) \end{aligned} \]</div>
+<p class="course-paragraph">
+Pozitif tam sayılar için bu bağıntı \(\Gamma(n)=(n-1)!\) sonucunu verir.</p></li>
+</ul>
+  </div>
+</div>
+<h3 id="kesirli-de-erlerin-hesaplanmas" class="subsection-title">Kesirli Değerlerin Hesaplanması</h3>
+<p class="course-paragraph">
+Yineleme bağıntısı \(\Gamma(\alpha+1) = \alpha \Gamma(\alpha)\) kullanılarak:
+</p>
+<div class="math-display">\[ \begin{aligned} \Gamma\left(\frac{3}{2}\right) &= \frac{1}{2} \Gamma\left(\frac{1}{2}\right) = \frac{\sqrt{\pi}}{2} \\
+    \Gamma\left(\frac{5}{2}\right) &= \frac{3}{2} \Gamma\left(\frac{3}{2}\right) = \frac{3}{2} \cdot \frac{\sqrt{\pi}}{2} = \frac{3\sqrt{\pi}}{4} \\
+    \Gamma\left(\frac{7}{2}\right) &= \frac{5}{2} \Gamma\left(\frac{5}{2}\right) = \frac{15\sqrt{\pi}}{8} \end{aligned} \]</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="haftal-k-dev-ve-2-farkl-yoldan-detayl-z-m" class="section-title"><span class="title-anchor">§</span> Haftalık Ödev ve 2 Farklı Yoldan Detaylı Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: \(\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}\) Eşitliğinin Gösterilmesi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Problem:</strong> \(\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}\) olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>1. Yöntem (Standart Normal Dağılım Yardımıyla):</strong>
+Standart normal yoğunluğun simetrisi gereği:
+</p>
+<div class="math-display">\[ \int_{0}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}} dx = \frac{1}{2} \]</div>
+<p class="course-paragraph">
+\(u = \frac{x^2}{2}\) değişken dönüşümü yapalım:
+</p>
+<div class="math-display">\[ x = \sqrt{2} u^{1/2} \implies dx = \frac{\sqrt{2}}{2} u^{-1/2} du = \frac{1}{\sqrt{2}} u^{-1/2} du \]</div>
+<p class="course-paragraph">
+İntegrale yerleştirelim:
+</p>
+<div class="math-display">\[ \begin{aligned} \int_{0}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-u} \left( \frac{1}{\sqrt{2}} u^{-1/2} du \right) &= \frac{1}{2} \notag \\
+    \frac{1}{2\sqrt{\pi}} \int_{0}^{\infty} u^{\frac{1}{2} - 1} e^{-u} du &= \frac{1}{2} \notag \\
+    \frac{1}{\sqrt{\pi}} \Gamma\left(\frac{1}{2}\right) = 1 &\implies \boxed{\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}} \end{aligned} \]</div>
+<p class="course-paragraph">
+<br/>
+<strong>2. Yöntem (Kutupsal Koordinatlarla Çift Katlı İntegral Yolu):</strong>  
+Tanımdan: \(\Gamma(1/2) = \int_0^\infty t^{-1/2} e^{-t} dt\). \(t = y^2 \implies dt = 2y \, dy\) dönüşümüyle:
+</p>
+<div class="math-display">\[ \Gamma\left(\frac{1}{2}\right) = 2 \int_0^\infty e^{-y^2} dy \]</div>
+<p class="course-paragraph">
+Aynı integrali \(x\) değişkeniyle çarpalım:
+</p>
+<div class="math-display">\[ \left[ \Gamma\left(\frac{1}{2}\right) \right]^2 = \left( 2 \int_0^\infty e^{-x^2} dx \right) \left( 2 \int_0^\infty e^{-y^2} dy \right) = 4 \int_0^\infty \int_0^\infty e^{-(x^2 + y^2)} dx \, dy \]</div>
+<p class="course-paragraph">
+1. bölgede kutupsal koordinatlara (\(x = r\cos\theta, y = r\sin\theta, dx dy = r dr d\theta, r \in [0, \infty), \theta \in [0, \pi/2]\)) geçelim:
+</p>
+<div class="math-display">\[ \left[ \Gamma\left(\frac{1}{2}\right) \right]^2 = 4 \left( \int_0^{\pi/2} d\theta \right) \left( \int_0^\infty r e^{-r^2} dr \right) = 4 \left( \frac{\pi}{2} \right) \left[ -\frac{1}{2} e^{-r^2} \right]_0^\infty = 2\pi \left(\frac{1}{2}\right) = \pi \]</div>
+<p class="course-paragraph">
+Karekök alındığında:
+</p>
+<div class="math-display">\[ \boxed{\Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}} \]</div>
+<p class="course-paragraph">
+elde edilir.
+</p>
+  </div>
+</div>
+<figure class="week-chart-card">
+<canvas class="week-chart" data-chart="gamma-integrand" width="900" height="360" role="img" aria-label="u üzeri eksi bir bölü iki çarpı e üzeri eksi u integrandı; sıfıra yaklaşırken yükselir ancak alanı sonludur.">Gamma integrandı u=0 yakınında sonsuza gider, ancak altındaki toplam alan sonludur.</canvas>
+<figcaption class="table-caption"><strong>Grafik:</strong> \(u^{-1/2}e^{-u}\), \(u\to0^+\) iken sonsuza gider; buna rağmen tekil nokta integrallenebilir ve toplam integral \(\Gamma(1/2)=\sqrt{\pi}\)'dir.</figcaption>
+</figure>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="1-hafta-h-zl-tekrar-ve-kar-la-t-rma-kart" class="section-title"><span class="title-anchor">§</span> 1. Hafta Hızlı Tekrar ve Karşılaştırma Kartı</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Kavram / Teorem</strong></th><th scope="col"><strong>Matematiksel Formül</strong></th><th scope="col"><strong>Sezgisel Anlamı / Ne İşe Yarar?</strong></th></tr></thead><tbody>
+<tr><td>1. Ham Moment</td><td>\(\mu'_1 = E(X)\)</td><td>Dağılımın sayı doğrusundaki ağırlık merkezi (Ortalama)</td></tr>
+<tr><td>2. Merkezsel Moment</td><td>\(\mu_2 = E[(X-\mu)^2] = \sigma^2\)</td><td>Ağırlık merkezinden saçılma ve belirsizlik ölçüsü (Varyans)</td></tr>
+<tr><td>Markov Eşitsizliği</td><td>\(P(X \ge a) \le \frac{E(X)}{a}\) (\(X \ge 0\))</td><td>Sadece ortalamayı bilerek kuyruk olasılığına evrensel üst sınır</td></tr>
+<tr><td>Chebyshev Eşitsizliği</td><td>\(P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}\)</td><td>Dağılımın şekli ne olursa olsun, \(\mu \pm 2\sigma\) içinde en az \(\%75\) olasılık vardır</td></tr>
+<tr><td>Jensen Eşitsizliği</td><td>\(E[g(X)] \ge g(E[X])\) (\(g\) dışbükey)</td><td>Dışbükey fonksiyonun beklenen değeri, beklenen değerin fonksiyonundan küçük olamaz</td></tr>
+<tr><td>MÇF Tanımı</td><td>\(M_X(t) = E(e^{tX})\)</td><td>Bütün momentleri türev katsayısı olarak saklayan tohum fonksiyon</td></tr>
+<tr><td>\(k\). Moment Çıkarma</td><td>\(E(X^k) = \left. \frac{d^k M_X(t)}{dt^k} \right|_{t=0}\)</td><td>İntegralsiz, yalnızca \(k\) kez türev alarak moment bulma</td></tr>
+<tr><td>Doğrusal Dönüşüm</td><td>\(M_{aX+b}(t) = e^{bt} M_X(at)\)</td><td>Değişken ölçeklendiğinde ve kaydırıldığında MÇF'nin davranışı</td></tr>
+<tr><td>Bağımsız Toplam</td><td>\(M_{\sum X_i}(t) = \prod M_{X_i}(t)\)</td><td>Zor konvolüsyon integrallerini basit çarpmaya dönüştürür</td></tr>
+<tr><td>Teklik Teoremi</td><td>\(M_X(t) = M_Y(t) \implies F_X = F_Y\)</td><td>MÇF dağılımın genetik parmak izidir; tek bir dağılımı temsil eder</td></tr>
+<tr><td>Gamma İndirgeme</td><td>\(\Gamma(n) = (n-1)\Gamma(n-1)\)</td><td>Faktöriyelin reel genellemesi: Tam sayılarda \(\Gamma(n) = (n-1)!\)</td></tr>
+<tr><td>Kritik Özel Değer</td><td>\(\Gamma(1/2) = \sqrt{\pi}\)</td><td>Normal ve Ki-Kare dağılımlarının temel normalize edici sabiti</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 1. Haftanın Temel Formül ve Teorem Referans Kartı</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <span></span>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-02.html" class="btn-primary">Hafta 2 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-01-charts.js"></script>
+</body>
+</html>

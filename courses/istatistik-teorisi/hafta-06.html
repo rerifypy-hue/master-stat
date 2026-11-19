@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6. Hafta: Nokta Tahmini ve Yansızlık Kriteri - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="active">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 6</span>
+        <h1 class="course-main-title">6. Hafta: Nokta Tahmini ve Yansızlık Kriteri</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 6. haftasında yer alan <strong>Olabilirlik İlkesi</strong>, <strong>En Çok Olabilirlik Tahmini (MLE)</strong>, <strong>Zehna Değişmezlik Teoremi</strong>, <strong>Skor Fonksiyonu</strong>, <strong>Fisher Bilgisi</strong> ve <strong>Rao-Cramér Alt Sınırı (CRLB / UMVUE)</strong> konularını içermektedir. Nokta tahmininin bu en kritik araçları sezgisel benzetmeler ve tam çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-6-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 6. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Nokta Tahmini ve Sherlock Holmes Mantığı (MLE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Olasılık teorisinde kitle parametresi (\(\theta\)) bilinir ve *"elimdeki torbadan kırmızı bilye gelme olasılığı nedir?"* sorusu sorulur.  
+İstatistik teorisinde ise durum tam tersidir: **Torbanın içini bilmiyoruz!**  
+Elimizde sadece torbadan çekilmiş bir örneklem (\(x_1, x_2, \dots, x_n\)) vardır.  
+Soru şudur: *"Mevcut veriyi üretmiş olma ihtimali en yüksek olan \(\theta\) parametresi hangisidir?"*  
+İşte bu soruya cevap veren yöntem <strong>En Çok Olabilirlik Yöntemi (MLE)</strong>'dir.  
+Peki bulduğumuz tahmin edicinin "en iyisi" olduğunu nereden biliriz? Evrende yapılabilecek en kusursuz tahminin varyansı için konulmuş bir fiziksel alt sınır vardır; buna da **Rao-Cramér Alt Sınırı (CRLB)** denir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olabilirlik-ve-en-ok-olabilirlik-y-ntemi-mle" class="section-title"><span class="title-anchor">§</span> Olabilirlik ve En Çok Olabilirlik Yöntemi (MLE)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olabilirlik ve Log-Olabilirlik Fonksiyonu</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, X_2, \dots, X_n \overset{\text{i.i.d.}}{\sim} f_\theta(x)\) olsun. Örneklem verisi \(x_1, \dots, x_n\) toplandıktan sonra, parametre \(\theta\)'nın <strong>Olabilirlik Fonksiyonu</strong>:
+</p>
+<div class="math-display">\[ L(\theta) = L(\theta; x_1, \dots, x_n) = \prod_{i=1}^n f_\theta(x_i) \]</div>
+<p class="course-paragraph">
+ve çarpımları toplama çevirerek türev almayı kolaylaştıran <strong>Log-Olabilirlik Fonksiyonu</strong>:
+</p>
+<div class="math-display">\[ \ell(\theta) = \ln L(\theta) = \sum_{i=1}^n \ln f_\theta(x_i) \]</div>
+<p class="course-paragraph">
+şeklinde tanımlanır.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: En Çok Olabilirlik Tahmin Edicisi (MLE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Gözlenen veriyi üretme olasılığını (olabilirliğini) maksimize eden parametre değeri \(\hat{\theta}_{\text{MLE}}\)'dir:
+</p>
+<div class="math-display">\[ \hat{\theta}_{\text{MLE}} = \arg\max_{\theta \in \Theta} L(\theta) = \arg\max_{\theta \in \Theta} \ell(\theta) \]</div>
+<p class="course-paragraph">
+\(\ell(\theta)\) fonksiyonu içbükey (konkav) ve türevlenebilir ise en çok olabilirlik denklemi (skor denklemi):
+</p>
+<div class="math-display">\[ \frac{d\ell(\theta)}{d\theta} = 0 \]</div>
+<p class="course-paragraph">
+ve tepe noktasını doğrulamak için ikinci mertebe koşulu \(\left. \frac{d^2\ell(\theta)}{d\theta^2} \right|_{\theta = \hat{\theta}} < 0\)'dır.
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Log-olabilirlik fonksiyonu ve tepe noktasında eğimin sıfır olduğu (\(\ell'(\theta)=0\)) MLE çözümü.</p>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: \(N(\theta, 1)\) Dağılımında \(\theta\)'nın MLE'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(f(x_i) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}(x_i - \theta)^2}\).
+</p>
+<div class="math-display">\[ \ell(\theta) = -\frac{n}{2} \ln(2\pi) - \frac{1}{2} \sum_{i=1}^n (x_i - \theta)^2 \]</div>
+<p class="course-paragraph">
+Türevi sıfıra eşitleyelim:
+</p>
+<div class="math-display">\[ \frac{d\ell(\theta)}{d\theta} = \sum_{i=1}^n (x_i - \theta) = 0 \implies \sum_{i=1}^n x_i - n\theta = 0 \implies \boxed{\hat{\theta}_{\text{MLE}} = \bar{X}_n} \]</div>
+<p class="course-paragraph">
+İkinci türev \(\frac{d^2\ell}{d\theta^2} = -n < 0\) olduğundan yerel ve mutlak tepe noktasıdır.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: \(\text{Bernoulli}(p)\) Dağılımında \(p\)'nin MLE'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(P(X=x) = p^x (1-p)^{1-x}, \; x \in \{0, 1\}\). Başarı sayısı \(Y = \sum_{i=1}^n X_i\) olsun:
+</p>
+<div class="math-display">\[ L(p) = p^Y (1-p)^{n-Y} \implies \ell(p) = Y \ln(p) + (n-Y) \ln(1-p) \]</div>
+<p class="course-paragraph">
+Türev:
+</p>
+<div class="math-display">\[ \frac{d\ell(p)}{dp} = \frac{Y}{p} - \frac{n-Y}{1-p} = 0 \implies Y(1-p) = p(n-Y) \implies Y = np \implies \boxed{\hat{p}_{\text{MLE}} = \frac{Y}{n} = \bar{X}_n} \]</div>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="mle-nin-temel-zellikleri" class="section-title"><span class="title-anchor">§</span> MLE'nin Temel Özellikleri</h2>
+<h3 id="1-de-i-mezlik-zelli-i-invariance-property-zehna-teoremi" class="subsection-title">1. Değişmezlik Özelliği (Invariance Property - Zehna Teoremi)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Zehna Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Eğer \(\hat{\theta}\), \(\theta\) parametresinin en çok olabilirlik tahmin edicisi ise, herhangi bir \(g(\theta)\) fonksiyonunun en çok olabilirlik tahmin edicisi de doğrudan:
+</p>
+<div class="math-display">\[ \boxed{\widehat{g(\theta)}_{\text{MLE}} = g(\hat{\theta}_{\text{MLE}})} \]</div>
+<p class="course-paragraph">
+olur.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Zehna Teoreminin Muazzam Pratikliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Yansız tahmin ediciler fonksiyon dönüşümlerinde bozulur: \(\hat{\theta}\) yansız olsa bile \(g(\hat{\theta})\) genellikle \(g(\theta)\) için yansız <strong>değildir</strong> (\(E[g(\hat{\theta})] \neq g(E[\hat{\theta}])\)).  
+Fakat MLE'de böyle bir dert yoktur! Örneğin \(\lambda\)'nın MLE'si \(\bar{X}\) ise; \(\lambda^2\)'nin MLE'si doğrudan \(\bar{X}^2\), \(e^{-\lambda}\)'nın MLE'si ise doğrudan \(e^{-\bar{X}}\) olur.
+</p>
+  </div>
+</div>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Alıştırma: Dönüşüm Parametresi İçin MLE ve Yansızlık</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, \dots, X_n \overset{\text{i.i.d.}}{\sim} \text{Poisson}(\lambda)\) olsun. \(\eta = g(\lambda) = e^{-2\lambda}\) parametresinin en çok olabilirlik tahmin edicisini bulunuz ve yansızlığını inceleyiniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Detaylı Çözüm Adımları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Önce ana parametre \(\lambda\)'nın MLE'sini bulalım:
+<div class="math-display">\[ \begin{aligned} L(\lambda) &= \frac{e^{-n\lambda} \lambda^{\sum x_i}}{\prod x_i!} \implies \ell(\lambda) = -n\lambda + \left(\sum_{i=1}^n x_i\right) \ln\lambda - \ln\left(\prod x_i!\right) \notag \\
+        \frac{d\ell(\lambda)}{d\lambda} &= -n + \frac{\sum x_i}{\lambda} = 0 \implies \hat{\lambda}_{\text{MLE}} = \bar{X}_n \end{aligned} \]</div></li>
+<li>Zehna değişmezlik özelliği gereğince \(\eta = e^{-2\lambda}\)'nın MLE'si:
+<div class="math-display">\[ \boxed{\hat{\eta}_{\text{MLE}} = e^{-2\hat{\lambda}} = e^{-2\bar{X}_n}} \]</div></li>
+<li><strong>Yansızlık İncelemesi:</strong>  
+<p class="course-paragraph">
+    Beklenen değerini hesaplayalım (\(Y = \sum X_i \sim \text{Poisson}(n\lambda)\)):
+</p>
+<div class="math-display">\[ \begin{aligned} E(\hat{\eta}) &= E\left( e^{-\frac{2}{n}\sum_{i=1}^n X_i} \right) = \left[ M_X\left(-\frac{2}{n}\right) \right]^n = \left[ e^{\lambda(e^{-2/n} - 1)} \right]^n = \exp\left( n\lambda(e^{-2/n} - 1) \right) \end{aligned} \]</div>
+<p class="course-paragraph">
+    \(n(e^{-2/n} - 1) \neq -2\) olduğundan sonlu örneklemde \(\hat{\eta}\) <strong>yansız değildir</strong>.  
+    Ancak \(n \to \infty\) iken Taylor açılımından \(n(e^{-2/n} - 1) \to -2\) olur:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} E(\hat{\eta}) = e^{-2\lambda} = \eta \]</div>
+<p class="course-paragraph">
+    Yani tahmin edici <strong>asemptotik olarak yansız ve tutarlıdır</strong>.</li>
+</p>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="fisher-bilgisi-ve-rao-cram-r-e-itsizli-i-crlb" class="section-title"><span class="title-anchor">§</span> Fisher Bilgisi ve Rao-Cramér Eşitsizliği (CRLB)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Skor Fonksiyonu ve Fisher Bilgisi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Tek bir gözlem \(X \sim f_\theta(x)\) için <strong>Skor Fonksiyonu</strong>:
+</p>
+<div class="math-display">\[ U_\theta(X) = \frac{d}{d\theta} \ln f_\theta(X) \]</div>
+<p class="course-paragraph">
+Regülerlik koşulları altında skor fonksiyonunun beklenen değeri sıfırdır:
+</p>
+<div class="math-display">\[ E_\theta[U_\theta(X)] = 0 \]</div>
+<p class="course-paragraph">
+<strong>Fisher Bilgisi (Fisher Information)</strong>, bu skor fonksiyonunun varyansıdır:
+</p>
+<div class="math-display">\[ \boxed{I(\theta) = V_\theta(U_\theta(X)) = E_\theta\left[ \left( \frac{d}{d\theta} \ln f_\theta(X) \right)^2 \right] = - E_\theta\left[ \frac{d^2}{d\theta^2} \ln f_\theta(X) \right]} \]</div>
+<p class="course-paragraph">
+\(n\) boyutlu bağımsız örneklem için toplam bilgi: \(I_n(\theta) = n I(\theta)\)'dır.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Fisher Bilgisinin Geometrik ve Sezgisel Anlamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    İkinci türev \(-\frac{d^2 \ell}{d\theta^2}\) log-olabilirlik eğrisinin tepe noktasındaki **eğriliğini (kavisini)** ölçer:
+</p>
+<ul class="course-list">
+<li>Eğer tepe çok sivri ve dik ise: Eğrilik büyüktür \(\implies\) Fisher Bilgisi büyüktür. Bu demektir ki veriler doğru parametreyi nokta atışı işaret eder; tahmin hatası ve varyansı küçüktür!</li>
+<li>Eğer tepe yayvan ve düz ise: Eğrilik küçüktür \(\implies\) Fisher Bilgisi azdır. Veriler parametre hakkında yetersiz bilgi taşır.</li>
+</ul>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Rao - Cramér Alt Sınırı (CRLB)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Uygun düzenlilik koşulları altında, \(T_n = T(X_1, \dots, X_n)\) yansız bir tahmin edici (\(E_\theta(T_n) = \theta\)) ise:
+</p>
+<div class="math-display">\[ \boxed{V_\theta(T_n) \ge \frac{1}{n I(\theta)} = \text{CRLB}} \]</div>
+<p class="course-paragraph">
+Yansız bir tahmin edici sınırda varyansa ulaşırsa o parametre noktası için etkindir. Her \(\theta\) için uygun koşullarda bu sınıra ulaşması, tahmin edicinin UMVUE olmasını sağlar.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Poisson Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Poisson modelinde parametreyi \(\lambda>0\) ile gösterelim. Olasılık kütle fonksiyonu:
+</p>
+<div class="math-display">\[ P(X=x\mid\lambda)=e^{-\lambda}\frac{\lambda^x}{x!},\qquad x=0,1,2,\ldots \]</div>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: \(\text{Poisson}(\lambda)\) Dağılımında CRLB ve UMVUE</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(f(x) = \frac{e^{-\lambda}\lambda^x}{x!}\) dağılımı için:
+</p>
+<div class="math-display">\[ \begin{aligned} \ln f(x) &= -\lambda + x \ln\lambda - \ln(x!) \\
+    \frac{d}{d\lambda} \ln f(x) &= -1 + \frac{x}{\lambda} \\
+    \frac{d^2}{d\lambda^2} \ln f(x) &= -\frac{x}{\lambda^2} \end{aligned} \]</div>
+<p class="course-paragraph">
+Tek gözlemin Fisher bilgisi:
+</p>
+<div class="math-display">\[ I(\lambda) = -E\left( -\frac{X}{\lambda^2} \right) = \frac{E(X)}{\lambda^2} = \frac{\lambda}{\lambda^2} = \frac{1}{\lambda} \]</div>
+<p class="course-paragraph">
+\(n\) boyutlu örneklem için Rao-Cramer Alt Sınırı:
+</p>
+<div class="math-display">\[ \text{CRLB} = \frac{1}{n I(\lambda)} = \frac{1}{n (1/\lambda)} = \frac{\lambda}{n} \]</div>
+<p class="course-paragraph">
+Şimdi örneklem ortalaması \(\bar{X}_n\)'in varyansına bakalım:
+</p>
+<div class="math-display">\[ V(\bar{X}_n) = \frac{V(X)}{n} = \frac{\lambda}{n} \]</div>
+<p class="course-paragraph">
+Görüldüğü üzere \(V(\bar{X}_n) = \text{CRLB} = \frac{\lambda}{n}\)'dir.  
+Dolayısıyla \(\bar{X}_n\), \(\lambda\) parametresi için <strong>UMVUE</strong>'dir (daha düşük varyanslı bir yansız tahmin edici bulmak matematiksel olarak imkansızdır!).
+</p>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> Örneklem büyüklüğü arttıkça Rao-Cramer alt sınırının azalması ve UMVUE varyansının bu sınıra tam oturması.</p>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="6-hafta-h-zl-tekrar-ve-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 6. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Kavram</strong></th><th scope="col"><strong>Matematiksel Formül</strong></th><th scope="col"><strong>Ne İşe Yarar / Sezgisel Anlamı</strong></th></tr></thead><tbody>
+<tr><td><strong>Olabilirlik \(L(\theta)\)</strong></td><td>\(\prod_{i=1}^n f(x_i; \theta)\)</td><td>Verilen verinin gerçekleşme ihtimalini parametrenin fonksiyonu yapar.</td></tr>
+<tr><td><strong>MLE (\(\hat{\theta}\))</strong></td><td>\(\arg\max \ell(\theta) \implies \ell'(\theta) = 0\)</td><td>Veriyi en olası kılan parametre değerini bulur.</td></tr>
+<tr><td><strong>Zehna Teoremi</strong></td><td>\(\widehat{g(\theta)}_{\text{MLE}} = g(\hat{\theta}_{\text{MLE}})\)</td><td>Parametre tahmini biliniyorsa fonksiyonunun tahmini doğrudan yerine koymadır.</td></tr>
+<tr><td><strong>Skor Fonksiyonu</strong></td><td>\(U(\theta) = \frac{d}{d\theta}\ln f(X)\)</td><td>Log-olabilirliğin eğimidir; beklenen değeri daima sıfırdır (\(E(U)=0\)).</td></tr>
+<tr><td><strong>Fisher Bilgisi</strong></td><td>\(I(\theta) = -E[\ell''(\theta)]\)</td><td>Log-olabilirliğin tepe sivrilğidir; parametre hakkındaki bilgi miktarını ölçer.</td></tr>
+<tr><td><strong>CRLB</strong></td><td>\(\text{Alt Sınır} = \frac{1}{n I(\theta)}\)</td><td>Yansız bir tahmin edicinin sahip olabileceği teorik minimum varyanstır.</td></tr>
+<tr><td><strong>UMVUE</strong></td><td>Uygun koşullarda tüm \(\theta\)'lar için \(V(\hat{\theta}) = \text{CRLB}\)</td><td>Yansız tahmin ediciler arasında her parametre değerinde en küçük varyanslı olan.</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 6. Haftanın Temel Olabilirlik ve Optimal Tahmin Kavramları Özeti</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-05.html" class="btn-secondary">⬅️ Hafta 5</a>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-07.html" class="btn-primary">Hafta 7 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-charts.js"></script>
+</body>
+</html>

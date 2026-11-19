@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7. Hafta: En Çok Olabilirlik Yöntemi (MLE) ve CRLB - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="active">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 7</span>
+        <h1 class="course-main-title">7. Hafta: En Çok Olabilirlik Yöntemi (MLE) ve CRLB</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu hafta <strong>Nokta Tahmini</strong> kapsamında <strong>Yansızlık</strong>, <strong>Hata Kareler Ortalaması (MSE)</strong> ve <strong>Tutarlılık</strong> kavramlarını inceler. Poisson örnekleri, Jensen eşitsizliği ve grafikler tahmin edicilerin özelliklerini karşılaştırır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-7-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 7. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Bir Tahmin Edicinin Kalitesini Nasıl Ölçeriz?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bilinmeyen bir \(\theta\) kitle parametresi (örneğin Türkiye'deki ortalama boy, bir fabrikanın hata oranı vb.) için elimizdeki örneklemden bir formül \(\hat{\theta} = T(X_1, \dots, X_n)\) ürettik.  
+Peki bu formülün "iyi" bir tahmin edici olup olmadığını nasıl anlarız? İstatistikte iki temel altın standart vardır:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Yansızlık (Doğruluk - Accuracy):</strong> Farklı örneklemler aldığımızda bulduğumuz tahminlerin ortalaması tam kitle parametresine oturuyor mu? (\(E(\hat{\theta}) = \theta\)).</li>
+<li><strong>Tutarlılık (Hassasiyet - Consistency):</strong> Örneklem büyüklüğü sonsuza gittikçe (\(n \to \infty\)), tahminimiz gerçek parametrenin üstüne kusursuzca kilitleniyor mu? (\(\hat{\theta} \xrightarrow{P} \theta\)).</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="nokta-tahmini-kavram-ve-matematiksel-er-eve" class="section-title"><span class="title-anchor">§</span> Nokta Tahmini Kavramı ve Matematiksel Çerçeve</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Nokta Tahmin Edici (Point Estimator)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, X_2, \dots, X_n\), dağılım fonksiyonu \(F_\theta\) (\(\theta \in \Theta \subseteq \mathbb{R}^k\)) olan bir anakütleden elde edilmiş rastgele bir örneklem olsun. Bilinmeyen \(\theta\) parametresini tahmin etmek amacıyla tanımlanan ve örneklem değerlerine bağlı olan bir ölçülebilir fonksiyona:
+</p>
+<div class="math-display">\[ \hat{\theta} = T(X_1, X_2, \dots, X_n) \]</div>
+<p class="course-paragraph">
+<strong>nokta tahmin edici</strong> (<em>point estimator</em>) denir. Sayısal olarak hesaplanan \(T(x_1, \dots, x_n)\) değerine ise <strong>nokta tahmini</strong> (<em>point estimate</em>) adı verilir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="tahmin-edicilerin-zellikleri-yans-zl-k-unbiasedness" class="section-title"><span class="title-anchor">§</span> Tahmin Edicilerin Özellikleri: Yansızlık (Unbiasedness)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Yansızlık ve Yanlılık (Bias)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(\hat{\theta}\), \(\theta\) parametresi için bir tahmin edici olsun. \(\hat{\theta}\)'nın <strong>yanlılığı</strong> (<em>bias</em>) şu şekilde tanımlanır:
+</p>
+<div class="math-display">\[ b_\theta(\hat{\theta}) = E_\theta(\hat{\theta}) - \theta \]</div>
+<p class="course-paragraph">
+Eğer her \(\theta \in \Theta\) için:
+</p>
+<div class="math-display">\[ b_\theta(\hat{\theta}) = 0 \iff E_\theta(\hat{\theta}) = \theta \]</div>
+<p class="course-paragraph">
+sağlanıyorsa, \(\hat{\theta}\) tahmin edicisine \(\theta\) için <strong>yansız tahmin edici</strong> (<em>unbiased estimator</em>) denir.
+</p>
+  </div>
+</div>
+<div class="table-container">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Açıklama:</strong> Tahmin edicilerin doğruluk (yansızlık) ve hassasiyet (varyans) davranışlarının hedef tahtası üzerindeki temsili.</p>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örneklem Ortalaması ve Örneklem Varyansının Yansızlığı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, X_2, \dots, X_n\) bağımsız ve aynı dağılımlı (<em>i.i.d.</em>) rastlantı değişkenleri olsun. \(E(X_i) = \mu\) ve \(V(X_i) = \sigma^2 < \infty\) verilsin.
+</p>
+<ol class="course-ordered-list">
+<li>Örneklem ortalaması \(\hat{\mu} = \bar{X} = \frac{1}{n}\sum_{i=1}^n X_i\)'nin \(\mu\) için yansızlığı:
+<div class="math-display">\[ E(\bar{X}) = E\left( \frac{1}{n} \sum_{i=1}^n X_i \right) = \frac{1}{n} \sum_{i=1}^n E(X_i) = \frac{1}{n} \cdot (n\mu) = \mu \implies b_\mu(\bar{X}) = 0. \]</div></li>
+<li>Örneklem varyansı \(S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2 = \frac{\sum X_i^2 - n\bar{X}^2}{n-1}\)'nin \(\sigma^2\) için yansızlığı:
+<p class="course-paragraph">
+    Her bir \(X_i\) için \(E(X_i^2) = \sigma^2 + \mu^2\) ve \(\bar{X}\) için \(E(\bar{X}^2) = \frac{\sigma^2}{n} + \mu^2\) olduğundan:
+</p>
+<div class="math-display">\[ \begin{aligned} E(S^2) &= \frac{1}{n-1} \left\{ \sum_{i=1}^n E(X_i^2) - n E(\bar{X}^2) \right\} \\
+    &= \frac{1}{n-1} \left\{ n(\sigma^2 + \mu^2) - n \left( \frac{\sigma^2}{n} + \mu^2 \right) \right\} \\
+    &= \frac{1}{n-1} \left\{ n\sigma^2 - \sigma^2 \right\} = \frac{n-1}{n-1}\sigma^2 = \sigma^2. \end{aligned} \]</div>
+<p class="course-paragraph">
+    Böylece \(E(S^2) = \sigma^2\) bulunarak \(S^2\)'nin \(\sigma^2\) için <strong>yansız</strong> olduğu ispatlanmış olur.</li>
+</p>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="yans-zl-n-tuzaklar-patolojik-kar-rnek" class="section-title"><span class="title-anchor">§</span> Yansızlığın Tuzakları: Patolojik Karşı-Örnek</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Yansız Olmak Her Zaman İyi Olmak Anlamına Gelmez!</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir tahmin edicinin sadece ortalamada doğru olması onun mantıklı bir tahmin ürettiğini garanti etmez. Bir insan bir ayağını kaynar suya, diğer ayağını buz kütlesine koysa "ortalama sıcaklığı" mükemmeldir; fakat kendisi perişan haldedir! İstatistikte de böyledir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Karşı Örnek: Poisson Dağılımında \((-1)^X\) Tahmin Edicisi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X \sim \text{Poisson}(\theta)\) olsun (\(n=1\) tek bir gözlem). Tahmin edilmek istenen parametre fonksiyonu \(\tau(\theta) = e^{-2\theta}\) olsun.  
+\(\hat{\tau} = (-1)^X\) tahmin edicisini tanımlayalım. Bu tahmin edicinin beklenen değeri:
+</p>
+<div class="math-display">\[ \begin{aligned} E_\theta\left( (-1)^X \right) &= \sum_{x=0}^\infty (-1)^x \frac{e^{-\theta} \theta^x}{x!} = e^{-\theta} \sum_{x=0}^\infty \frac{(-\theta)^x}{x!} = e^{-\theta} \cdot e^{-\theta} = e^{-2\theta}. \end{aligned} \]</div>
+<p class="course-paragraph">
+<strong>Çarpıcı Çıkarım:</strong> \(E_\theta\left((-1)^X\right) = e^{-2\theta}\) olduğundan \(\hat{\tau} = (-1)^X\) matematiksel olarak \(e^{-2\theta}\) için <strong>kesinlikle yansızdır!</strong>  
+Fakat parametre \(\theta > 0\) iken hedef değer \(\tau(\theta) = e^{-2\theta} \in (0, 1)\) aralığındadır. Oysa \((-1)^X\) tahmin edicisi \(X\) çift ise \(+1\), tek ise \(-1\) değerini alır! Tahmin edici asla \((0, 1)\) aralığında bir değer üretemez. Dolayısıyla:
+</p>
+<div class="math-display">\[ \text{Yansız olmak } \centernot\implies \text{İyi bir tahmin edici olmak!} \]</div>
+  </div>
+</div>
+<div class="table-container">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Açıklama:</strong> \((-1)^X\) tahmin edicisinin aldığı ayrık değerler (\(\{-1, +1\}\)) ile tahmin edilmek istenen sürekli \(e^{-2\theta}\) eğrisinin karşılaştırması.</p>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="poisson-ornekleminde-yansizlik-incelemesi" class="section-title"><span class="title-anchor">§</span> Poisson Örnekleminde Yansızlık İncelemesi</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Örnek: \(e^{-2\bar{X}}\) Tahmin Edicisinin Yansızlığı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Soru Metni:</strong> \(X_1, X_2, \dots, X_n \sim \text{Poisson}(\theta)\) bağımsız ve aynı dağılımlı örneklem olsun. \(\hat{\tau} = e^{-2\bar{X}}\) tahmin edicisinin \(\tau(\theta) = e^{-2\theta}\) parametresi için yansız olmadığını gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>1. Çözüm Yolu (Moment Çıkaran Fonksiyon İle):</strong>
+\(Y = \sum_{i=1}^n X_i \sim \text{Poisson}(n\theta)\) olduğundan:
+</p>
+<div class="math-display">\[ E\left( e^{-2\bar{X}} \right) = E\left( e^{-\frac{2}{n} Y} \right) = M_Y\left(-\frac{2}{n}\right) = \exp\left\{ n\theta \left( e^{-2/n} - 1 \right) \right\} \]</div>
+<p class="course-paragraph">
+Konvekslikten dolayı \(e^{-2/n} > 1 - \frac{2}{n} \implies n\theta(e^{-2/n} - 1) > -2\theta\) olur. Üstel fonksiyon artan olduğundan:
+</p>
+<div class="math-display">\[ E\left( e^{-2\bar{X}} \right) > e^{-2\theta} \]</div>
+<p class="course-paragraph">
+Sonuç olarak \(E(e^{-2\bar{X}}) \neq e^{-2\theta}\) olup \(e^{-2\bar{X}}\) <strong>yansız değildir</strong> (pozitif yanlıdır).
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>2. Çözüm Yolu (Jensen Eşitsizliği İle Tek Satırda İspat):</strong>
+\(g(u) = e^{-2u}\) fonksiyonunun 2. türevi \(g''(u) = 4e^{-2u} > 0\) olduğundan kesinlikle konvekstir. Jensen eşitsizliğine göre:
+</p>
+<div class="math-display">\[ E(g(\bar{X})) > g(E(\bar{X})) \implies E\left( e^{-2\bar{X}} \right) > e^{-2 E(\bar{X})} = e^{-2\theta} \]</div>
+<p class="course-paragraph">
+<strong>Asemptotik Analiz:</strong> \(n \to \infty\) iken Taylor serisinden \(n(e^{-2/n}-1) \to -2\) olduğundan \(\lim_{n \to \infty} E(e^{-2\bar{X}}) = e^{-2\theta}\) olur. Yani tahmin edici <strong>asemptotik olarak yansız ve tutarlıdır</strong>.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="tahmin-edicilerin-zellikleri-tutarl-l-k-consistency" class="section-title"><span class="title-anchor">§</span> Tahmin Edicilerin Özellikleri: Tutarlılık (Consistency)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Tutarlılık (Consistency)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(T_n\) tahmin edici dizisi olsun. Her \(\varepsilon > 0\) için:
+</p>
+<div class="math-display">\[ \lim_{n\to\infty} P\left( |T_n - \theta| > \varepsilon \right) = 0 \iff T_n \xrightarrow{P} \theta \]</div>
+<p class="course-paragraph">
+ise \(T_n\)'ye \(\theta\) için <strong>tutarlı tahmin edici</strong> denir.
+</p>
+  </div>
+</div>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Tutarlılık İçin Yeter Koşul (MSE Kriteri)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Markov ve Chebyshev eşitsizliklerinden ötürü:
+</p>
+<div class="math-display">\[ P(|T_n - \theta| > \varepsilon) \le \frac{\text{MSE}(T_n)}{\varepsilon^2} = \frac{V(T_n) + [b_\theta(T_n)]^2}{\varepsilon^2} \]</div>
+<p class="course-paragraph">
+Eğer:
+</p>
+<div class="math-display">\[ \lim_{n\to\infty} \text{MSE}(T_n) = 0 \iff \left( \lim_{n\to\infty} V(T_n) = 0 \quad \text{ve} \quad \lim_{n\to\infty} E(T_n) = \theta \right) \]</div>
+<p class="course-paragraph">
+sağlanıyorsa, \(T_n\) tahmin edicisi <strong>tutarlıdır</strong> (\(T_n \xrightarrow{P} \theta\)).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="parametrik-yogunlukta-yansizlik-ve-varyans" class="section-title"><span class="title-anchor">§</span> Parametrik Yoğunlukta Yansızlık ve Varyans</h2>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Yansızlık ve Tutarlılık İncelemesi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(f(x;\theta) = \frac{1}{2}(1 + \theta x), \; -1 < x < 1, \; -1 \le \theta \le 1\) olsun. \(\hat{\theta} = 3\bar{X}_n\) tahmin edicisinin yansız ve tutarlı olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>\(E(X) = \int_{-1}^1 x \frac{1}{2}(1+\theta x) dx = \left[ \frac{x^2}{4} + \frac{\theta x^3}{6} \right]_{-1}^1 = \frac{\theta}{3}\).</li>
+<li>\(E(\hat{\theta}) = E(3\bar{X}_n) = 3 E(X) = 3 \left(\frac{\theta}{3}\right) = \theta \implies\) <strong>Yansızdır!</strong></li>
+<li>\(E(X^2) = \int_{-1}^1 x^2 \frac{1}{2}(1+\theta x) dx = \left[ \frac{x^3}{6} + \frac{\theta x^4}{8} \right]_{-1}^1 = \frac{1}{3}\).</li>
+<li>\(V(X) = E(X^2) - [E(X)]^2 = \frac{1}{3} - \left(\frac{\theta}{3}\right)^2 = \frac{3-\theta^2}{9}\).</li>
+<li>\(V(\hat{\theta}) = V(3\bar{X}_n) = 9 \frac{V(X)}{n} = 9 \frac{3-\theta^2}{9n} = \frac{3-\theta^2}{n}\).</li>
+<li>\(\lim_{n \to \infty} V(\hat{\theta}) = 0\) ve \(b(\hat{\theta})=0\) olduğundan \(\lim_{n \to \infty} \text{MSE}(\hat{\theta}) = 0 \implies \boxed{\hat{\theta} \xrightarrow{P} \theta}\) (<strong>Tutarlıdır!</strong>).</li>
+</ol>
+  </div>
+</div>
+<div class="table-container">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Açıklama:</strong> \(f(x;\theta) = \frac{1}{2}(1 + \theta x)\) yoğunluk fonksiyonunun farklı \(\theta\) değerleri altındaki davranışı.</p>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Varyansın Hesaplanması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Varyansın Hesaplanması:</strong>
+Varyans, ikinci momentten beklenen değerin karesinin çıkarılmasıyla bulunur:
+</p>
+<div class="math-display">\[ V(X) = \frac{1}{3} - \left(\frac{\theta}{3}\right)^2 = \frac{1}{3} - \frac{\theta^2}{9} = \frac{3 - \theta^2}{9}. \]</div>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="7-hafta-h-zl-tekrar-ve-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 7. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Özellik / Kriter</strong></th><th scope="col"><strong>Matematiksel Şart</strong></th><th scope="col"><strong>Sezgisel Anlamı / Ne İfade Eder?</strong></th></tr></thead><tbody>
+<tr><td><strong>Yansızlık</strong></td><td>\(E(\hat{\theta}) = \theta \iff \text{Bias} = 0\)</td><td>Tahminlerin ortalaması tam hedefi bulur; sistematik kayma yoktur.</td></tr>
+<tr><td><strong>Tutarlılık</strong></td><td>\(\lim_{n \to \infty} P(|\hat{\theta}_n - \theta| > \epsilon) = 0\)</td><td>Örneklem büyüdükçe hata olasılığı sıfıra iner; tahmin parametreye kilitlenir.</td></tr>
+<tr><td><strong>MSE Kriteri</strong></td><td>\(\lim_{n \to \infty} [V(\hat{\theta}_n) + \text{Bias}^2] = 0\)</td><td>Tutarlılığı garanti eden pratik limit şartı.</td></tr>
+<tr><td><strong>Jensen Eşitsizliği</strong></td><td>\(g\) konveks ise \(E(g(X)) \ge g(E(X))\)</td><td>Konveks dönüşümün beklenen değerine alt sınır verir.</td></tr>
+<tr><td><strong>Örneklem Ortalaması</strong></td><td>\(E(\bar{X}) = \mu, \; V(\bar{X}) = \sigma^2/n\)</td><td>Her zaman hem yansız hem de tutarlı bir tahmin edicidir.</td></tr>
+<tr><td><strong>Örneklem Varyansı</strong></td><td>\(E(S^2) = \sigma^2, \; V(S^2) \to 0\)</td><td>\(n-1\)'e bölünmesi sayesinde yansız ve tutarlı varyans tahminidir.</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 7. Haftanın Nokta Tahmini Kriterleri ve Özet Karşılaştırması</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-06.html" class="btn-secondary">⬅️ Hafta 6</a>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <span></span>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-charts.js"></script>
+</body>
+</html>

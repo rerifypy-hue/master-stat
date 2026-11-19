@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4. Hafta: Genelleştirilmiş CLT ve Kolmogorov/Markov Kriterleri - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  
+  <!-- MathJax Local Engine (Zero External Dependencies) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="../../assets/js/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="../../index.html" class="nav-brand">
+    <span class="logo-badge">MS</span>
+    <span>Master Statistics</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../../index.html" class="">Ana Sayfa</a></li>
+    <li><a href="../../courses/istatistik-teorisi/index.html" class="active">İstatistik Teorisi</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="index.html">📖 Tüm Dersi Gör</a></li>
+        <li><a href="../../index.html">🏠 Portala Dön</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="active">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="margin-bottom: 2rem;">
+        <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 4</span>
+        <h1 class="course-main-title">4. Hafta: Genelleştirilmiş CLT ve Kolmogorov/Markov Kriterleri</h1>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 4. haftasında yer alan <strong>Genelleştirilmiş Merkezi Limit Teoremleri</strong> (Lindeberg-Feller ve Lyapunov), <strong>Büyük Sayılar Yasası Kriterleri</strong> (Kolmogorov ve Markov), <strong>De Moivre - Laplace Teoremi</strong> ve <strong>Rastgele Değişken Dönüşümleri (Transformations)</strong> konularını içermektedir. Ağır matematiksel koşullar sezgisel benzetmeler ve tam çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-4-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 4. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Dağılımlar Özdeş Olmadığında Ne Yaparız?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Geçen hafta gördüğümüz klasik Merkezi Limit Teoremi değişkenlerin hem bağımsız hem de <strong>aynı dağılıma sahip (i.i.d.)</strong> olduğunu varsayıyordu.  
+Fakat gerçek hayatta:
+</p>
+<ul class="course-list">
+<li>Topladığımız veriler farklı kaynaklardan (farklı fabrikalardan, farklı yaş gruplarından) gelebilir. Yani değişkenlerin varyansları ve ortalamaları birbirinden farklıdır!</li>
+<li>Soru şudur: <strong>Değişkenler aynı dağılıma sahip olmasa bile toplamları yine de Normal Dağılıma (\(N(0,1)\)) gider mi?</strong></li>
+</ul>
+<p class="course-paragraph">
+İşte 4. haftanın ilk konusu olan **Lindeberg-Feller** ve **Lyapunov** teoremleri bu soruya cevap verir: *"Evet, yeter ki içlerinden tek bir değişken devasa varyansıyla tüm sistemi domine etmesin!"*  
+İkinci kısımda ise bir \(X\) değişkeninden \(Y = g(X)\) yeni bir değişken ürettiğimizde (örneğin \(Y = X^2\)), yeni olasılık yoğunluğunu nasıl bulacağımızı (<strong>Değişken Dönüşümü</strong>) öğreniriz.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="genelle-tirilmi-merkezi-limit-teoremleri" class="section-title"><span class="title-anchor">§</span> Genelleştirilmiş Merkezi Limit Teoremleri</h2>
+<p class="course-paragraph">
+Klasik Lindeberg-Lévy MLT'sinde \(X_i\) değişkenlerinin aynı dağılıma sahip olması şarttır. Değişkenlerin dağılımları birbirinden farklı olduğunda aşağıdaki genellemeler devreye girer.
+</p>
+<h3 id="1-lindeberg-feller-teoremi" class="subsection-title">1. Lindeberg - Feller Teoremi</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Lindeberg - Feller Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, X_2, \dots\) bağımsız ancak farklı dağılımlara sahip olabilen rastgele değişkenler olsun. \(E(X_k) = \mu_k\) ve \(V(X_k) = \sigma_k^2 < \infty\) olmak üzere:
+</p>
+<div class="math-display">\[ Y_k = X_k - \mu_k, \quad T_n = \sum_{k=1}^n Y_k, \quad s_n^2 = \sum_{k=1}^n \sigma_k^2 \]</div>
+<p class="course-paragraph">
+tanımlansın ve \(s_n^2\to\infty\) olsun. Eğer her \(\epsilon > 0\) için <strong>Lindeberg Koşulu</strong>:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} \frac{1}{s_n^2} \sum_{k=1}^n E\left( Y_k^2 \, I_{\{|Y_k| \ge \epsilon s_n\}} \right) = 0 \]</div>
+<p class="course-paragraph">
+sağlanıyorsa, standartlaştırılmış toplam standart normale dağılımda yakınsar:
+</p>
+<div class="math-display">\[ Z_n = \frac{T_n}{s_n} = \frac{\sum_{k=1}^n (X_k - \mu_k)}{\sqrt{\sum_{k=1}^n \sigma_k^2}} \xrightarrow{d} N(0, 1) \]</div>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Lindeberg Koşulunun Anlamı: "Aşırı Baskın Değişken Yoktur"</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(I_{\{|Y_k| \ge \epsilon s_n\}}\) bir gösterge fonksiyonudur; yani değişkenin toplam standart sapmadan (\(\epsilon s_n\)) daha büyük aşırı uç değerler alması durumudur.  
+Lindeberg koşulu der ki: Toplam varyans (\(s_n^2\)) büyüdükçe, hiçbir tekil değişkenin aşırı uç sapması toplam sistemi tek başına esir alamaz; her bir değişkenin toplama etkisi sıfıra gider.
+</p>
+  </div>
+</div>
+<h3 id="2-lyapunov-ko-ulu" class="subsection-title">2. Lyapunov Koşulu</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Lyapunov Koşulu (Daha Kolay Uygulanan Yeter Koşul)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Lindeberg koşulundaki gösterge fonksiyonlu integrali hesaplamak çoğu zaman zordur. Lyapunov şunu göstermiştir: Eğer bir \(\delta > 0\) için:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} \frac{1}{s_n^{2+\delta}} \sum_{i=1}^n E\left( |X_i - \mu_i|^{2+\delta} \right) = 0 \]</div>
+<p class="course-paragraph">
+sağlanıyorsa, Lindeberg koşulu <strong>otomatik olarak sağlanır</strong> ve MLT geçerli olur:
+</p>
+<div class="math-display">\[ \frac{\sum_{i=1}^n (X_i - \mu_i)}{s_n} \xrightarrow{d} N(0, 1) \]</div>
+<p class="course-paragraph">
+(Pratikte genellikle \(\delta = 1\) alınarak 3. momentler kontrol edilir).
+</p>
+  </div>
+</div>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Lyapunov Koşulunun Uygulanışı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Lyapunov Koşulunun Uygulanışı:</strong>
+Bağımsız \(X_k\) değişkenlerinin aynı dağılıma sahip olması gerekmez. \(s_n^2=\sum_{k=1}^n V(X_k)\to\infty\) ve bir \(\delta>0\) için
+\(\frac{1}{s_n^{2+\delta}}\sum_{k=1}^n E|X_k-E(X_k)|^{2+\delta}\to0\)
+ise standartlaştırılmış toplam standart normale yakınsar.
+</p>
+  </div>
+</div>
+<h4 class="subsubsection-title">İspat: Lyapunov Koşulu \(\implies\) Lindeberg Koşulu</h4>
+<p class="course-paragraph">
+\(|X_i - \mu_i| \ge \epsilon s_n\) bölgesinde \(\frac{|X_i - \mu_i|}{\epsilon s_n} \ge 1 \implies \left(\frac{|X_i - \mu_i|}{\epsilon s_n}\right)^\delta \ge 1\) olur. Buradan:
+</p>
+<div class="math-display">\[ (X_i - \mu_i)^2 I_{\{|X_i - \mu_i| \ge \epsilon s_n\}} \le \frac{|X_i - \mu_i|^{2+\delta}}{\epsilon^\delta s_n^\delta} \]</div>
+<p class="course-paragraph">
+Toplamı alıp \(s_n^2\)'ye bölersek:
+</p>
+<div class="math-display">\[ \frac{1}{s_n^2} \sum_{i=1}^n E\left( (X_i - \mu_i)^2 I_{\{|X_i - \mu_i| \ge \epsilon s_n\}} \right) \le \frac{1}{\epsilon^\delta} \left( \frac{1}{s_n^{2+\delta}} \sum_{i=1}^n E\left( |X_i - \mu_i|^{2+\delta} \right) \right) \]</div>
+<p class="course-paragraph">
+Lyapunov terimi sıfıra gittiğinde sağ taraf sıfır olur; sandviç kuralından Lindeberg koşulu kanıtlanır.
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="b-y-k-say-lar-yasas-i-in-kolmogorov-ve-markov-kriterleri" class="section-title"><span class="title-anchor">§</span> Büyük Sayılar Yasası İçin Kolmogorov ve Markov Kriterleri</h2>
+<p class="course-paragraph">
+Değişkenlerin dağılımları aynı olmadığında ortalamanın kitle ortalamasına yakınsamasını test eden iki altın kriter vardır:
+</p>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Kolmogorov Kriteri (Güçlü BSY - SLLN)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(\{X_n\}\) bağımsız rastgele değişkenler dizisi olsun. Eğer:
+</p>
+<div class="math-display">\[ \sum_{k=1}^{\infty} \frac{\sigma_k^2}{k^2} < \infty \]</div>
+<p class="course-paragraph">
+ise \(\{X_n\}\) dizisi <strong>Güçlü Büyük Sayılar Yasası (SLLN)</strong>'nı sağlar (\(\frac{1}{n}\sum (X_k - \mu_k) \xrightarrow{a.s.} 0\)).
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Markov Koşulu (Zayıf BSY - WLLN)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(\{X_n\}\) bağımsız rastgele değişkenler dizisi olsun. Eğer:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} \frac{1}{n^2} \sum_{k=1}^n \sigma_k^2 = 0 \]</div>
+<p class="course-paragraph">
+ise \(\{X_n\}\) dizisi <strong>Zayıf Büyük Sayılar Yasası (WLLN)</strong>'nı sağlar (\(\frac{1}{n}\sum (X_k - \mu_k) \xrightarrow{P} 0\)).
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">\(p\)-Serisinin Yakınsaklığı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>\(p\)-Serisinin Yakınsaklığı:</strong>
+\(\sum_{k=1}^{\infty}\frac{1}{k^p}\) serisi \(p\le1\) için ıraksar, \(p>1\) için yakınsar:
+</p>
+<div class="math-display">\[ \sum_{k=1}^{\infty} \frac{1}{k^p} \implies 
+    \begin{cases}
+        p \le 1, & \text{ıraksaktır (örneğin } p=1 \text{ harmonik seridir)} \\
+        p > 1, & \text{yakınsaktır}
+    \end{cases} \]</div>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: \(X_k \sim \text{Poisson}(k\lambda)\) İçin BSY İncelemesi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(V(X_k) = \sigma_k^2 = k\lambda\) olsun.
+</p>
+<ol class="course-ordered-list">
+<li><strong>Kolmogorov Kriteri:</strong>
+<div class="math-display">\[ \sum_{k=1}^{\infty} \frac{\sigma_k^2}{k^2} = \sum_{k=1}^{\infty} \frac{k\lambda}{k^2} = \lambda \sum_{k=1}^{\infty} \frac{1}{k} = \infty \quad (\text{Harmonik seri ıraksak!}) \]</div>
+<p class="course-paragraph">
+    Kolmogorov kriteri sağlanmaz; Güçlü BSY garanti edilemez.</li>
+</p>
+<li><strong>Markov Koşulu:</strong>
+<div class="math-display">\[ \lim_{n \to \infty} \frac{1}{n^2} \sum_{k=1}^n k\lambda = \lim_{n \to \infty} \frac{\lambda}{n^2} \frac{n(n+1)}{2} = \frac{\lambda}{2} \neq 0 \]</div>
+<p class="course-paragraph">
+    Limit sıfır çıkmadığı için Markov koşulu da sağlanmaz.</li>
+</p>
+</ol>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Ki-Kare Dizisinde Markov Koşulu</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Ki-Kare Dizisinde Markov Koşulu:</strong>
+Bağımsız \(Y_k\sim\chi^2_k\) değişkenleri için \(V(Y_k)=2k\). Varyans koşulunun limiti:
+</p>
+<div class="math-display">\[ \lim_{n \to \infty} \frac{1}{n^2} \sum_{k=1}^n 2k = \lim_{n \to \infty} \frac{2}{n^2} \frac{n(n+1)}{2} = \lim_{n \to \infty} \frac{n^2 + n}{n^2} = 1 \neq 0 \]</div>
+<p class="course-paragraph">
+Limit sonsuz değil \(1\)'dir; ancak yine de \(0\) olmadığından Markov koşulu sağlanmaz.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: \(Y \sim \text{Bernoulli}(p)\) ve \(X_n = \frac{Y}{n}\) Dizisi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_k=Y/k\) için \(V(X_k)=pq/k^2\). Bu değişkenler bağımsız değildir; hepsi aynı \(Y\)'ye bağlıdır, bu nedenle yukarıdaki bağımsızlık kriterleri doğrudan uygulanamaz.
+</p>
+<p class="course-paragraph">
+Doğrudan hesaplayınca:
+</p>
+<div class="math-display">\[ \frac{1}{n}\sum_{k=1}^n X_k = \frac{Y}{n}\sum_{k=1}^n \frac{1}{k} = \frac{Y H_n}{n}\xrightarrow{a.s.}0 \]</div>
+<p class="course-paragraph">
+\(H_n\) harmonik sayısı için \(H_n/n\to0\) ve \(Y\) sınırlı olduğundan bu dizi hemen hemen kesinlikle sıfıra yakınsar.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="4-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 4. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: De Moivre - Laplace Teoreminin MÇF İle İspatı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X_1, \dots, X_n \overset{\text{i.i.d.}}{\sim} \text{Bernoulli}(p)\) ve \(Y_n = \sum_{i=1}^n X_i \sim \text{Binom}(n, p)\) olsun.
+</p>
+<div class="math-display">\[ Z_n = \frac{Y_n - E(Y_n)}{\sqrt{V(Y_n)}} = \frac{Y_n - np}{\sqrt{npq}} \xrightarrow{d} N(0, 1) \]</div>
+<p class="course-paragraph">
+olduğunu \(0<p<1\) varsayımı altında Moment Çıkaran Fonksiyon (MGF) yöntemiyle gösteriniz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Detaylı ve Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir Bernoulli değişkeninin MÇF'si:
+<div class="math-display">\[ M_X(t) = E(e^{tX}) = p e^t + q, \quad (q = 1 - p) \]</div></li>
+<li>Bağımsız toplam \(Y_n \sim \text{Binom}(n, p)\) için:
+<div class="math-display">\[ M_{Y_n}(t) = [M_X(t)]^n = (p e^t + q)^n \]</div></li>
+<li>Standardize edilmiş değişken \(Z_n = \frac{Y_n - np}{\sqrt{npq}}\)'nin MÇF'si:
+<div class="math-display">\[ M_{Z_n}(t) = e^{-\frac{npt}{\sqrt{npq}}} M_{Y_n}\left( \frac{t}{\sqrt{npq}} \right) = \left[ e^{-p \frac{t}{\sqrt{npq}}} \left( p e^{\frac{t}{\sqrt{npq}}} + q \right) \right]^n \]</div></li>
+<li>\(u = \frac{t}{\sqrt{npq}}\) diyelim (\(n \to \infty\) iken \(u \to 0\)). Doğal logaritmasını alalım:
+<div class="math-display">\[ \ln M_{Z_n}(t) = n \left[ -p u + \ln(p e^u + q) \right] = n \, g(u) \]</div></li>
+<li>\(g(u) = -pu + \ln(pe^u + q)\) fonksiyonunun \(u=0\)'da Taylor serisini açalım:
+<div class="math-display">\[ \begin{aligned} g(0) &= 0 \\
+        g'(u) &= -p + \frac{p e^u}{p e^u + q} \implies g'(0) = -p + p = 0 \\
+        g''(u) &= \frac{p e^u(p e^u + q) - p^2 e^{2u}}{(p e^u + q)^2} = \frac{pq e^u}{(p e^u + q)^2} \implies g''(0) = pq \end{aligned} \]</div></li>
+<li>Taylor formülü gereği: \(g(u) = 0 + 0 \cdot u + \frac{pq}{2} u^2 + O(u^3)\).  
+<p class="course-paragraph">
+    \(u = \frac{t}{\sqrt{npq}}\) yerine yazılırsa:
+</p>
+<div class="math-display">\[ \ln M_{Z_n}(t) = n \left[ \frac{pq}{2} \frac{t^2}{npq} + O(n^{-3/2}) \right] = \frac{t^2}{2} + O(n^{-1/2}) \]</div></li>
+<li>Limit alındığında:
+<div class="math-display">\[ \lim_{n \to \infty} M_{Z_n}(t) = \exp\left( \frac{t^2}{2} \right) \implies \boxed{Z_n \xrightarrow{d} N(0, 1)} \]</div></li>
+</ol>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Grafik:</strong> \(n=20\), \(p=0.4\) için standartlaştırılmış Binom olasılıkları ve \(N(0,1)\) yoğunluğu karşılaştırılmıştır. Normal yaklaşım asimptotiktir; sonlu örneklemde tam eşitlik anlamına gelmez.</p>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="rastgele-de-i-kenlerde-d-n-mler-transformations" class="section-title"><span class="title-anchor">§</span> Rastgele Değişkenlerde Dönüşümler (Transformations)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Değişken Dönüşümü Nedir? Neden Jacobian / Türev Çarpanı Gelir?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir \(X\) rastgele değişkenini bir formülden geçirip yeni bir \(Y = g(X)\) değişkeni elde ettiğimizde (örneğin sıcaklığı Santigrat'tan Fahrenhayt'a veya boyutu alana \(Y = X^2\) çevirdiğimizde), yeni \(f_Y(y)\) yoğunluğu sadece yerine koymakla bulunmaz!  
+Çünkü olasılık kütlesi esner veya sıkışır. Bu esnemeyi dengelemek için diferansiyel oran olan türev çarpanı \(|dx/dy|\) (Jacobian) mutlaka eklenmelidir.
+</p>
+  </div>
+</div>
+<h3 id="1-birebir-ve-monoton-d-n-mler" class="subsection-title">1. Birebir ve Monoton Dönüşümler</h3>
+<p class="course-paragraph">
+\(X\) sürekli rastgele değişkeninin yoğunluğu \(f_X(x)\) olsun. \(Y = g(X)\) kesin monoton ve türevlenebilir ise:
+</p>
+<div class="math-display">\[ \boxed{f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d g^{-1}(y)}{dy} \right| = f_X(x) \left| \frac{dx}{dy} \right|} \]</div>
+<h3 id="2-birebir-olmayan-d-n-mler-math-inl-88" class="subsection-title">2. Birebir Olmayan Dönüşümler (\(Y = X^2\))</h3>
+<p class="course-paragraph">
+\(Y = X^2\) parabolik dönüşümünde hem pozitif hem de negatif \(x\) değerleri aynı \(y\)'ye gider:
+</p>
+<div class="math-display">\[ \begin{aligned} F_Y(y) &= P(X^2 \le y) = P(-\sqrt{y} \le X \le \sqrt{y}) = F_X(\sqrt{y}) - F_X(-\sqrt{y}), \quad (y > 0) \end{aligned} \]</div>
+<p class="course-paragraph">
+Türev alarak yoğunluğa geçersek:
+</p>
+<div class="math-display">\[ \boxed{f_Y(y) = \frac{1}{2\sqrt{y}} \left[ f_X(\sqrt{y}) + f_X(-\sqrt{y}) \right], \quad (y > 0)} \]</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Parçalı Yoğunluk Dönüşümü</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    \(X \sim \text{Uniform}(-1, 2) \implies f(x) = \frac{1}{3}, \; -1 < x < 2\) olsun. \(Y = X^2\)'nin yoğunluğunu bulunuz.
+</p>
+<p class="course-paragraph">
+<br/>
+<strong>Çözüm:</strong>
+\(x \in (-1, 2)\) iken \(y = x^2 \in (0, 4)\) olur. Ancak simetri bozulduğu için bölge ikiye ayrılır:
+</p>
+<ul class="course-list">
+<li><strong>1. Bölge (\(0 < y < 1\)):</strong> Hem sol dal (\(-\sqrt{y}\)) hem sağ dal (\(+\sqrt{y}\)) mevcuttur (2 kol aktif):
+<div class="math-display">\[ f_Y(y) = \frac{1}{2\sqrt{y}} \left[ \frac{1}{3} + \frac{1}{3} \right] = \boxed{\frac{1}{3\sqrt{y}}} \]</div></li>
+<li><strong>2. Bölge (\(1 \le y < 4\)):</strong> Negatif kol \(-1\)'de bittiği için \(-\sqrt{y}\) tanım dışıdır (\(f_X(-\sqrt{y})=0\)). Yalnızca pozitif kol (\(+\sqrt{y}\)) aktiftir (Tek kol aktif):
+<div class="math-display">\[ f_Y(y) = \frac{1}{2\sqrt{y}} \left[ \frac{1}{3} + 0 \right] = \boxed{\frac{1}{6\sqrt{y}}} \]</div></li>
+</ul>
+<p class="course-paragraph">
+Sonuç olarak:
+</p>
+<div class="math-display">\[ f_Y(y) = 
+    \begin{cases}
+        \frac{1}{3\sqrt{y}}, & 0 < y < 1 \\
+        \frac{1}{6\sqrt{y}}, & 1 \le y < 4 \\
+        0, & \text{diğer yerlerde}
+    \end{cases} \]</div>
+  </div>
+</div>
+<div class="text-center">
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">Grafik</div>
+</div>
+<p class="table-caption"><strong>Tablo:</strong> \(Y = X^2\) dönüşümünde \(-1 < x < 2\) aralığının bölgelere ayrılması.</p>
+</div>
+<h2 id="4-hafta-h-zl-tekrar-ve-form-l-tablosu" class="section-title"><span class="title-anchor">§</span> 4. Hafta Hızlı Tekrar ve Formül Tablosu</h2>
+<div class="table-container">
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th scope="col"><strong>Teorem / Kriter</strong></th><th scope="col"><strong>Matematiksel Şart</strong></th><th scope="col"><strong>Ne İşe Yarar / Anlamı</strong></th></tr></thead><tbody>
+<tr><td><strong>Lindeberg Koşulu</strong></td><td>\(\lim \frac{1}{s_n^2} \sum E(Y_k^2 I_{\{|Y_k| \ge \epsilon s_n\}}) = 0\)</td><td>Dağılımları farklı değişkenlerin toplamında MLT'yi garanti eder.</td></tr>
+<tr><td><strong>Lyapunov Koşulu</strong></td><td>\(\lim \frac{1}{s_n^{2+\delta}} \sum E(|X_k-\mu_k|^{2+\delta}) = 0\)</td><td>Lindeberg'den daha kolay hesaplanan üst moment yeter koşulu.</td></tr>
+<tr><td><strong>Kolmogorov Kriteri</strong></td><td>\(\sum_{k=1}^\infty \frac{\sigma_k^2}{k^2} < \infty\)</td><td>Farklı varyanslı bağımsız serilerde Güçlü BSY (\(a.s.\)) garantisi.</td></tr>
+<tr><td><strong>Markov Kriteri</strong></td><td>\(\lim_{n \to \infty} \frac{1}{n^2} \sum_{k=1}^n \sigma_k^2 = 0\)</td><td>Zayıf BSY (olasılıkta yakınsama) için pratik varyans limiti.</td></tr>
+<tr><td><strong>Monoton Dönüşüm</strong></td><td>\(f_Y(y) = f_X(x) |dx/dy|\)</td><td>Tek değişkenli birebir dönüşümde yoğunluk bulma.</td></tr>
+<tr><td><strong>Karesel Dönüşüm (\(X^2\))</strong></td><td>\(f_Y(y) = \frac{1}{2\sqrt{y}}[f_X(\sqrt{y}) + f_X(-\sqrt{y})]\)</td><td>Parabolün iki kolunu birleştirerek \(Y=X^2\) yoğunluğu bulma.</td></tr>
+</tbody>
+</table></div>
+<p class="table-caption"><strong>Açıklama:</strong> 4. Haftanın Temel Teoremleri, Yakınsama Kriterleri ve Dönüşüm Kuralları</p>
+</div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-03.html" class="btn-secondary">⬅️ Hafta 3</a>
+        <a href="index.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-05.html" class="btn-primary">Hafta 5 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Master Statistics</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller yerel MathJax 3 motoru ile işlenmektedir.</p>
+  </div>
+</footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/week-charts.js"></script>
+</body>
+</html>
