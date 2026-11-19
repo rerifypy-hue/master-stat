@@ -1,0 +1,387 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[turkish]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.2cm}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{babel,arrows.meta,positioning,calc,shapes.geometric}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{centernot}
+
+\input{style.tex}
+\definecolor{primaryblue}{RGB}{25, 60, 120}
+\definecolor{secondaryblue}{RGB}{235, 242, 250}
+\definecolor{defgreen}{RGB}{34, 112, 60}
+\definecolor{lightgreen}{RGB}{236, 247, 240}
+\definecolor{warnred}{RGB}{168, 38, 38}
+\definecolor{lightred}{RGB}{253, 242, 242}
+\definecolor{examyellow}{RGB}{180, 115, 20}
+\definecolor{lightyellow}{RGB}{254, 250, 238}
+\definecolor{tealblue}{RGB}{0, 120, 130}
+
+\tcbset{
+    commonbox/.style={
+        breakable,
+        enhanced,
+        arc=2mm,
+        boxrule=1pt,
+        left=4mm, right=4mm, top=3mm, bottom=3mm
+    }
+}
+
+\newtcolorbox{tanim}[2][]{
+    commonbox,
+    colback=lightgreen,
+    colframe=defgreen,
+    coltitle=white,
+    title=\textbf{Tanım\notblank{#2}{: #2}{}},
+    #1
+}
+
+\newtcolorbox{teorem}[2][]{
+    commonbox,
+    colback=secondaryblue,
+    colframe=primaryblue,
+    coltitle=white,
+    title=\textbf{Teorem\notblank{#2}{: #2}{}},
+    #1
+}
+
+\newtcolorbox{ornek}[2][]{
+    commonbox,
+    colback=lightyellow,
+    colframe=examyellow,
+    coltitle=white,
+    title=\textbf{Örnek\notblank{#2}{: #2}{}},
+    #1
+}
+
+\newtcolorbox{uyari}[1][]{
+    commonbox,
+    colback=lightred,
+    colframe=warnred,
+    coltitle=white,
+    title=\textbf{Hata Tespiti ve Kritik Uyarı},
+    #1
+}
+
+\newtcolorbox{odev}[2][]{
+    commonbox,
+    colback=lightgreen!60!secondaryblue,
+    colframe=defgreen!80!black,
+    coltitle=white,
+    title=\textbf{Ödev Çözümü\notblank{#2}{: #2}{}},
+    #1
+}
+
+\newtcolorbox{sezgi}[2][]{
+    commonbox,
+    colback=tealblue!5!white,
+    colframe=tealblue,
+    coltitle=white,
+    title=\textbf{Sezgisel Bakış ve Basit Anlatım\notblank{#2}{: #2}{}},
+    #1
+}
+
+\title{\textbf{\LARGE İstatistik Teorisi - Hafta 7}\\[0.3em]
+\Large Nokta Tahmini Temelleri: Yansızlık, Tutarlılık ve Momentler Yöntemi\\[0.2em]
+\normalsize (El Yazısı Ders Notları: 43--45. Sayfalar / 14.04.2023 Tarihli Ders)}
+\author{\textbf{Ders Notları Düzenlemesi, Sezgisel Açıklamalar ve Çözümlü Analizler}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Bu çalışma; el yazısı istatistik teorisi ders notlarının 43, 44 ve 45. sayfalarında yer alan \textbf{Nokta Tahmini Temelleri} konusunu kapsamaktadır. Nokta tahmin edicilerin taşıması gereken temel özelliklerden \textbf{Yansızlık (Unbiasedness)}, \textbf{Hata Kareler Ortalaması (MSE)}, Chebyshev eşitsizliği ışığında \textbf{Tutarlılık (Consistency)} kriterleri ele alınmıştır. Poisson dağılımında $e^{-2\bar{X}}$'in yansız olmadığı, Jensen eşitsizliği ve MÇF ile eksiksiz ispatlanmış, hedef tahtası benzetmeleri ve TikZ grafikleriyle görselleştirilmiştir.
+\end{abstract}
+
+\hrule
+\vspace{1em}
+
+\section{Büyük Resim: 7. Haftada Ne Öğreniyoruz ve Neden?}
+
+\begin{sezgi}{Bir Tahmin Edicinin Kalitesini Nasıl Ölçeriz?}
+Bilinmeyen bir $\theta$ kitle parametresi (örneğin Türkiye'deki ortalama boy, bir fabrikanın hata oranı vb.) için elimizdeki örneklemden bir formül $\hat{\theta} = T(X_1, \dots, X_n)$ ürettik.  
+Peki bu formülün "iyi" bir tahmin edici olup olmadığını nasıl anlarız? İstatistikte iki temel altın standart vardır:
+\begin{enumerate}
+    \item \textbf{Yansızlık (Doğruluk - Accuracy):} Farklı örneklemler aldığımızda bulduğumuz tahminlerin ortalaması tam kitle parametresine oturuyor mu? ($E(\hat{\theta}) = \theta$).
+    \item \textbf{Tutarlılık (Hassasiyet - Consistency):} Örneklem büyüklüğü sonsuza gittikçe ($n \to \infty$), tahminimiz gerçek parametrenin üstüne kusursuzca kilitleniyor mu? ($\hat{\theta} \xrightarrow{P} \theta$).
+\end{enumerate}
+\end{sezgi}
+
+---
+
+\section{Nokta Tahmini Kavramı ve Matematiksel Çerçeve}
+
+\begin{tanim}{Nokta Tahmin Edici (Point Estimator)}
+$X_1, X_2, \dots, X_n$, dağılım fonksiyonu $F_\theta$ ($\theta \in \Theta \subseteq \mathbb{R}^k$) olan bir anakütleden elde edilmiş rastgele bir örneklem olsun. Bilinmeyen $\theta$ parametresini tahmin etmek amacıyla tanımlanan ve örneklem değerlerine bağlı olan bir ölçülebilir fonksiyona:
+\[
+\hat{\theta} = T(X_1, X_2, \dots, X_n)
+\]
+\textbf{nokta tahmin edici} (\textit{point estimator}) denir. Sayısal olarak hesaplanan $T(x_1, \dots, x_n)$ değerine ise \textbf{nokta tahmini} (\textit{point estimate}) adı verilir.
+\end{tanim}
+
+---
+
+\section{Tahmin Edicilerin Özellikleri: Yansızlık (Unbiasedness)}
+
+\begin{tanim}{Yansızlık ve Yanlılık (Bias)}
+$\hat{\theta}$, $\theta$ parametresi için bir tahmin edici olsun. $\hat{\theta}$'nın \textbf{yanlılığı} (\textit{bias}) şu şekilde tanımlanır:
+\[
+b_\theta(\hat{\theta}) = E_\theta(\hat{\theta}) - \theta
+\]
+Eğer her $\theta \in \Theta$ için:
+\[
+b_\theta(\hat{\theta}) = 0 \iff E_\theta(\hat{\theta}) = \theta
+\]
+sağlanıyorsa, $\hat{\theta}$ tahmin edicisine $\theta$ için \textbf{yansız tahmin edici} (\textit{unbiased estimator}) denir.
+\end{tanim}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+    % Panel 1: Yansız & Düşük Varyans
+    \begin{scope}[shift={(0,0)}]
+        \draw[thick, fill=blue!5] (0,0) circle (2cm);
+        \draw[thick, fill=blue!10] (0,0) circle (1.3cm);
+        \draw[thick, fill=blue!20] (0,0) circle (0.6cm);
+        \fill[red] (0,0) circle (2.5pt) node[below right, font=\footnotesize] {$\theta$};
+        \foreach \pt in {(0.1,0.1), (-0.15,0.05), (0.05,-0.2), (-0.1,-0.1), (0.2,-0.05), (0.0,0.25)} {
+            \fill[primaryblue] \pt circle (2pt);
+        }
+        \node[below, font=\small\bfseries] at (0,-2.3) {Yansız \& Düşük Varyans};
+        \node[below, font=\footnotesize, text=defgreen] at (0,-2.8) {(İdeal Tahmin Edici)};
+    \end{scope}
+
+    % Panel 2: Yanlı & Düşük Varyans
+    \begin{scope}[shift={(5.5,0)}]
+        \draw[thick, fill=blue!5] (0,0) circle (2cm);
+        \draw[thick, fill=blue!10] (0,0) circle (1.3cm);
+        \draw[thick, fill=blue!20] (0,0) circle (0.6cm);
+        \fill[red] (0,0) circle (2.5pt) node[below right, font=\footnotesize] {$\theta$};
+        \foreach \pt in {(1.1,1.1), (0.9,1.2), (1.2,0.95), (1.0,0.85), (1.3,1.15), (1.05,1.3)} {
+            \fill[warnred] \pt circle (2pt);
+        }
+        \node[below, font=\small\bfseries] at (0,-2.3) {Yanlı \& Düşük Varyans};
+        \node[below, font=\footnotesize, text=warnred] at (0,-2.8) {($b(\hat{\theta}) \neq 0$, Dar Yayılım)};
+    \end{scope}
+
+    % Panel 3: Yansız & Yüksek Varyans
+    \begin{scope}[shift={(11,0)}]
+        \draw[thick, fill=blue!5] (0,0) circle (2cm);
+        \draw[thick, fill=blue!10] (0,0) circle (1.3cm);
+        \draw[thick, fill=blue!20] (0,0) circle (0.6cm);
+        \fill[red] (0,0) circle (2.5pt) node[below right, font=\footnotesize] {$\theta$};
+        \foreach \pt in {(1.2,0.4), (-1.3,0.2), (0.3,1.4), (-0.4,-1.3), (0.8,-0.9), (-0.9,-0.7), (0.1,0.2)} {
+            \fill[examyellow!80!black] \pt circle (2pt);
+        }
+        \node[below, font=\small\bfseries] at (0,-2.3) {Yansız \& Yüksek Varyans};
+        \node[below, font=\footnotesize, text=examyellow!90!black] at (0,-2.8) {($E(\hat{\theta})=\theta$, Geniş Yayılım)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Tahmin edicilerin doğruluk (yansızlık) ve hassasiyet (varyans) davranışlarının hedef tahtası üzerindeki temsili.}
+\end{figure}
+
+\begin{ornek}{Örneklem Ortalaması ve Örneklem Varyansının Yansızlığı (Sayfa 43)}
+$X_1, X_2, \dots, X_n$ bağımsız ve aynı dağılımlı (\textit{i.i.d.}) rastlantı değişkenleri olsun. $E(X_i) = \mu$ ve $V(X_i) = \sigma^2 < \infty$ verilsin.
+\begin{enumerate}
+    \item Örneklem ortalaması $\hat{\mu} = \bar{X} = \frac{1}{n}\sum_{i=1}^n X_i$'nin $\mu$ için yansızlığı:
+    \[
+    E(\bar{X}) = E\left( \frac{1}{n} \sum_{i=1}^n X_i \right) = \frac{1}{n} \sum_{i=1}^n E(X_i) = \frac{1}{n} \cdot (n\mu) = \mu \implies b_\mu(\bar{X}) = 0.
+    \]
+    \item Örneklem varyansı $S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2 = \frac{\sum X_i^2 - n\bar{X}^2}{n-1}$'nin $\sigma^2$ için yansızlığı:
+    
+    Her bir $X_i$ için $E(X_i^2) = \sigma^2 + \mu^2$ ve $\bar{X}$ için $E(\bar{X}^2) = \frac{\sigma^2}{n} + \mu^2$ olduğundan:
+    \begin{align*}
+    E(S^2) &= \frac{1}{n-1} \left\{ \sum_{i=1}^n E(X_i^2) - n E(\bar{X}^2) \right\} \\
+    &= \frac{1}{n-1} \left\{ n(\sigma^2 + \mu^2) - n \left( \frac{\sigma^2}{n} + \mu^2 \right) \right\} \\
+    &= \frac{1}{n-1} \left\{ n\sigma^2 - \sigma^2 \right\} = \frac{n-1}{n-1}\sigma^2 = \sigma^2.
+    \end{align*}
+    Böylece $E(S^2) = \sigma^2$ bulunarak $S^2$'nin $\sigma^2$ için \textbf{yansız} olduğu ispatlanmış olur.
+\end{enumerate}
+\end{ornek}
+
+---
+
+\section{Yansızlığın Tuzakları: Patolojik Karşı-Örnek}
+
+\begin{sezgi}{Yansız Olmak Her Zaman İyi Olmak Anlamına Gelmez!}
+Bir tahmin edicinin sadece ortalamada doğru olması onun mantıklı bir tahmin ürettiğini garanti etmez. Bir insan bir ayağını kaynar suya, diğer ayağını buz kütlesine koysa "ortalama sıcaklığı" mükemmeldir; fakat kendisi perişan haldedir! İstatistikte de böyledir.
+\end{sezgi}
+
+\begin{ornek}{Poisson Dağılımı ve $(-1)^X$ Patolojisi (Sayfa 44)}
+$X \sim \text{Poisson}(\theta)$ olsun ($n=1$ tek bir gözlem). Tahmin edilmek istenen parametre fonksiyonu $\tau(\theta) = e^{-2\theta}$ olsun.  
+$\hat{\tau} = (-1)^X$ tahmin edicisini tanımlayalım. Bu tahmin edicinin beklenen değeri:
+\begin{align*}
+E_\theta\left( (-1)^X \right) &= \sum_{x=0}^\infty (-1)^x \frac{e^{-\theta} \theta^x}{x!} = e^{-\theta} \sum_{x=0}^\infty \frac{(-\theta)^x}{x!} = e^{-\theta} \cdot e^{-\theta} = e^{-2\theta}.
+\end{align*}
+\textbf{Çarpıcı Çıkarım:} $E_\theta\left((-1)^X\right) = e^{-2\theta}$ olduğundan $\hat{\tau} = (-1)^X$ matematiksel olarak $e^{-2\theta}$ için \textbf{kesinlikle yansızdır!}  
+Fakat parametre $\theta > 0$ iken hedef değer $\tau(\theta) = e^{-2\theta} \in (0, 1)$ aralığındadır. Oysa $(-1)^X$ tahmin edicisi $X$ çift ise $+1$, tek ise $-1$ değerini alır! Tahmin edici asla $(0, 1)$ aralığında bir değer üretemez. Dolayısıyla:
+\[
+\text{Yansız olmak } \centernot\implies \text{İyi bir tahmin edici olmak!}
+\]
+\end{ornek}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        width=11cm, height=5.5cm,
+        xlabel={$\theta$},
+        ylabel={Değer},
+        xmin=0, xmax=3.5,
+        ymin=-1.25, ymax=1.25,
+        axis lines=box,
+        grid=both,
+        grid style={line width=.1pt, draw=gray!20},
+        legend style={at={(0.97,0.8)}, anchor=east}
+    ]
+        \addplot[domain=0:3.5, samples=100, smooth, line width=1.5pt, primaryblue] {exp(-2*x)};
+        \addlegendentry{Gerçek Parametre: $\tau(\theta) = e^{-2\theta}$}
+
+        \addplot[dashed, line width=1.2pt, defgreen, domain=0:3.5] {1};
+        \addlegendentry{$\hat{\tau} = +1$ ($X$ çift ise)}
+
+        \addplot[dashed, line width=1.2pt, warnred, domain=0:3.5] {-1};
+        \addlegendentry{$\hat{\tau} = -1$ ($X$ tek ise)}
+    \end{axis}
+\end{tikzpicture}
+\caption{$(-1)^X$ tahmin edicisinin aldığı ayrık değerler ($\{-1, +1\}$) ile tahmin edilmek istenen sürekli $e^{-2\theta}$ eğrisinin karşılaştırması.}
+\end{figure}
+
+---
+
+\section{Ders Notundaki Ödevin Ayrıntılı Çözümü}
+
+\begin{odev}{Sayfa 44'teki Ödev: $e^{-2\bar{X}}$'in $e^{-2\theta}$ İçin Yansız Olmadığının İspatı}
+\textbf{Soru Metni:} $X_1, X_2, \dots, X_n \sim \text{Poisson}(\theta)$ bağımsız ve aynı dağılımlı örneklem olsun. $\hat{\tau} = e^{-2\bar{X}}$ tahmin edicisinin $\tau(\theta) = e^{-2\theta}$ parametresi için yansız olmadığını gösteriniz.
+
+\bigskip
+\textbf{1. Çözüm Yolu (Moment Çıkaran Fonksiyon İle):}
+$Y = \sum_{i=1}^n X_i \sim \text{Poisson}(n\theta)$ olduğundan:
+\[
+E\left( e^{-2\bar{X}} \right) = E\left( e^{-\frac{2}{n} Y} \right) = M_Y\left(-\frac{2}{n}\right) = \exp\left\{ n\theta \left( e^{-2/n} - 1 \right) \right\}
+\]
+Konvekslikten dolayı $e^{-2/n} > 1 - \frac{2}{n} \implies n\theta(e^{-2/n} - 1) > -2\theta$ olur. Üstel fonksiyon artan olduğundan:
+\[
+E\left( e^{-2\bar{X}} \right) > e^{-2\theta}
+\]
+Sonuç olarak $E(e^{-2\bar{X}}) \neq e^{-2\theta}$ olup $e^{-2\bar{X}}$ \textbf{yansız değildir} (pozitif yanlıdır).
+
+\bigskip
+\textbf{2. Çözüm Yolu (Jensen Eşitsizliği İle Tek Satırda İspat):}
+$g(u) = e^{-2u}$ fonksiyonunun 2. türevi $g''(u) = 4e^{-2u} > 0$ olduğundan kesinlikle konvekstir. Jensen eşitsizliğine göre:
+\[
+E(g(\bar{X})) > g(E(\bar{X})) \implies E\left( e^{-2\bar{X}} \right) > e^{-2 E(\bar{X})} = e^{-2\theta}
+\]
+\textbf{Asemptotik Analiz:} $n \to \infty$ iken Taylor serisinden $n(e^{-2/n}-1) \to -2$ olduğundan $\lim_{n \to \infty} E(e^{-2\bar{X}}) = e^{-2\theta}$ olur. Yani tahmin edici \textbf{asemptotik olarak yansız ve tutarlıdır}.
+\end{odev}
+
+---
+
+\section{Tahmin Edicilerin Özellikleri: Tutarlılık (Consistency)}
+
+\begin{tanim}{Tutarlılık (Consistency)}
+$T_n$ tahmin edici dizisi olsun. Her $\varepsilon > 0$ için:
+\[
+\lim_{n\to\infty} P\left( |T_n - \theta| > \varepsilon \right) = 0 \iff T_n \xrightarrow{P} \theta
+\]
+ise $T_n$'ye $\theta$ için \textbf{tutarlı tahmin edici} denir.
+\end{tanim}
+
+\begin{teorem}{Tutarlılık İçin Yeter Koşul (MSE Kriteri)}
+Markov ve Chebyshev eşitsizliklerinden ötürü:
+\[
+P(|T_n - \theta| > \varepsilon) \le \frac{\text{MSE}(T_n)}{\varepsilon^2} = \frac{V(T_n) + [b_\theta(T_n)]^2}{\varepsilon^2}
+\]
+Eğer:
+\[
+\lim_{n\to\infty} \text{MSE}(T_n) = 0 \iff \left( \lim_{n\to\infty} V(T_n) = 0 \quad \text{ve} \quad \lim_{n\to\infty} E(T_n) = \theta \right)
+\]
+sağlanıyorsa, $T_n$ tahmin edicisi \textbf{kesinlikle tutarlıdır} ($T_n \xrightarrow{P} \theta$).
+\end{teorem}
+
+---
+
+\section{Sayfa 45'teki Örnek: \texorpdfstring{$f(x;\theta) = \frac{1}{2}(1 + \theta x)$}{f(x;theta) = 1/2(1 + theta x)} Dağılımı}
+
+\begin{ornek}{Yansızlık ve Tutarlılık İncelemesi}
+$f(x;\theta) = \frac{1}{2}(1 + \theta x), \; -1 < x < 1, \; -1 \le \theta \le 1$ olsun. $\hat{\theta} = 3\bar{X}_n$ tahmin edicisinin yansız ve tutarlı olduğunu gösteriniz.
+
+\bigskip
+\textbf{Adım Adım Çözüm:}
+\begin{enumerate}
+    \item $E(X) = \int_{-1}^1 x \frac{1}{2}(1+\theta x) dx = \left[ \frac{x^2}{4} + \frac{\theta x^3}{6} \right]_{-1}^1 = \frac{\theta}{3}$.
+    \item $E(\hat{\theta}) = E(3\bar{X}_n) = 3 E(X) = 3 \left(\frac{\theta}{3}\right) = \theta \implies$ \textbf{Yansızdır!}
+    \item $E(X^2) = \int_{-1}^1 x^2 \frac{1}{2}(1+\theta x) dx = \left[ \frac{x^3}{6} + \frac{\theta x^4}{8} \right]_{-1}^1 = \frac{1}{3}$.
+    \item $V(X) = E(X^2) - [E(X)]^2 = \frac{1}{3} - \left(\frac{\theta}{3}\right)^2 = \frac{3-\theta^2}{9}$.
+    \item $V(\hat{\theta}) = V(3\bar{X}_n) = 9 \frac{V(X)}{n} = 9 \frac{3-\theta^2}{9n} = \frac{3-\theta^2}{n}$.
+    \item $\lim_{n \to \infty} V(\hat{\theta}) = 0$ ve $b(\hat{\theta})=0$ olduğundan $\lim_{n \to \infty} \text{MSE}(\hat{\theta}) = 0 \implies \boxed{\hat{\theta} \xrightarrow{P} \theta}$ (\textbf{Tutarlıdır!}).
+\end{enumerate}
+\end{ornek}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        width=10.5cm, height=5.5cm,
+        xlabel={$x$},
+        ylabel={$f(x;\theta)$},
+        xmin=-1.1, xmax=1.1,
+        ymin=0, ymax=1.15,
+        axis lines=box,
+        grid=both,
+        grid style={line width=.1pt, draw=gray!20},
+        legend style={at={(0.04,0.94)}, anchor=north west}
+    ]
+        \addplot[domain=-1:1, samples=50, line width=1.2pt, dashed, black] {0.5};
+        \addlegendentry{$\theta = 0$ (Düzgün Dağılım)}
+
+        \addplot[domain=-1:1, samples=50, line width=1.4pt, primaryblue] {0.5*(1 + 0.8*x)};
+        \addlegendentry{$\theta = 0.8$ (Pozitif Eğim)}
+
+        \addplot[domain=-1:1, samples=50, line width=1.4pt, warnred] {0.5*(1 - 0.8*x)};
+        \addlegendentry{$\theta = -0.8$ (Negatif Eğim)}
+    \end{axis}
+\end{tikzpicture}
+\caption{$f(x;\theta) = \frac{1}{2}(1 + \theta x)$ yoğunluk fonksiyonunun farklı $\theta$ değerleri altındaki davranışı.}
+\end{figure}
+
+\begin{uyari}
+\textbf{Sayfa 45'teki Cebirsel İşaret Karalaması ve Doğrusu:}  
+Varyans daima $V(X) = E(X^2) - [E(X)]^2$ olduğundan aradaki işaret \textbf{kesinlikle eksi} olmalıdır:
+\[
+V(X) = \frac{1}{3} - \left(\frac{\theta}{3}\right)^2 = \frac{1}{3} - \frac{\theta^2}{9} = \frac{3 - \theta^2}{9}.
+\]
+\end{uyari}
+
+---
+
+\section{7. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu}
+
+\begin{table}[ht]
+\centering
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\toprule
+\textbf{Özellik / Kriter} & \textbf{Matematiksel Şart} & \textbf{Sezgisel Anlamı / Ne İfade Eder?} \\ \midrule
+\textbf{Yansızlık} & $E(\hat{\theta}) = \theta \iff \text{Bias} = 0$ & Tahminlerin ortalaması tam hedefi bulur; sistematik kayma yoktur. \\
+\textbf{Tutarlılık} & $\lim_{n \to \infty} P(|\hat{\theta}_n - \theta| > \epsilon) = 0$ & Örneklem büyüdükçe hata olasılığı sıfıra iner; tahmin parametreye kilitlenir. \\
+\textbf{MSE Kriteri} & $\lim_{n \to \infty} [V(\hat{\theta}_n) + \text{Bias}^2] = 0$ & Tutarlılığı garanti eden pratik limit şartı. \\
+\textbf{Jensen Eşitsizliği} & $g$ konveks ise $E(g(X)) > g(E(X))$ & Doğrusal olmayan dönüşümlerin yansızlığı bozduğunu gösterir. \\
+\textbf{Örneklem Ortalaması} & $E(\bar{X}) = \mu, \; V(\bar{X}) = \sigma^2/n$ & Her zaman hem yansız hem de tutarlı bir tahmin edicidir. \\
+\textbf{Örneklem Varyansı} & $E(S^2) = \sigma^2, \; V(S^2) \to 0$ & $n-1$'e bölünmesi sayesinde yansız ve tutarlı varyans tahminidir. \\ \bottomrule
+\end{tabularx}
+\caption{7. Haftanın Nokta Tahmini Kriterleri ve Özet Karşılaştırması}
+\end{table}
+
+\end{document}

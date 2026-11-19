@@ -1,0 +1,212 @@
+\documentclass[11pt,a4paper,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[turkish]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.2cm, top=2.5cm, bottom=2.5cm}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{babel,arrows.meta,positioning,calc,shapes.geometric}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{centernot}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage{docmute}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    citecolor=defgreen,
+    urlcolor=primaryblue,
+    bookmarksnumbered=true,
+    pdfstartview={XYZ null null 1.00},
+    pdftitle={Istatistik Teorisi Ders Kitabi},
+    pdfauthor={Istatistik Teorisi Notlari}
+}
+
+%% Renk Paleti
+\definecolor{primaryblue}{RGB}{25, 60, 120}
+\definecolor{secondaryblue}{RGB}{235, 242, 250}
+\definecolor{defgreen}{RGB}{34, 112, 60}
+\definecolor{lightgreen}{RGB}{236, 247, 240}
+\definecolor{warnred}{RGB}{168, 38, 38}
+\definecolor{lightred}{RGB}{253, 242, 242}
+\definecolor{examyellow}{RGB}{180, 115, 20}
+\definecolor{lightyellow}{RGB}{254, 250, 238}
+
+% Aliases for Hafta 01-06 color names
+\definecolor{mainblue}{RGB}{25, 60, 120}
+\definecolor{okgreen}{RGB}{34, 112, 60}
+\definecolor{alertred}{RGB}{168, 38, 38}
+\definecolor{purp}{RGB}{128, 0, 128}
+\definecolor{boxbg}{RGB}{245, 248, 252}
+\definecolor{tealblue}{RGB}{0, 120, 130}
+
+%% Kutu Tanımları
+\tcbset{
+    commonbox/.style={
+        breakable,
+        enhanced,
+        arc=2mm,
+        boxrule=1pt,
+        left=4mm, right=4mm, top=3mm, bottom=3mm
+    }
+}
+
+\newtcolorbox[auto counter, number within=chapter]{tanim}[2][]{
+    commonbox,
+    colback=lightgreen,
+    colframe=defgreen,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={Tan\i m \thetcbcounter\notblank{#2}{ --- #2}{}},
+    #1
+}
+
+\newtcolorbox[auto counter, number within=chapter]{teorem}[2][]{
+    commonbox,
+    colback=secondaryblue,
+    colframe=primaryblue,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={Teorem \thetcbcounter\notblank{#2}{ --- #2}{}},
+    #1
+}
+
+\newtcolorbox[auto counter, number within=chapter]{ornek}[2][]{
+    commonbox,
+    colback=lightyellow,
+    colframe=examyellow,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={\"{O}rnek \thetcbcounter\notblank{#2}{ --- #2}{}},
+    #1
+}
+
+\newtcolorbox[auto counter, number within=chapter]{uyari}[1][]{
+    commonbox,
+    colback=lightred,
+    colframe=warnred,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={Hata Tespiti / Uyar\i\ \thetcbcounter\notblank{#1}{ --- #1}{}},
+}
+
+\newtcolorbox[auto counter, number within=chapter]{odev}[2][]{
+    commonbox,
+    colback=lightgreen!60!secondaryblue,
+    colframe=defgreen!80!black,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={\"{O}dev \c{C}\"{o}z\"{u}m\"{u} \thetcbcounter\notblank{#2}{ --- #2}{}},
+    #1
+}
+
+\newtcolorbox[auto counter, number within=chapter]{sezgi}[2][]{
+    commonbox,
+    colback=tealblue!5!white,
+    colframe=tealblue,
+    coltitle=white,
+    fonttitle=\bfseries,
+    title={Sezgisel Bak\i\c{s} ve Basit Anlat\i m\notblank{#2}{ --- #2}{}},
+    #1
+}
+
+%% Sayfa Başlıkları
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\bfseries\color{primaryblue}\leftmark}
+\fancyhead[R]{\small\bfseries\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+
+\begin{document}
+\shorthandoff{=}
+
+%% Kapak
+\begin{titlepage}
+\centering
+\vspace*{1.5cm}
+{\Huge\bfseries\color{primaryblue} \.{I}STAT\.{I}ST\.{I}K TEOR\.{I}S\.{I} \\[0.4em] \LARGE DERS K\.{I}TABI}\\[1.5cm]
+{\Large\bfseries Kapsaml\i\ Teori, Matematiksel \.{I}spatlar, Hata D\"{u}zeltmeleri,\\[0.3em]
+\"{O}zg\"{u}n TikZ Grafikleri ve Ayd\i nlat\i lm\i \c{s} \"{O}dev \c{C}\"{o}z\"{u}mleri}\\[2cm]
+
+\begin{tcolorbox}[enhanced, colback=secondaryblue, colframe=primaryblue, width=0.88\textwidth, arc=2mm, boxrule=1pt]
+\centering\large
+\textbf{Kaynak Materyal:}\\
+45 Sayfal\i k Orijinal El Yaz\i s\i\ Ders Notlar\i\ (2023 Bahar D\"{o}nemi)\\
+\vspace{0.4em}
+\normalsize
+01--05.pdf $\cdot$ 06--11.pdf $\cdot$ 12--18.pdf $\cdot$ 19--24.pdf $\cdot$ 25--36.pdf $\cdot$ 37--42.pdf $\cdot$ 43--45.pdf
+\end{tcolorbox}
+
+\vfill
+{\large \textbf{Haftal\i k Ders Notlar\i ndan Dinamik Olarak Ba\u{g}lanan Ana Metin}}\\[0.5em]
+{\large 2026}
+\vspace*{1cm}
+\end{titlepage}
+
+\frontmatter
+
+\chapter*{\"{O}ns\"{o}z}
+Bu ders kitab\i, Lisans ve Lisans\"{u}st\"{u} d\"{u}zey \textbf{\.{I}statistik Teorisi} dersi kapsam\i ndaki t\"{u}m temel konular\i\ tek bir kaynakta toplamak amac\i yla haz\i rlanm\i\c{s}t\i r. 
+
+Klasik teorik anlat\i mlar\i n aksine, bu kitapta her matematiksel ispat\i n ard\i ndaki \textbf{sezgisel d\"{u}\c{s}\"{u}nce}, g\"{u}nl\"{u}k hayat analojileri, orijinal el yaz\i s\i\ notlardaki \textbf{hata d\"{u}zeltmeleri} ve \textbf{vekt\"{o}rel TikZ grafikleri} titizlikle i\c{s}lenmi\c{s}tir.
+
+Kitap, \texttt{haftalik\_notlar/} alt\i ndaki m\"{o}d\"{u}ler haftal\i k not dosyalar\i n\i\ dinamik olarak (\texttt{\textbackslash docmute} ve \texttt{\textbackslash input}) \c{c}ekerek olu\c{s}turulmaktad\i r. B\"{o}ylece haftal\i k notlarda yap\i lan herhangi bir iyile\c{s}tirme veya d\"{u}zeltme, do\u{g}rudan bu kitaba yans\i maktad\i r.
+
+\tableofcontents
+
+\mainmatter
+
+%% Haftalık alt belgelerin başlık/özet davranışları
+\renewcommand{\maketitle}{}
+\newenvironment{abstract}{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=secondaryblue!50,
+    colframe=primaryblue!70,
+    arc=2mm,
+    boxrule=0.8pt,
+    left=4mm, right=4mm, top=3mm, bottom=3mm
+  ]
+  \small\textbf{Haftal\i k Konu ve B\"{o}l\"{u}m \"{O}zeti:}\par\smallskip\ignorespaces
+}{%
+  \end{tcolorbox}\vspace{1em}%
+}
+
+%% BÖLÜM 1
+\chapter{Momentler, MGF ve Temel E\c{s}itsizlikler}
+\input{../haftalik_notlar/Hafta_01.tex}
+
+%% BÖLÜM 2
+\chapter{Rastgele De\u{g}i\c{s}kenlerin D\"{o}n\"{u}\c{s}\"{u}mleri ve \"{O}zel Da\u{g}\i l\i mlar}
+\input{../haftalik_notlar/Hafta_02.tex}
+
+%% BÖLÜM 3
+\chapter{Çok Boyutlu D\"{o}n\"{u}\c{s}\"{u}mler ve Da\u{g}\i l\i mlar ($t$, $F$, Beta)}
+\input{../haftalik_notlar/Hafta_03.tex}
+
+%% BÖLÜM 4
+\chapter{S\i ra \.{I}statistikleri ve Asimptotik Limit Da\u{g}\i l\i mlar\i}
+\input{../haftalik_notlar/Hafta_04.tex}
+
+%% BÖLÜM 5
+\chapter{Stokastik Yak\i nsama ve Asimptotik Teori}
+\input{../haftalik_notlar/Hafta_05.tex}
+
+%% BÖLÜM 6
+\chapter{Nokta Tahmini, Sapmas\i zl\i k ve Tutarl\i l\i k}
+\input{../haftalik_notlar/Hafta_07.tex}
+
+%% BÖLÜM 7
+\chapter{En \c{C}ok Olabilirlik Tahmini (MLE) ve CRLB Alt S\i n\i r\i}
+\input{../haftalik_notlar/Hafta_06.tex}
+
+\end{document}

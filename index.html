@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akademik Ders Portalı - İstatistik & Olasılık</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="logo-badge">PORTAL</span>
+    <span>Akademik Notlar</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Ana Sayfa</a></li>
+    <li><a href="istatistik-teorisi.html" class="">İstatistik Teorisi</a></li>
+    <li><a href="olasilik-teorisi.html" class="">Olasılık & Yakınsama</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <main class="main-content" style="max-width: 1100px; padding-top: 3rem;">
+    <!-- Hero Banner -->
+    <section class="hero">
+      <span class="stat-pill" style="margin-bottom: 1rem; display: inline-block;">🎓 Lisansüstü & Lisans Ders Kaynakları</span>
+      <h1>Akademik Ders ve Teori Portalı</h1>
+      <p>
+        İstatistik teorisi, olasılık kalkülüsü ve matematiksel modelleme konularında hazırlanmış tam kapsamlı ders notları, çözümlü sorular ve yayınlanmış ders kitapları.
+      </p>
+      <div class="hero-badges">
+        <div class="stat-pill">📘 2 Kapsamlı Ders</div>
+        <div class="stat-pill">📅 7 Haftalık Tam Müfredat</div>
+        <div class="stat-pill">📐 MathJax 3 ile Vektörel Formüller</div>
+        <div class="stat-pill">📄 50+ Sayfalık PDF Ders Kitapları</div>
+      </div>
+    </section>
+
+    <!-- Course Cards Grid -->
+    <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--text-primary);">Aktif Dersler</h2>
+    <div class="course-grid">
+      
+      <!-- Course 1 -->
+      <div class="course-card">
+        <span class="course-badge badge-blue">Ders 1 • Aktif</span>
+        <h2>İstatistik Teorisi</h2>
+        <p>
+          Momentler, MÇF/OÇF/Karakteristik fonksiyonlar, Merkezi Limit Teoremi, Örnekleme Dağılımları (Student-t, Fisher-F, $\chi^2$), Nokta Tahmini, Yansızlık ve En Çok Olabilirlik Yöntemi (MLE).
+        </p>
+        <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          <strong>İçerik:</strong> 7 Hafta • 40+ Çözümlü Teorem • Tam Ders Kitabı
+        </div>
+        <div class="course-card-actions">
+          <a href="istatistik-teorisi.html" class="btn-primary">📖 Notları İncele</a>
+          <a href="pdf/Istatistik_Teorisi_Tam_Notlar.pdf" target="_blank" class="btn-pdf">📄 Kitap PDF</a>
+        </div>
+      </div>
+
+      <!-- Course 2 -->
+      <div class="course-card">
+        <span class="course-badge badge-purple">Ders 2 • Aktif</span>
+        <h2>Olasılık & Yakınsama Teorisi</h2>
+        <p>
+          Rassal değişken dizilerinin 4 temel yakınsama türü: Olasılıkta Yakınsama, Hemen Hemen Kesin Yakınsama, Momentlerde ($L^p$) Yakınsama ve Dağılımda Yakınsama ile WLLN ispatları.
+        </p>
+        <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          <strong>İçerik:</strong> 4 Yakınsama Modeli • İspatlar & Soru Çözümleri
+        </div>
+        <div class="course-card-actions">
+          <a href="olasilik-teorisi.html" class="btn-primary">📖 Notları İncele</a>
+          <a href="pdf/dersler.pdf" target="_blank" class="btn-pdf">📄 PDF Dokümanı</a>
+        </div>
+      </div>
+
+      <!-- Course 3 (Future) -->
+      <div class="course-card" style="border-style: dashed;">
+        <span class="course-badge badge-green">Yeni Ders Ekleme Altyapısı</span>
+        <h2>Matematik & İleri Konular</h2>
+        <p>
+          Lineer Cebir, Ekonometri, Stokastik Süreçler ve Zaman Serileri gibi derslerinizi aynı modüler şablonla dakikalar içinde sisteme dahil edebilirsiniz.
+        </p>
+        <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          <strong>Mimari:</strong> Modüler HTML/JS/CSS • Sıfır Bağımlılık
+        </div>
+        <div class="course-card-actions">
+          <span class="btn-secondary" style="cursor: default;">⏳ Genişlemeye Hazır</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Week Navigation Section -->
+    <section style="margin-top: 3.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 2rem;">
+      <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--text-primary);">İstatistik Teorisi: Haftalık Hızlı Erişim</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">İstediğiniz haftanın doğrudan konusunu açabilir veya müstakil sayfasını okuyabilirsiniz:</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+        <a href="hafta-01.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>1. Hafta</strong><br/><small style="color: var(--text-muted);">Momentler & MÇF</small></div>
+        </a>
+        <a href="hafta-02.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>2. Hafta</strong><br/><small style="color: var(--text-muted);">OÇF & Karakteristik Fonk.</small></div>
+        </a>
+        <a href="hafta-03.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>3. Hafta</strong><br/><small style="color: var(--text-muted);">Limitler & CLT İspatı</small></div>
+        </a>
+        <a href="hafta-04.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>4. Hafta</strong><br/><small style="color: var(--text-muted);">Kolmogorov & Markov Kriteri</small></div>
+        </a>
+        <a href="hafta-05.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>5. Hafta</strong><br/><small style="color: var(--text-muted);">Örnekleme Dağılımları (t, F)</small></div>
+        </a>
+        <a href="hafta-06.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>6. Hafta</strong><br/><small style="color: var(--text-muted);">Nokta Tahmini & Yansızlık</small></div>
+        </a>
+        <a href="hafta-07.html" class="btn-secondary" style="justify-content: flex-start; text-align: left; padding: 0.75rem 1rem;">
+          <div><strong>7. Hafta</strong><br/><small style="color: var(--text-muted);">MLE & CRLB Sınırı</small></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Akademik Notlar ve Ders Kitapları Portalı</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller MathJax 3 ile işlenmekte ve LaTeX standartlarına uygun olarak sunulmaktadır.</p>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

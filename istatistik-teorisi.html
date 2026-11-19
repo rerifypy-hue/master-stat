@@ -1,0 +1,4024 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İstatistik Teorisi - Tam Ders Notları & Kitap</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="logo-badge">PORTAL</span>
+    <span>Akademik Notlar</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="">Ana Sayfa</a></li>
+    <li><a href="istatistik-teorisi.html" class="active">İstatistik Teorisi</a></li>
+    <li><a href="olasilik-teorisi.html" class="">Olasılık & Yakınsama</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Ders Kitabı & İndirme</div>
+      <div style="margin-bottom: 1.5rem; padding: 0.5rem;">
+        <a href="pdf/Istatistik_Teorisi_Tam_Notlar.pdf" target="_blank" class="btn-pdf" style="width: 100%; justify-content: center; margin-bottom: 0.5rem;">
+          📚 Kitap PDF (Tamamı)
+        </a>
+        <a href="index.html" class="btn-secondary" style="width: 100%; justify-content: center; font-size: 0.85rem;">
+          🏠 Portala Dön
+        </a>
+      </div>
+      
+      <div class="sidebar-title">Haftalık Konular</div>
+      <ul class="sidebar-menu">
+        
+    <li>
+      <a href="#hafta-1">
+        <span>📌 Hafta 1</span>
+        <span class="badge">Hafta 1</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="#hafta-2">
+        <span>📌 Hafta 2</span>
+        <span class="badge">Hafta 2</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="#hafta-3">
+        <span>📌 Hafta 3</span>
+        <span class="badge">Hafta 3</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="#hafta-4">
+        <span>📌 Hafta 4</span>
+        <span class="badge">Hafta 4</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="#hafta-5">
+        <span>📌 Hafta 5</span>
+        <span class="badge">Hafta 5</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="#hafta-6">
+        <span>📌 Hafta 6</span>
+        <span class="badge">Hafta 6</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="#hafta-7">
+        <span>📌 Hafta 7</span>
+        <span class="badge">Hafta 7</span>
+      </a>
+    </li>
+    
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="course-header" style="margin-bottom: 2.5rem;">
+        <div class="course-meta-bar">
+          <span>📚 Ders Kodu: STAT-501</span>
+          <span>📅 Kapsam: 7 Hafta + Kitap</span>
+          <span>✍️ Matematiksel İstatistik & Çıkarsama</span>
+        </div>
+        <h1 class="course-main-title">İstatistik Teorisi Ders Notları</h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+          Bu ders sayfası, olasılık dağılımlarından başlayarak momentler, eşitsizlikler, yakınsama türleri, Merkezi Limit Teoremi, örnekleme dağılımları, nokta tahmini ve En Çok Olabilirlik Yöntemi (MLE) konularını adım adım, çözümlü örnekler ve ispatlarıyla kapsamaktadır.
+        </p>
+      </div>
+
+      
+    <section id="hafta-1" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 1</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">1. Hafta: Momentler, Eşitsizlikler ve MÇF</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_01.pdf" target="_blank" class="btn-pdf">📄 Hafta 1 PDF İndir</a>
+          <a href="hafta-01.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 1. haftasında yer alan <strong>Moment Kavramı (Orijine ve Ortalamaya Göre Momentler)</strong>, <strong>Çarpıklık ve Basıklık</strong>, <strong>Markov, Chebyshev ve Jensen Eşitsizlikleri</strong>, <strong>Moment Çıkaran Fonksiyon (MÇF)</strong>, <strong>Bağımsız Toplamlar ve Teklik Teoremi</strong>, <strong>Euler Gamma Fonksiyonu</strong> ve $(1/2) = {}$ ispatını içermektedir. Ağır matematiksel integrallerin yanında her kavramın arkasındaki sezgisel mantık, el yazısı ders notlarındaki kritik işlem hatalarının düzeltmeleri, vektörel TikZ grafikleri ve adım adım sınav tipi çözümlerle desteklenmiştir.</div>
+<hr class="my-4"/>
+<h2 id="giri-ve-moment-kavram" class="section-title"><span class="title-anchor">§</span> Giriş ve Moment Kavramı</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Moment Nedir ve Neden İhtiyaç Duyarız?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir olasılık dağılımı ($f(x)$) elimizde sonsuz sayıda noktadan oluşan karmaşık bir eğri veya veri yığını olarak bulunur. Bu eğrinin tüm geometrik ve istatistiksel karakterini birkaç kritik sayı ile özetlemek isteriz:
+</p>
+<ul class="course-list">
+<li><strong>1. Moment ($$ - Ortalama):</strong> Dağılımın sayı doğrusundaki <strong>ağırlık merkezidir</strong>. Eğri homojen ağırlıklı bir tahterevalli olsaydı, parmağımızı tam nereye koyarsak dengede kalırdı? İşte bu denge noktası $E(X)$'tir.</li>
+<li><strong>2. Merkezsel Moment ($^2$ - Varyans):</strong> Verilerin bu ağırlık merkezinden ne kadar uzağa saçıldığını, yani <strong>belirsizliğin ve riskin büyüklüğünü</strong> ölçer.</li>
+<li><strong>3. Moment (Çarpıklık / Skewness):</strong> Dağılımın simetrisini inceler. Kuyruk sağa doğru mu uzanıyor (pozitif çarpık), yoksa sola doğru mu (negatif çarpık)?</li>
+<li><strong>4. Moment (Basıklık / Kurtosis):</strong> Dağılımın tepe noktasının sivriliğini ve kuyrukların kalınlığını (uç değer riskini / black swan olaylarını) ölçer.</li>
+</ul>
+<p class="course-paragraph">
+Kısacası momentler, bir olasılık dağılımının boyunu, kilosunu ve karakteristik hatlarını belirleyen <strong>biyometrik kimlik kartıdır</strong>.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Moment Tanımları</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir $X$ rastgele değişkeni için:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Orijine Göre $k$. Moment ($k$. Ham / Merkezsel Olmayan Moment - Raw Moment):</strong>
+    $$
+<p class="course-paragraph">
+        '_k = E(X^k) = 
+        {cases}
+            _x x^k P(X = x), & {kesikli durumda} \\[0.5em]
+            _{-}^{} x^k f(x) \, dx, & {sürekli durumda}
+        {cases}
+</p>
+$$
+<p class="course-paragraph">
+    Özel olarak $k=1$ için 1. ham moment kitle ortalamasını ($$) verir:
+</p>
+    $$
+<p class="course-paragraph">
+        '_1 = E(X) = 
+</p>
+$$</li>
+<li><strong>$k$. Merkezsel Moment (Central Moment):</strong>
+<p class="course-paragraph">
+    Ortalama ($$) etrafındaki sapmaların kuvvetlerinin beklenen değeridir:
+</p>
+    $$
+<p class="course-paragraph">
+        _k = E = 
+        {cases}
+            _x (x - )^k P(X = x), & {kesikli durumda} \\[0.5em]
+            _{-}^{} (x - )^k f(x) \, dx, & {sürekli durumda}
+        {cases}
+</p>
+$$
+<p class="course-paragraph">
+    Özel olarak:
+</p>
+    <ul class="course-list">
+<li>$k=1$ için: $_1 = E[X - ] = E(X) -  = 0$ (Ortalamadan sapmaların beklenen değeri daima sıfırdır).</li>
+<li>$k=2$ için: $_2 = E = V(X) = ^2$ (Varyans).</li>
+</ul></li>
+</ol>
+  </div>
+</div>
+<h3 id="merkezsel-momentler-ile-ham-momentler-aras-ndaki-cebirsel-i-li-ki" class="subsection-title">Merkezsel Momentler ile Ham Momentler Arasındaki Cebirsel İlişki</h3>
+<p class="course-paragraph">
+Binom açılımı $(X - )^k = _{j=0}^k {k}{j} X^j (-)^{k-j}$ kullanılarak merkezsel momentler ham momentler cinsinden yazılabilir:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    _2 &= E = E(X^2 - 2 X + ^2) = E(X^2) - 2 E(X) + ^2 = '_2 - ('_1)^2 \\
+    _3 &= E = '_3 - 3'_2 '_1 + 2('_1)^3 \\
+    _4 &= E = '_4 - 4'_3 '_1 + 6'_2 ('_1)^2 - 3('_1)^4
+{aligned}
+</p>
+$$
+<h3 id="standartla-t-r-lm-momentler-arp-kl-k-ve-bas-kl-k" class="subsection-title">Standartlaştırılmış Momentler: Çarpıklık ve Basıklık</h3>
+<ul class="course-list">
+<li><strong>Çarpıklık Katsayısı (Skewness - $_3$):</strong>
+    $$
+<p class="course-paragraph">
+        _3 = {_3}{^3} = {E}{^3}
+</p>
+$$
+<p class="course-paragraph">
+    $_3 = 0$ ise dağılım simetriktir (örn: Normal dağılım). $_3 > 0$ ise sağa uzun kuyruklu (pozitif çarpık), $_3 < 0$ ise sola uzun kuyrukludur (negatif çarpık).</li>
+</p>
+<li><strong>Basıklık Katsayısı (Kurtosis - $_4$):</strong>
+    $$
+<p class="course-paragraph">
+        _4 = {_4}{^4} = {E}{^4}
+</p>
+$$
+<p class="course-paragraph">
+    Standart normal dağılım için $_4 = 3$'tür. Bu nedenle fazlalık basıklık (excess kurtosis) $_2 = _4 - 3$ olarak tanımlanır. $_4 > 3$ ise sivri ve kalın kuyruklu (leptokurtik), $_4 < 3$ ise basık ve ince kuyrukludur (platikurtik).</li>
+</p>
+</ul>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Normal Dağılımın Ortalamasının Doğrudan İntegralle Hesaplanması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  N(, ^2)$ dağılımına sahip sürekli bir rastgele değişkenin olasılık yoğunluk fonksiyonu:
+</p>
+$$
+<p class="course-paragraph">
+    f(x) = {1}{{2^2}} (-{1}{2}({x - }{})^2),  - < x < 
+</p>
+$$
+<p class="course-paragraph">
+şeklindedir. $E(X)$ beklenen değerini doğrudan integral tanımıyla hesaplayınız.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm Adımları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Beklenen değer tanımını yazalım:
+    $$
+<p class="course-paragraph">
+        E(X) = _{-}^{} x f(x) \, dx = {1}{{2^2}} _{-}^{} x \, e^{-{1}{2}({x - }{})^2} dx
+</p>
+$$</li>
+<li>Standartlaştırma ($z$-dönüşümü) uygulayalım:
+    $$
+<p class="course-paragraph">
+        z = {x - }{}  x =  z +   dx =  \, dz
+</p>
+$$</li>
+<li>Bu değişken dönüşümünü integrale yerleştirelim (${^2} = $ çarpanı diferansiyeldeki $$ ile tam sadeleşir):
+    $$
+<p class="course-paragraph">
+{aligned}
+        E(X) &= {1}{{2}} _{-}^{} ( z + ) \, e^{-{1}{2}z^2} ( \, dz)  \\
+        &= {{}{{2}} _{-}^{} z \, e^{-{1}{2}z^2} dz}_{I_1} + { _{-}^{} {1}{{2}} e^{-{1}{2}z^2} dz}_{I_2}
+    {aligned}
+</p>
+$$</li>
+<li><strong>$I_2$ İntegralinin Hesabı:</strong>  
+<p class="course-paragraph">
+    Standart normal yoğunluk fonksiyonunun ($N(0,1)$) tüm reel eksendeki toplam alanı olasılık aksiyomları gereği 1'dir:
+</p>
+    $$
+<p class="course-paragraph">
+        _{-}^{} {1}{{2}} e^{-{1}{2}z^2} dz = 1  I_2 =   1 = 
+</p>
+$$</li>
+<li><strong>$I_1$ İntegrali ve Tek Fonksiyon Püf Noktası:</strong>  
+<p class="course-paragraph">
+    $g(z) = z \, e^{-{1}{2}z^2}$ fonksiyonunda $z$ yerine $-z$ yazalım:
+</p>
+    $$
+<p class="course-paragraph">
+        g(-z) = (-z) e^{-{1}{2}(-z)^2} = -z e^{-{1}{2}z^2} = -g(z)
+</p>
+$$
+<p class="course-paragraph">
+    $g(z)$ bir <strong>tek (odd) fonksiyondur</strong>. Simetrik $[-, ]$ aralığında mutlak integrallenebilir bir tek fonksiyonun negatif taraftaki alanı ile pozitif taraftaki alanı birbirini tam olarak sıfırlar:
+</p>
+    $$
+<p class="course-paragraph">
+        I_1 = {}{{2}} _{-}^{} z e^{-{1}{2}z^2} dz = 0
+</p>
+$$</li>
+</ol>
+<p class="course-paragraph">
+Sonuç olarak:
+</p>
+$$
+<p class="course-paragraph">
+    E(X) = I_1 + I_2 = 0 +  = 
+</p>
+$$
+<p class="course-paragraph">
+bulunur.
+</p>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>El Yazısı Notlardaki Yaklaşım ve Matematiksel Düzeltme:</strong>
+</p>
+<ul class="course-list">
+<li>2. sayfadaki el yazısı notlarda $I_1$ integrali için $u = z^2$ dönüşümü yapılarak integral $(-, 0)$ ve $(0, )$ aralıklarına bölünmeye çalışılmıştır.</li>
+<li>Ancak $z < 0$ iken $u = z^2  z = -{u}$ olduğundan diferansiyel adımı işaret karmaşasına yol açmaktadır.</li>
+<li>Sonuç $-{}{{2}} + {}{{2}} = 0$ olarak doğru tamamlansa da; $z e^{-z^2/2}$ integrandı tek fonksiyon olduğundan simetriden dolayı doğrudan $I_1 = 0$ yazmak hem matematiksel açıdan en şık hem de sınav puanlama standartlarında en risksiz yöntemdir.</li>
+</ul>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Tek Fonksiyon Özelliği: Kırmızı eğri $g(-z) = -g(z)$ simetrisine sahiptir. Negatif bölgedeki alan (kırmızı taralı) ile pozitif bölgedeki alan (yeşil taralı) eşit büyüklükte ve zıt işaretli olduğundan integral net sıfır verir.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olas-l-k-teorisinde-temel-e-itsizlikler" class="section-title"><span class="title-anchor">§</span> Olasılık Teorisinde Temel Eşitsizlikler</h2>
+<p class="course-paragraph">
+Momentler dağılım hakkında genel sınırlar çizmemize olanak tanır. Dağılımın tam fonksiyonel formunu bilmesek dahi sadece ortalama ve varyans bilgisiyle olasılık sınırları hesaplayabiliriz.
+</p>
+<h3 id="1-markov-e-itsizli-i" class="subsection-title">1. Markov Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Markov Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X$ negatif değer almayan ($X  0$) bir rastgele değişken ve $a > 0$ herhangi bir pozitif reel sayı olsun. Bu durumda:
+</p>
+$$
+<p class="course-paragraph">
+    P(X  a)  {E(X)}{a}
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Markov Eşitsizliğinin Anlamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    "Bir şirkette çalışanların maaş ortalaması 20.000 TL ise, çalışanların en fazla kaçta kaçı 100.000 TL veya üzerinde kazanıyor olabilir?"  
+Markov kuralına göre: $P(X  100.000)  {20.000}{100.000} = {1}{5} = \%20$.  
+Eğer çalışanların \%20'sinden fazlası 100.000 TL alsaydı, sadece onların getireceği pay bile ortalamayı 20.000 TL'nin üzerine fırlatırdı! Dağılım ne olursa olsun bu sınır aşılamaz.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Matematiksel İspat:</strong>
+$X  0$ sürekli bir değişken olsun (kesikli durum tamamen paraleldir):
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    E(X) &= _0^ x f(x) \, dx = _0^a x f(x) \, dx + _a^ x f(x) \, dx  \\
+    & _a^ x f(x) \, dx  ({çünkü } x  0 { ve } f(x)  0 { olduğundan } _0^a  0)  \\
+    & _a^ a f(x) \, dx  ({çünkü integral bölgesinde } x  a)  \\
+    &= a _a^ f(x) \, dx = a P(X  a)
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Her iki taraf $a > 0$'a bölündüğünde $P(X  a)  {E(X)}{a}$ elde edilir. $$
+</p>
+<h3 id="2-chebyshev-e-itsizli-i" class="subsection-title">2. Chebyshev Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Chebyshev Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Ortalaması $$ ve sonlu varyansı $^2$ olan herhangi bir $X$ rastgele değişkeni için, her $k > 0$ veya her $ > 0$ için:
+</p>
+$$
+<p class="course-paragraph">
+    P(|X - |  k)  {1}{k^2}    P(|X - | < k)  1 - {1}{k^2}
+</p>
+$$
+<p class="course-paragraph">
+Benzer şekilde $ = k$ alınırsa:
+</p>
+$$
+<p class="course-paragraph">
+    P(|X - |  )  {^2}{^2}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Matematiksel İspat:</strong>
+$Y = (X - )^2$ rastgele değişkenini tanımlayalım. $Y  0$'dır ve $E(Y) = E[(X-)^2] = ^2$'dir.  
+Şimdi $Y$ değişkenine $a = ^2 > 0$ için Markov eşitsizliğini uygulayalım:
+</p>
+$$
+<p class="course-paragraph">
+    P(Y  ^2)  {E(Y)}{^2}  P((X - )^2  ^2)  {^2}{^2}
+</p>
+$$
+<p class="course-paragraph">
+$(X - )^2  ^2$ olayı ile $|X - |  $ olayı tamamen özdeştir. Dolayısıyla:
+</p>
+$$
+<p class="course-paragraph">
+    P(|X - |  )  {^2}{^2}
+</p>
+$$
+<p class="course-paragraph">
+ispatlanır. $$
+</p>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Chebyshev Eşitsizliği: Dağılımın şekli ne olursa olsun verilerin en az $\%75$'i $  2$ aralığında, en az $\%88.9$'u $  3$ aralığında bulunmak zorundadır.}
+{center}
+</p>
+<h3 id="3-jensen-e-itsizli-i" class="subsection-title">3. Jensen Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Jensen Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $g(x)$ dışbükey (convex, yani $g''(x)  0$) bir fonksiyon ve $X$ beklenen değeri sonlu bir rastgele değişken olsun. Bu durumda:
+</p>
+$$
+<p class="course-paragraph">
+    E[g(X)]  g(E[X])
+</p>
+$$
+<p class="course-paragraph">
+Eğer $g(x)$ içbükey (concave, yani $g''(x)  0$) ise eşitsizlik yön değiştirir: $E[g(X)]  g(E[X])$.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Jensen Eşitsizliği Neden Doğrudur? (Teğet Doğrusu İspatı)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Dışbükey bir fonksiyonun (örneğin $g(x) = x^2$ veya $g(x) = e^x$) grafiği her zaman herhangi bir noktasından çizilen teğet doğrusunun <strong>üzerinde kalır</strong>.  
+Fonksiyona tam $ = E(X)$ noktasından teğet çizelim. Teğet doğrusunun denklemi $L(x) = g() + g'()(x - )$'dir.  
+Dışbükeylik nedeniyle her $x$ için $g(x)  L(x)$ olur:
+</p>
+$$
+<p class="course-paragraph">
+    g(X)  g() + g'()(X - )
+</p>
+$$
+<p class="course-paragraph">
+Her iki tarafın beklenen değerini alırsak:
+</p>
+$$
+<p class="course-paragraph">
+    E[g(X)]  g() + g'() {E(X - )}_{0} = g() = g(E[X])
+</p>
+$$
+<p class="course-paragraph">
+İşte bu kadar zarif bir geometrik gerçek!
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Jensen Eşitsizliği Geometrisi: Dışbükey eğri daima teğetinin üstünde kaldığından ortalama değerin fonksiyonu $g(E[X])$, fonksiyonun ortalaması $E[g(X)]$'ten küçük veya eşittir.}
+{center}
+</p>
+<p class="course-paragraph">
+<strong>Jensen Eşitsizliğinin Doğrudan Sonuçları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>$g(x) = x^2$ dışbükeydir $ E(X^2)  [E(X)]^2  V(X) = E(X^2) - [E(X)]^2  0$. (Varyansın negatif olamayacağının en temel ispatı!)</li>
+<li>$g(x) = 1/x$ ($x > 0$ için dışbükey) $ E({1}{X})  {1}{E(X)}$.</li>
+<li>$g(x) = -(x)$ dışbükey $ E[ X]  (E[X])$. (Aritmetik Ortalama $$ Geometrik Ortalama eşitsizliğinin temeli).</li>
+</ol>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="moment-karan-fonksiyon-m-f-mgf" class="section-title"><span class="title-anchor">§</span> Moment Çıkaran Fonksiyon (MÇF / MGF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Neden MÇF? (Türevle Moment Üreten Tohum Fonksiyon)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Her bir $k$. moment için ayrı ayrı zorlu integraller ($ x^k f(x) dx$) çözmek yerine, bütün momentleri bünyesinde bir katsayı olarak saklayan fonksiyon:
+</p>
+$$
+<p class="course-paragraph">
+    M_X(t) = E(e^{tX})
+</p>
+$$
+<p class="course-paragraph">
+şeklinde tanımlanır. Bu fonksiyondan $t$'ye göre $k$ kez türev alıp $t=0$ koyduğumuzda doğrudan $k$. moment önümüze düşer.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Moment Çıkaran Fonksiyon Tanımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir $X$ rastgele değişkeni için moment çıkaran fonksiyon $M_X(t)$ şu şekilde tanımlanır:
+</p>
+$$
+<p class="course-paragraph">
+    M_X(t) = E(e^{tX}) = 
+    {cases}
+        _x e^{tx} P(X = x), & {kesikli durumda} \\[0.5em]
+        _{-}^{} e^{tx} f(x) \, dx, & {sürekli durumda}
+    {cases}
+</p>
+$$
+<p class="course-paragraph">
+<em>Varlık Koşulu:</em> $M_X(t)$'nin var olması için $0$ civarında en az bir $(-h, h)$ aralığında ($h > 0$) bu beklenen değerin sonlu olması şarttır.
+</p>
+  </div>
+</div>
+<h3 id="moment-karan-fonksiyonun-temel-zellikleri" class="subsection-title">Moment Çıkaran Fonksiyonun Temel Özellikleri</h3>
+<ol class="course-ordered-list">
+<li><strong>Sıfır Noktasındaki Değer:</strong>
+    $$
+<p class="course-paragraph">
+        M_X(0) = E(e^{0  X}) = E(1) = 1
+</p>
+$$
+<p class="course-paragraph">
+    Bu özellik MÇF türetimlerinde sağlama yapmak için harika bir kontrol aracıdır.</li>
+</p>
+<li><strong>Momentleri Türetme Mekanizması:</strong>
+<p class="course-paragraph">
+    $e^u = _{k=0}^ {u^k}{k!}$ Maclaurin seri açılımından:
+</p>
+    $$
+<p class="course-paragraph">
+        M_X(t) = E = _{k=0}^ {t^k}{k!} E(X^k) = 1 + t E(X) + {t^2}{2!} E(X^2) +  + {t^k}{k!} E(X^k) + 
+</p>
+$$
+<p class="course-paragraph">
+    Dolayısıyla $t$'ye göre $k$. türev alınıp $t=0$ yazıldığında:
+</p>
+    $$
+<p class="course-paragraph">
+        . {d^k M_X(t)}{dt^k} |_{t=0} = E(X^k) = '_k
+</p>
+$$</li>
+<li><strong>Doğrusal Dönüşüm Kuralı:</strong>
+<p class="course-paragraph">
+    Eğer $Y = aX + b$ ise ($a, b  {R}$):
+</p>
+    $$
+<p class="course-paragraph">
+        M_Y(t) = E(e^{t(aX+b)}) = E(e^{bt} e^{(at)X}) = e^{bt} E(e^{(at)X}) = e^{bt} M_X(at)
+</p>
+$$</li>
+<li><strong>Teklik Teoremi (Uniqueness Theorem):</strong>
+<p class="course-paragraph">
+    Eğer iki rastgele değişkenin bir $(-h, h)$ aralığında MÇF'leri eşitse ($M_X(t) = M_Y(t)$), bu iki değişkenin kitle olasılık dağılımları birebir aynıdır ($F_X(x) = F_Y(x)$). MÇF bir dağılımın genetik parmak izidir.</li>
+</p>
+</ol>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Standart Normal $N(0,1)$ ve Genel Normal $N(, ^2)$ MÇF'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Adım 1: Standart Normal $Z  N(0,1)$ için:</strong>
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    M_Z(t) &= E(e^{tZ}) = _{-}^{} e^{tz} {1}{{2}} e^{-{z^2}{2}} dz = {1}{{2}} _{-}^{} e^{-{1}{2}(z^2 - 2tz)} dz  \\
+    &= {1}{{2}} _{-}^{} e^{-{1}{2}[(z-t)^2 - t^2]} dz = e^{{t^2}{2}} {_{-}^{} {1}{{2}} e^{-{(z-t)^2}{2}} dz}_{1} = e^{{t^2}{2}}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>Adım 2: Genel Normal $X =  Z +   N(, ^2)$ için Doğrusal Dönüşümle:</strong>  
+Doğrusal dönüşüm kuralı $M_{aZ+b}(t) = e^{bt} M_Z(at)$ kullanılarak integral çözmeden anında:
+</p>
+$$
+<p class="course-paragraph">
+    {M_X(t) = e^{ t} M_Z( t) = e^{ t} e^{{( t)^2}{2}} = (  t + {1}{2}^2 t^2 )}
+</p>
+$$
+<p class="course-paragraph">
+bulunur.
+</p>
+  </div>
+</div>
+<h3 id="k-m-lan-karan-fonksiyon-cumulant-generating-function" class="subsection-title">Kümülan Çıkaran Fonksiyon (Cumulant Generating Function)</h3>
+<p class="course-paragraph">
+MÇF'nin doğal logaritması <strong>Kümülan Çıkaran Fonksiyon</strong> olarak adlandırılır:
+</p>
+$$
+<p class="course-paragraph">
+    K_X(t) =  M_X(t)
+</p>
+$$
+<p class="course-paragraph">
+Bu fonksiyon özellikle varyans ve yüksek momentlerin hesabında türev işlemlerini olağanüstü kolaylaştırır:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    K'_X(t) &= {M'_X(t)}{M_X(t)}  K'_X(0) = {M'_X(0)}{M_X(0)} = {E(X)}{1} =  \\
+    K''_X(t) &= {M''_X(t) M_X(t) - [M'_X(t)]^2}{[M_X(t)]^2}  K''_X(0) = {E(X^2)  1 - [E(X)]^2}{1^2} = ^2
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Normal dağılım için $K_X(t) = ( e^{ t + {1}{2}^2 t^2} ) =  t + {1}{2}^2 t^2$ olur.  
+Görüldüğü üzere $K'_X(0) = $ ve $K''_X(0) = ^2$ anında çıkar!
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="bile-ik-m-f-ba-ms-zl-k-ve-toplamlar-n-da-l-m" class="section-title"><span class="title-anchor">§</span> Bileşik MÇF, Bağımsızlık ve Toplamların Dağılımı</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Bileşik Moment Çıkaran Fonksiyon</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $<u>X</u> = (X_1, X_2, , X_n)$ sürekli rastgele değişkenler vektörü ve ortak olasılık yoğunluğu $f(x_1, , x_n)$ olsun:
+</p>
+$$
+<p class="course-paragraph">
+    M_{<u>X</u>}(t_1, , t_n) = E( e^{t_1 X_1 +  + t_n X_n} ) = _{-}^  _{-}^ e^{_{i=1}^n t_i x_i} f(x_1, , x_n) dx_1  dx_n
+</p>
+$$
+  </div>
+</div>
+<h3 id="ba-ms-zl-k-durumu" class="subsection-title">Bağımsızlık Durumu</h3>
+<p class="course-paragraph">
+Eğer $X_1, , X_n$ rastgele değişkenleri bağımsız ise ortak yoğunluk marjinal yoğunlukların çarpımıdır: $f(x_1,,x_n) = _{i=1}^n f_{X_i}(x_i)$.  
+Bu durumda bileşik MÇF, marjinal MÇF'lerin basit bir çarpımına ayrışır:
+</p>
+$$
+<p class="course-paragraph">
+    M_{<u>X</u>}(t_1, , t_n) = _{i=1}^n M_{X_i}(t_i)
+</p>
+$$
+<h3 id="ba-ms-z-de-i-kenlerin-toplam" class="subsection-title">Bağımsız Değişkenlerin Toplamı</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Toplamın MÇF Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$ karşılıklı bağımsız rastgele değişkenler ve toplamları $Y = _{i=1}^n X_i$ olsun:
+</p>
+$$
+<p class="course-paragraph">
+    M_Y(t) = E(e^{tY}) = E(e^{t  X_i}) = E( _{i=1}^n e^{t X_i} ) = _{i=1}^n E(e^{t X_i}) = _{i=1}^n M_{X_i}(t)
+</p>
+$$
+<p class="course-paragraph">
+Eğer bu değişkenler bağımsız ve özdeş dağılımlı (i.i.d.) ise:
+</p>
+$$
+<p class="course-paragraph">
+    M_Y(t) = ^n
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Bağımsız Poisson Değişkenlerinin Toplamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1  {Poisson}(_1)$ ve $X_2  {Poisson}(_2)$ bağımsız olsun. $Y = X_1 + X_2$'nin dağılımını MÇF yöntemiyle bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir Poisson($$) değişkeninin MÇF'si:
+    $$
+<p class="course-paragraph">
+{aligned}
+        M_X(t) &= E(e^{tX}) = _{x=0}^ e^{tx} {e^{-}^x}{x!} = e^{-} _{x=0}^ {( e^t)^x}{x!}  \\
+        &= e^{-} e^{ e^t} = ( (e^t - 1) )
+    {aligned}
+</p>
+$$</li>
+<li>Bağımsız toplamın MÇF'si:
+    $$
+<p class="course-paragraph">
+{aligned}
+        M_Y(t) &= M_{X_1}(t)  M_{X_2}(t) = (_1(e^t - 1))  (_2(e^t - 1))  \\
+        &= ( (_1 + _2)(e^t - 1) )
+    {aligned}
+</p>
+$$</li>
+<li><strong>Teklik Teoremi:</strong> Bu ifade parametresi $(_1 + _2)$ olan bir Poisson MÇF'sidir. Dolayısıyla:
+    $$
+<p class="course-paragraph">
+        {X_1 + X_2  {Poisson}(_1 + _2)}
+</p>
+$$</li>
+</ol>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Üstel Dağılımlı Değişkenlerin Toplamı ve Gamma Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, , X_n {{i.i.d.}}{} {Üstel}()$ olsun: $f(x) =  e^{- x}, \; x > 0$. $Y = _{i=1}^n X_i$'nin dağılımını belirleyiniz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir üstel değişkenin MÇF'si:
+    $$
+<p class="course-paragraph">
+        M_X(t) = _0^ e^{tx}  e^{- x} dx =  _0^ e^{-( - t)x} dx = {}{ - t} = ( 1 - {t}{} )^{-1},  (t < )
+</p>
+$$</li>
+<li>$n$ bağımsız değişkenin toplamı için:
+    $$
+<p class="course-paragraph">
+        M_Y(t) = [M_X(t)]^n = ( 1 - {t}{} )^{-n} = ( {}{ - t} )^n
+</p>
+$$</li>
+<li>Bu formül şekil parametresi $n$ ve oran parametresi $$ olan <strong>Gamma Dağılımı</strong>'nın MÇF'sidir:
+    $$
+<p class="course-paragraph">
+        {Y = _{i=1}^n X_i  {Gamma}(n, )}
+</p>
+$$</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Bağımsız $n$ adet ${Exp}(1)$ değişkeninin toplamı ${Gamma}(n, 1)$ dağılımına dönüşür. $n$ büyüdükçe tepe noktası sağa kayar ve çan eğrisine simetrikleşir.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="gamma-fonksiyonu-ve-euler-i-ntegrali" class="section-title"><span class="title-anchor">§</span> Gamma Fonksiyonu ve Euler İntegrali</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Gamma Fonksiyonu Nedir?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Gamma fonksiyonu, faktöriyel kavramının tam sayılardan tüm pozitif reel ve karmaşık sayılara genelleştirilmiş halidir:
+</p>
+<ul class="course-list">
+<li>Pozitif tam sayılar için: $(n) = (n-1)!$ (Örn: $(4) = 3! = 6$, $(1) = 0! = 1$).</li>
+<li>Peki kesirli bir sayının faktöriyeli nedir? Örneğin $(1/2) = {}$ çıkar. Bu ${}$ sabiti, normal dağılımın ve Ki-Kare dağılımlarının kalbindeki temel normalize edicidir.</li>
+</ul>
+  </div>
+</div>
+<p class="course-paragraph">
+Euler Gamma fonksiyonu şu integral ile tanımlanır:
+</p>
+$$
+<p class="course-paragraph">
+    () = _{0}^{} x^{ - 1} e^{-x} \, dx,  ( > 0)
+</p>
+$$
+<p class="course-paragraph">
+Ölçek parametresi $$ eklendiğinde genel Gamma integrali elde edilir:
+</p>
+$$
+<p class="course-paragraph">
+    _{0}^{} x^{ - 1} e^{- x} \, dx = {()}{^}
+</p>
+$$
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>El Yazısı Notlardaki Çok Önemli Hata ve Doğrusu (Sayfa 5):</strong>
+</p>
+<ul class="course-list">
+<li><strong>Notta Yazılan İfade:</strong> $(n) = n \, (n-1)$ <strong>{alertred</strong>{(HATALI!)}}</li>
+<li><strong>Matematiksel Gerçek:</strong> 
+    $$
+<p class="course-paragraph">
+        {(n) = (n-1)(n-1)}  {veya}  {(n+1) = n(n)}
+</p>
+$$</li>
+<li><strong>Neden Hatalı?</strong>  
+<p class="course-paragraph">
+    Kısmi integrasyon uygulandığında:
+</p>
+    $$
+<p class="course-paragraph">
+{aligned}
+        (n) &= _0^ x^{n-1} e^{-x} dx  (u = x^{n-1}  du = (n-1)x^{n-2}dx, \; dv = e^{-x}dx  v = -e^{-x})  \\
+        &= {_0^}_{0} + (n-1) _0^ x^{n-2} e^{-x} dx = (n-1)(n-1)
+    {aligned}
+</p>
+$$
+<p class="course-paragraph">
+    Nitekim notun hemen altındaki tam sayılarda $(n) = (n-1)!$ eşitliği ancak $(n) = (n-1)(n-1)$ indirgemesiyle tutarlıdır.</li>
+</p>
+</ul>
+  </div>
+</div>
+<h3 id="kesirli-de-erlerin-hesaplanmas" class="subsection-title">Kesirli Değerlerin Hesaplanması</h3>
+<p class="course-paragraph">
+Yineleme bağıntısı $(+1) =  ()$ kullanılarak:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    ({3}{2}) &= {1}{2} ({1}{2}) = {{}}{2} \\
+    ({5}{2}) &= {3}{2} ({3}{2}) = {3}{2}  {{}}{2} = {3{}}{4} \\
+    ({7}{2}) &= {5}{2} ({5}{2}) = {15{}}{8}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+---
+</p>
+<h2 id="haftal-k-dev-ve-2-farkl-yoldan-detayl-z-m" class="section-title"><span class="title-anchor">§</span> Haftalık Ödev ve 2 Farklı Yoldan Detaylı Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: $({1</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    {2}) = {}$ Eşitliğinin Gösterilmesi}
+<strong>Problem:</strong> $({1}{2}) = {}$ olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>1. Yöntem (Ders Notundaki İpucu: Standart Normal Dağılım Yardımıyla):</strong>  
+Standart normal yoğunluğun simetrisi gereği:
+</p>
+$$
+<p class="course-paragraph">
+    _{0}^{} {1}{{2}} e^{-{x^2}{2}} dx = {1}{2}
+</p>
+$$
+<p class="course-paragraph">
+$u = {x^2}{2}$ değişken dönüşümü yapalım:
+</p>
+$$
+<p class="course-paragraph">
+    x = {2} u^{1/2}  dx = {{2}}{2} u^{-1/2} du = {1}{{2}} u^{-1/2} du
+</p>
+$$
+<p class="course-paragraph">
+İntegrale yerleştirelim:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    _{0}^{} {1}{{2}} e^{-u} ( {1}{{2}} u^{-1/2} du ) &= {1}{2}  \\
+    {1}{2{}} _{0}^{} u^{{1}{2} - 1} e^{-u} du &= {1}{2}  \\
+    {1}{{}} ({1}{2}) = 1 & {({1}{2}) = {}}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>2. Yöntem (Kutupsal Koordinatlarla Çift Katlı İntegral Yolu):</strong>  
+Tanımdan: $(1/2) = _0^ t^{-1/2} e^{-t} dt$. $t = y^2  dt = 2y \, dy$ dönüşümüyle:
+</p>
+$$
+<p class="course-paragraph">
+    ({1}{2}) = 2 _0^ e^{-y^2} dy
+</p>
+$$
+<p class="course-paragraph">
+Aynı integrali $x$ değişkeniyle çarpalım:
+</p>
+$$
+<p class="course-paragraph">
+    ^2 = ( 2 _0^ e^{-x^2} dx ) ( 2 _0^ e^{-y^2} dy ) = 4 _0^ _0^ e^{-(x^2 + y^2)} dx \, dy
+</p>
+$$
+<p class="course-paragraph">
+1. bölgede kutupsal koordinatlara ($x = r, y = r, dx dy = r dr d, r  [0, ),   [0, /2]$) geçelim:
+</p>
+$$
+<p class="course-paragraph">
+    ^2 = 4 ( _0^{/2} d ) ( _0^ r e^{-r^2} dr ) = 4 ( {}{2} ) _0^ = 2 ({1}{2}) = 
+</p>
+$$
+<p class="course-paragraph">
+Karekök alındığında:
+</p>
+$$
+<p class="course-paragraph">
+    {({1}{2}) = {}}
+</p>
+$$
+<p class="course-paragraph">
+elde edilir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{$(1/2)$ integrandı: $u  0^+$ iken fonksiyon sonsuza ıraksasa da integral yakınsaktır ve toplam alanı tam olarak ${}$ değerine eşittir.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="1-hafta-h-zl-tekrar-ve-kar-la-t-rma-kart" class="section-title"><span class="title-anchor">§</span> 1. Hafta Hızlı Tekrar ve Karşılaştırma Kartı</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.4}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Kavram / Teorem</strong></th><th><strong>Matematiksel Formül</strong></th><th><strong>Sezgisel Anlamı / Ne İşe Yarar?</strong></th></tr></thead><tbody>
+</p>
+<tr><td>1. Ham Moment</td><td>$'_1 = E(X)$</td><td>Dağılımın sayı doğrusundaki ağırlık merkezi (Ortalama)</td></tr>
+<tr><td>2. Merkezsel Moment</td><td>$_2 = E[(X-)^2] = ^2$</td><td>Ağırlık merkezinden saçılma ve belirsizlik ölçüsü (Varyans)</td></tr>
+<tr><td>Markov Eşitsizliği</td><td>$P(X  a)  {E(X)}{a}$ ($X  0$)</td><td>Sadece ortalamayı bilerek kuyruk olasılığına evrensel üst sınır</td></tr>
+<tr><td>Chebyshev Eşitsizliği</td><td>$P(|X - |  k)  {1}{k^2}$</td><td>Şekil ne olursa olsun verilerin $ \%75$'i $  2$ içindedir</td></tr>
+<tr><td>Jensen Eşitsizliği</td><td>$E[g(X)]  g(E[X])$ ($g''  0$)</td><td>Dışbükey fonksiyonların beklenen değeri, beklenen değerin fonksiyonundan büyüktür</td></tr>
+<tr><td>MÇF Tanımı</td><td>$M_X(t) = E(e^{tX})$</td><td>Bütün momentleri türev katsayısı olarak saklayan tohum fonksiyon</td></tr>
+<tr><td>$k$. Moment Çıkarma</td><td>$E(X^k) = . {d^k M_X(t)}{dt^k} |_{t=0}$</td><td>İntegralsiz, yalnızca $k$ kez türev alarak moment bulma</td></tr>
+<tr><td>Doğrusal Dönüşüm</td><td>$M_{aX+b}(t) = e^{bt} M_X(at)$</td><td>Değişken ölçeklendiğinde ve kaydırıldığında MÇF'nin davranışı</td></tr>
+<tr><td>Bağımsız Toplam</td><td>$M_{ X_i}(t) =  M_{X_i}(t)$</td><td>Zor konvolüsyon integrallerini basit çarpmaya dönüştürür</td></tr>
+<tr><td>Teklik Teoremi</td><td>$M_X(t) = M_Y(t)  F_X = F_Y$</td><td>MÇF dağılımın genetik parmak izidir; tek bir dağılımı temsil eder</td></tr>
+<tr><td>Gamma İndirgeme</td><td>$(n) = (n-1)(n-1)$</td><td>Faktöriyelin reel genellemesi: Tam sayılarda $(n) = (n-1)!$</td></tr>
+<tr><td>Kritik Özel Değer</td><td>$(1/2) = {}$</td><td>Normal ve Ki-Kare dağılımlarının temel normalize edici sabiti</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{1. Haftanın Temel Formül ve Teorem Referans Kartı}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    <section id="hafta-2" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 2</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">2. Hafta: Olasılık Çıkaran ve Karakteristik Fonksiyonlar</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_02.pdf" target="_blank" class="btn-pdf">📄 Hafta 2 PDF İndir</a>
+          <a href="hafta-02.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 2. haftasında yer alan <strong>Olasılık Çıkaran Fonksiyon (OÇF / PGF)</strong>, <strong>Karakteristik Fonksiyon (KF / CF)</strong>, <strong>Ters Dönüşüm Teoremi (Inversion)</strong>, <strong>Cauchy Dağılımı</strong>, <strong>Laplace Dönüşümü</strong> ve <strong>Kuyruk Olasılığı ile Beklenen Değer Teoremi</strong> konularını içermektedir. Matematiksel ispatların yanında her aracın "neden" geliştirildiği sezgisel benzetmeler ve çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-2-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 2. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<p class="course-paragraph">
+Geçen hafta gördüğümüz Moment Çıkaran Fonksiyon ($M_X(t) = E(e^{tX})$) harika bir araçtı; fakat iki büyük sınırlılığı vardır:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Kesikli Dağılımlarda Olasılıkları Vermez:</strong> MÇF sadece ortalama ve varyans gibi momentleri üretir; doğrudan $P(X=0), P(X=1), P(X=2)$ olasılık değerlerini vermez. Bunun için kesikli değişkenlere özel <strong>Olasılık Çıkaran Fonksiyon (OÇF)</strong> geliştirilmiştir.</li>
+<li><strong>Bazı Dağılımlarda MÇF Sonsuza Patlar (Yoktur):</strong> Ağır kuyruklu dağılımlarda (örneğin Cauchy veya $t$-dağılımı) $E(e^{tX})$ integrali ıraksar. Bu krizi çözmek için matematiğin en güçlü silahı olan sanal birim $i = {-1}$ devreye sokulur ve <strong>Karakteristik Fonksiyon</strong> ($(t) = E(e^{itX})$) tanımlanır. Bu fonksiyon istisnasız <strong>her dağılım için kesinlikle vardır</strong>!</li>
+</ol>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olas-l-k-karan-fonksiyon-o-f-pgf" class="section-title"><span class="title-anchor">§</span> Olasılık Çıkaran Fonksiyon (OÇF / PGF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: OÇF'nin Basit Mantığı (Olasılıkları Raflara Dizmek)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Sayma sayıları üzerinde tanımlı kesikli bir değişkenimiz olsun ($X  \{0, 1, 2, \}$; örneğin bir günde gelen çağrı sayısı, atılan yazı sayısı vb.).  
+Bir polinom düşünelim:
+</p>
+$$
+<p class="course-paragraph">
+    g(t) = P(X=0)  t^0 + P(X=1)  t^1 + P(X=2)  t^2 + P(X=3)  t^3 + 
+</p>
+$$
+<p class="course-paragraph">
+Burada $t$'nin üsleri olayları ($x=0, 1, 2, $), katsayıları ise o olayların olasılıklarını ($P(X=x)$) temsil eden etiketlerdir.  
+Biz bu fonksiyona $t=0$ koyup türev alırsak aradığımız olasılık pat diye elimize düşer!
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olasılık Çıkaran Fonksiyon (Probability Generating Function)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Sayma sayıları üzerinde tanımlı kesikli bir $X$ rastgele değişkeni ($X  \{0, 1, 2, \}$) için <strong>Olasılık Çıkaran Fonksiyon</strong> $G_X(t)$ (veya $g(t)$) şu şekilde tanımlanır:
+</p>
+$$
+<p class="course-paragraph">
+    g(t) = G_X(t) = E(t^X) = _{x=0}^{} t^x P(X = x)
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Terminoloji Düzeltmesi (Sayfa 6):</strong>
+El yazısı notların başlığında <em>"Olasılık Çıkaran Fonksiyon"</em> yazıldıktan hemen altında parantez içinde İngilizce olarak sehven <em>"(Moment generating function)"</em> yazılmıştır.
+</p>
+<ul class="course-list">
+<li>$E(e^{tX})$ fonksiyonu <strong>Moment Çıkaran Fonksiyon (MGF / MÇF)</strong>'dir.</li>
+<li>$E(t^X)$ fonksiyonu ise <strong>Olasılık Çıkaran Fonksiyon (PGF / OÇF)</strong>'dir.</li>
+<li>İki kavram arasındaki geçiş: $G_X(t) = M_X( t)$ veya $M_X(t) = G_X(e^t)$ şeklindedir.</li>
+</ul>
+  </div>
+</div>
+<h3 id="olas-l-k-karan-fonksiyonun-3-temel-zelli-i" class="subsection-title">Olasılık Çıkaran Fonksiyonun 3 Temel Özelliği</h3>
+<ol class="course-ordered-list">
+<li><strong>$t=1$'deki Değeri (Toplam Olasılık):</strong>
+    $$
+<p class="course-paragraph">
+        g(1) = E(1^X) = _{x=0}^{} P(X = x) = 1
+</p>
+$$</li>
+<li><strong>Olasılıkları Üretme Özelliği ($t=0$'daki Türevler):</strong>
+<p class="course-paragraph">
+    $g(t)$'nin $k$ kez türevini alıp $t=0$ yazarsak, doğrudan $k$. olasılığı elde ederiz:
+</p>
+    $$
+<p class="course-paragraph">
+        {P(X = k) = {1}{k!} . {d^k g(t)}{dt^k} |_{t=0} = {g^{(k)}(0)}{k!}}
+</p>
+$$</li>
+<li><strong>Faktöriyel Momentleri Üretme Özelliği ($t=1$'deki Türevler):</strong>
+<p class="course-paragraph">
+    $g(t)$'nin $t=1$'deki türevleri ise faktöriyel momentleri verir:
+</p>
+    $$
+<p class="course-paragraph">
+        g'(1) = E(X),  g''(1) = E[X(X-1)]
+</p>
+$$
+<p class="course-paragraph">
+    Buradan varyans şu pratik formülle çıkar:
+</p>
+    $$
+<p class="course-paragraph">
+        {V(X) = g''(1) + g'(1) - [g'(1)]^2}
+</p>
+$$</li>
+</ol>
+<h4 class="subsubsection-title">İspat (Neden $g^{(k)</h4>
+<p class="course-paragraph">
+(0)/k!$ Olasılığı Verir?)}
+Polinomu açıkça yazalım:
+</p>
+$$
+<p class="course-paragraph">
+    g(t) = P(X=0) + P(X=1)t + P(X=2)t^2 + P(X=3)t^3 + 
+</p>
+$$
+<ul class="course-list">
+<li>$t=0$ koyarsak: $g(0) = P(X=0)$.</li>
+<li>1. Türev: $g'(t) = P(X=1) + 2P(X=2)t + 3P(X=3)t^2 +   g'(0) = 1! P(X=1)$.</li>
+<li>2. Türev: $g''(t) = 2  1 P(X=2) + 3  2 P(X=3)t +   g''(0) = 2! P(X=2)$.</li>
+<li>$k$. Türev: $g^{(k)}(0) = k! P(X=k)  P(X=k) = {g^{(k)}(0)}{k!}$.</li>
+</ul>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: Poisson Dağılımının OÇF ve MÇF'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  {Poisson}()$ olsun. $X$'in MÇF ve OÇF'sini bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+Poisson olasılık kütle fonksiyonu:
+</p>
+$$
+<p class="course-paragraph">
+    P(X = x) = {e^{-} ^x}{x!},  x = 0, 1, 2,   ( > 0)
+</p>
+$$
+<p class="course-paragraph">
+<strong>1. Olasılık Çıkaran Fonksiyon (OÇF):</strong>
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    g(t) = E(t^X) &= _{x=0}^{} t^x {e^{-} ^x}{x!} = e^{-} _{x=0}^{} {( t)^x}{x!}  \\
+    &= e^{-}  e^{ t} = {e^{(t - 1)}}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>2. Moment Çıkaran Fonksiyon (MÇF):</strong>  
+$t$ yerine $e^t$ yazarak:
+</p>
+$$
+<p class="course-paragraph">
+    M_X(t) = E(e^{tX}) = g(e^t) = {e^{(e^t - 1)}}
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Tanım Kümesi Hatası ve Düzeltmesi (Sayfa 7):</strong>
+Notta Poisson dağılımı verilirken tanım kümesi $x > 0$ olarak yazılmıştır. Bu yanlıştır; Poisson dağılımının desteği (support) <strong>sıfır dahil</strong> tüm negatif olmayan tam sayılardır ($x  \{0, 1, 2, \}$). Nitekim $P(X=0) = e^{-}  0$'dır ve serinin başlangıç noktası $x=0$'dır.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{${Poisson}(=3)$ olasılık kütle fonksiyonu. Dağılım $x=0$'da pozitif olasılığa sahiptir ($P(X=0)=e^{-3} 0.05$).}
+{center}
+</p>
+<h2 id="karakteristik-fonksiyon-kf-cf" class="section-title"><span class="title-anchor">§</span> Karakteristik Fonksiyon (KF / CF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Neden Karakteristik Fonksiyon? (MÇF'nin Yetmediği Yer)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    MÇF formülü olan $E(e^{tX}) =  e^{tx} f(x) dx$ integralinde $t > 0$ iken $x  $ durumunda $e^{tx}$ üstel olarak devasa hızda büyür. Eğer $f(x)$ fonksiyonu bu büyümeden daha hızlı sönümlenmiyorsa (örneğin Cauchy, $t$-dağılımı veya Pareto gibi kalın kuyruklu dağılımlarda), integral patlar ve MÇF var olmaz!  
+İşte matematikçiler burada devreye $i = {-1}$ sanal birimini sokmuştur:
+</p>
+$$
+<p class="course-paragraph">
+    |e^{itx}| = |(tx) + i(tx)| = {^2(tx) + ^2(tx)} = 1
+</p>
+$$
+<p class="course-paragraph">
+$e^{itx}$ fonksiyonu reel eksende sonsuza gitmez, sadece birim çember üzerinde döner! Bu sayede integral asla patlamaz.  
+<strong>Altın Kural:</strong> Karakteristik fonksiyon, <strong>istisnasız her olasılık dağılımı için daima vardır ve $|(t)|  1$'dir!</strong>
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Karakteristik Fonksiyon (Characteristic Function)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir rastgele değişken $X$ için <strong>Karakteristik Fonksiyon</strong> $_X(t)$ şu şekilde tanımlanır:
+</p>
+$$
+<p class="course-paragraph">
+    (t) = _X(t) = E(e^{itX}) = 
+    {cases}
+        _{-}^{} e^{itx} f(x) \, dx, & {Sürekli ise} \\
+        _{x} e^{itx} P(X = x), & {Kesikli ise}
+    {cases}
+</p>
+$$
+<p class="course-paragraph">
+Burada $i = {-1}$ sanal birimdir. (Bu dönüşüm aslında $f(x)$'in Fourier dönüşümüdür.)
+</p>
+  </div>
+</div>
+<h3 id="karakteristik-fonksiyonun-temel-zellikleri" class="subsection-title">Karakteristik Fonksiyonun Temel Özellikleri</h3>
+<ol class="course-ordered-list">
+<li><strong>Her Dağılım İçin Daima Mevcut ve Sınırlıdır:</strong>
+    $$
+<p class="course-paragraph">
+        |(t)|  _{-}^ |e^{itx}| f(x) dx = _{-}^ 1  f(x) dx = 1
+</p>
+$$
+<p class="course-paragraph">
+    Ayrıca her zaman $(0) = E(e^0) = 1$'dir.</li>
+</p>
+<li><strong>Simetrik Dağılımlarda Gerçel (Reel) Olma Özelliği:</strong>
+<p class="course-paragraph">
+    Eğer $f(x)$ orijine göre simetrik bir fonksiyon ise ($f(-x) = f(x)$), sanal kısım tek fonksiyon olacağından sıfırlanır ve $(t)$ tamamen <strong>gerçel (reel)</strong> bir fonksiyondur:
+</p>
+    $$
+<p class="course-paragraph">
+        (t) = _{-}^{} (tx) f(x) dx + i {_{-}^{} (tx) f(x) dx}_{0 { (tek fonksiyon)}} = 2 _{0}^{} (tx) f(x) dx  {R}
+</p>
+$$</li>
+<li><strong>Doğrusal Dönüşüm:</strong> $Y = a + bX$ ise:
+    $$
+<p class="course-paragraph">
+        _Y(t) = e^{ita} _X(bt)
+</p>
+$$</li>
+<li><strong>Momentlerin Üretilmesi:</strong>
+    $$
+<p class="course-paragraph">
+        . {d^k _X(t)}{dt^k} |_{t=0} = i^k E(X^k)  {E(X^k) = (-i)^k . {d^k _X(t)}{dt^k} |_{t=0}}
+</p>
+$$</li>
+</ol>
+<h3 id="ters-d-n-m-teoremi-inversion-theorem" class="subsection-title">Ters Dönüşüm Teoremi (Inversion Theorem)</h3>
+<p class="course-paragraph">
+Karakteristik fonksiyon ile olasılık yoğunluk fonksiyonu birbirinin ayna görüntüsüdür. Eğer bir dağılımın $(t)$ karakteristik fonksiyonunu biliyorsanız, orijinal $f(x)$ yoğunluk fonksiyonunu ters Fourier integrali ile kesin olarak bulabilirsiniz:
+</p>
+$$
+<p class="course-paragraph">
+    {f(x) = {1}{2} _{-}^{} e^{-itx} (t) \, dt}
+</p>
+$$
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: $(t) = e^{-t^2/2</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $ Fonksiyonundan Yoğunluk Fonksiyonunu Bulma}
+$(t) = e^{-t^2/2}$ olan sürekli rastgele değişkenin yoğunluk fonksiyonunu bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+Ters dönüşüm formülünü yazalım:
+</p>
+$$
+<p class="course-paragraph">
+    f(x) = {1}{2} _{-}^{} e^{-itx} e^{-t^2/2} dt = {1}{2} _{-}^{} ( - {1}{2}(t^2 + 2itx) ) dt
+</p>
+$$
+<p class="course-paragraph">
+Üs kısmını tam kare yapalım: $t^2 + 2itx = (t + ix)^2 - (ix)^2 = (t + ix)^2 + x^2$.  
+Yerine koyarsak:
+</p>
+$$
+<p class="course-paragraph">
+    f(x) = {1}{2} e^{-x^2/2} {_{-}^{} e^{-{1}{2}(t + ix)^2} dt}_{{Gauss integrali} = {2}} = {{2}}{2} e^{-x^2/2} = {{1}{{2}} e^{-x^2/2}}
+</p>
+$$
+<p class="course-paragraph">
+Bu standart normal dağılım $X  N(0, 1)$'in olasılık yoğunluk fonksiyonudur.
+</p>
+  </div>
+</div>
+<h2 id="2-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 2. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: $(t) = e^{-|t|</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $ Karakteristik Fonksiyonuna Karşılık Gelen Dağılım}
+<strong>Ödev Sorusu (Sayfa 10):</strong> Bir $X$ rastgele değişkeninin karakteristik fonksiyonu $(t) = e^{-|t|}$ olarak verilmiştir. Bu dağılımın olasılık yoğunluk fonksiyonu $f(x)$'i bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Ters dönüşüm formülünü uygulayalım:
+    $$
+<p class="course-paragraph">
+        f(x) = {1}{2} _{-}^{} e^{-itx} e^{-|t|} dt
+</p>
+$$</li>
+<li>Euler bağıntısını açalım: $e^{-itx} = (tx) - i(tx)$.
+    $$
+<p class="course-paragraph">
+        f(x) = {1}{2} _{-}^{} (tx) e^{-|t|} dt - {i}{2} {_{-}^{} (tx) e^{-|t|} dt}_{0 { (tek fonksiyon)}}
+</p>
+$$</li>
+<li>$(tx) e^{-|t|}$ çift fonksiyon olduğundan $[0, )$ aralığına geçip 2 ile çarpalım:
+    $$
+<p class="course-paragraph">
+        f(x) = {1}{2}  2 _{0}^{} (tx) e^{-t} dt = {1}{} _{0}^{} e^{-t} (tx) \, dt
+</p>
+$$</li>
+<li>$J = _{0}^{} e^{-t} (tx) dt$ integralini kısmi integrasyon ile hesaplayalım:
+    $$
+<p class="course-paragraph">
+{aligned}
+        u = (tx), \; dv = e^{-t}dt & J = 1 - x _0^ e^{-t}(tx) dt \\
+        {Tekrar kısmi integrasyon} & _0^ e^{-t}(tx) dt = x J \\
+         J = 1 - x^2 J & J(1 + x^2) = 1  J = {1}{1 + x^2}
+    {aligned}
+</p>
+$$</li>
+<li>İntegral sonucunu yerine koyalım:
+    $$
+<p class="course-paragraph">
+        {f(x) = {1}{ (1 + x^2)},  - < x < }
+</p>
+$$</li>
+</ol>
+<p class="course-paragraph">
+<strong>Çok Önemli Teorik Sonuç:</strong> Bu dağılım <strong>Standart Cauchy Dağılımı</strong>'dır ($X  {Cauchy}(0,1)$).  
+Cauchy dağılımının beklenen değeri ve varyansı yoktur (kuyrukları çok kalındır, $ |x|f(x)dx = $). Bu nedenle Cauchy'nin Moment Çıkaran Fonksiyonu (MGF) mevcut değildir! Ancak Karakteristik Fonksiyonu $(t) = e^{-|t|}$ sapasağlam mevcuttur.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Ödevde bulunan Standart Cauchy dağılımı ile Standart Normal dağılımın karşılaştırması. Cauchy dağılımının kalın kuyrukları (heavy tails) açıkça görülmektedir.}
+{center}
+</p>
+<h2 id="laplace-d-n-m-ve-kuyruk-beklenen-de-er-teoremi" class="section-title"><span class="title-anchor">§</span> Laplace Dönüşümü ve Kuyruk Beklenen Değer Teoremi</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Laplace Dönüşümü</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Pozitif sürekli rastgele değişkenler ($X  0$) için Laplace dönüşümü:
+</p>
+$$
+<p class="course-paragraph">
+    f^*(s) = {L}(f(x)) = E(e^{-sX}) = _{0}^{} e^{-sx} f(x) \, dx,  (s > 0)
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Kuyruk Olasılığı ile Beklenen Değer (Geometrik Sezgi)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Genelde $E(X) =  x f(x) dx$ formülünü biliriz. Fakat $X  0$ olan pozitif değişkenler için (örneğin bir ampulün ömrü, arıza süresi, bekleme süresi):
+</p>
+$$
+<p class="course-paragraph">
+    E(X) = _{0}^{} P(X  x) \, dx
+</p>
+$$
+<p class="course-paragraph">
+şeklinde muhteşem bir alternatif formül vardır!  
+<strong>Anlamı:</strong> Bir cihazın ortalama ömrü ($E(X)$), o cihazın $x$ süresinden fazla hayatta kalma olasılığı fonksiyonunun ($S(x) = 1 - F(x)$) altında kalan toplam alana eşittir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Kuyruk Olasılığı Teoreminin İspatı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  0$ sürekli rastgele değişkeni için $E(X) = _{0}^{} [1 - F(x)] dx$ olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm (Kısmi İntegrasyon İle):</strong>
+$u = 1 - F(x)  du = -f(x)dx$ ve $dv = dx  v = x$ alalım:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    _{0}^{} [1 - F(x)] dx &= _{0}^{} - _{0}^{} x (-f(x)) dx  \\
+    &=  + _{0}^{} x f(x) dx
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+$E(X) < $ olduğunda sonsuzda $x[1-F(x)]  0$ olduğundan sınır terimi sıfırlanır:
+</p>
+$$
+<p class="course-paragraph">
+    _{0}^{} P(X  x) \, dx = 0 + _{0}^{} x f(x) \, dx = {E(X)}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Kuyruk olasılığı fonksiyonu (Hayatta Kalma / Survival Eğrisi) altındaki alan doğrudan ortalamayı verir.}
+{center}
+</p>
+<h2 id="2-hafta-h-zl-tekrar-ve-d-n-m-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 2. Hafta Hızlı Tekrar ve Dönüşüm Karşılaştırma Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l l X@{}}
+<p class="course-paragraph">
+<strong>Dönüşüm</strong></th><th><strong>Formül</strong></th><th><strong>Tanım Kümesi</strong></th><th><strong>Ne İşe Yarar / Temel Üstünlüğü</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>OÇF (PGF)</strong></td><td>$G(t) = E(t^X)$</td><td>Kesikli ($X  {N}_0$)</td><td>$t=0$'da türev alarak $P(X=k)$ olasılığını verir.</td></tr>
+<tr><td><strong>MÇF (MGF)</strong></td><td>$M(t) = E(e^{tX})$</td><td>Sonlu momentliler</td><td>$t=0$'da türev alarak $E(X^k)$ momentlerini üretir.</td></tr>
+<tr><td><strong>Karakteristik (CF)</strong></td><td>$(t) = E(e^{itX})$</td><td><strong>Her dağılım</strong></td><td>Her zaman vardır ($|(t)|  1$); Cauchy gibi ağır kuyruklarda çalışır.</td></tr>
+<tr><td><strong>Laplace</strong></td><td>$f^*(s) = E(e^{-sX})$</td><td>Pozitif ($X  0$)</td><td>Güvenilirlik ve ömür analizlerinde integralleri basitleştirir.</td></tr>
+<tr><td><strong>Kuyruk Teoremi</strong></td><td>$_0^ P(X  x) dx$</td><td>Pozitif ($X  0$)</td><td>Yoğunluk yerine hayatta kalma fonksiyonundan $E(X)$ bulur.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{2. Haftada İncelenen Bütün Üreteç ve Dönüşüm Fonksiyonlarının Karşılaştırması}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    <section id="hafta-3" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 3</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">3. Hafta: Rassal Değişken Dizilerinde Yakınsama Türleri ve CLT</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_03.pdf" target="_blank" class="btn-pdf">📄 Hafta 3 PDF İndir</a>
+          <a href="hafta-03.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 3. haftasında yer alan <strong>Yakınsama Türleri</strong> (Olasılıkta, Hemen Hemen Her Yerde, Momentte ve Dağılımda), <strong>Merkezi Limit Teoremi (CLT / MLT)</strong>, <strong>Slutsky Teoremi</strong>, <strong>Sıra İstatistiklerinin Limitleri</strong> ve <strong>Ki-Kare Dağılımının Normale Yakınsaması</strong> konularını içermektedir. Ağır matematiksel teoremler sezgisel benzetmeler ve çözümlü örneklerle basitleştirilmiştir.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-rneklem-b-y-d-k-e-n-to-infty-ne-olur" class="section-title"><span class="title-anchor">§</span> Büyük Resim: Örneklem Büyüdükçe ($n  $) Ne Olur?</h2>
+<p class="course-paragraph">
+Lisede veya kalkülüste bir sayı dizisinin limitini biliriz: Örneğin $a_n = {1}{n}  0$. Sayılar sabittir ve nereye gittikleri bellidir.  
+Ancak istatistikte elimizde sayılar değil, **rastgele değişkenler** ($X_1, X_2, , X_n$) vardır!  
+Her denemede farklı bir sonuç üreten bir sürecin "limiti" ne demektir?
+</p>
+<ul class="course-list">
+<li>Değişkenin kendisi tek bir sabit sayıya mı yaklaşır? $$ <strong>Olasılıkta Yakınsama</strong> ($X_n {P} c$)</li>
+<li>Her bir deneme kesinlikle aynı hedefe mi varır? $$ <strong>Hemen Hemen Her Yerde Yakınsama</strong> ($X_n {a.s.} X$)</li>
+<li>Değişkenin kendisi sabit kalmasa bile, çizdiği olasılık eğrisi (grafiği) tanıdık bir şekle mi bürünür? $$ <strong>Dağılımda Yakınsama</strong> ($X_n {d} X$)</li>
+</ul>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="rastgele-de-i-ken-dizilerinde-yak-nsama-t-rleri" class="section-title"><span class="title-anchor">§</span> Rastgele Değişken Dizilerinde Yakınsama Türleri</h2>
+<h3 id="1-olas-l-kta-yak-nsama-convergence-in-probability" class="subsection-title">1. Olasılıkta Yakınsama (Convergence in Probability)</h3>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Olasılıkta Yakınsamanın Anlamı: Hedefte Toplanma</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir hedef tahtasına sürekli ok attığınızı hayal edin ($n$ ok sayısı). $n$ büyüdükçe merkezin $$ kadar uzağına düşme ihtimaliniz sıfıra iniyorsa, yani atışlarınızın \%99.999'u hedefin minicik bir çevresine sıkışıyorsa bu dizi hedefe **olasılıkta yakınsıyor** demektir.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olasılıkta Yakınsama ($X_n {P</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    X$)}
+Her $ > 0$ için:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } P( |X_n - X|   ) = 0    _{n  } P( |X_n - X| <  ) = 1
+</p>
+$$
+<p class="course-paragraph">
+ise $X_n$ dizisi $X$'e <strong>olasılıkta yakınsar</strong> denir ve $X_n {P} X$ ile gösterilir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: Zayıf Büyük Sayılar Yasası (WLLN)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, , X_n {{i.i.d.}}{} (, ^2 < )$ olsun. Örneklem ortalaması ${X}_n = {1}{n} _{i=1}^n X_i$'nin kitle ortalamasına olasılıkta yakınsadığını (${X}_n {P} $) gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm (Chebyshev Eşitsizliği İle):</strong>
+Örneklem ortalamasının beklenen değeri ve varyansı:
+</p>
+$$
+<p class="course-paragraph">
+    E({X}_n) = ,  V({X}_n) = {^2}{n}
+</p>
+$$
+<p class="course-paragraph">
+Chebyshev eşitsizliğini uygulayalım:
+</p>
+$$
+<p class="course-paragraph">
+    P( |{X}_n - |   )  {V({X}_n)}{^2} = {^2}{n ^2}
+</p>
+$$
+<p class="course-paragraph">
+$n  $ iken limit alırsak:
+</p>
+$$
+<p class="course-paragraph">
+    0  _{n  } P( |{X}_n - |   )  _{n  } {^2}{n ^2} = 0
+</p>
+$$
+<p class="course-paragraph">
+Sandviç kuralından olasılık sıfıra gider. Böylece:
+</p>
+$$
+<p class="course-paragraph">
+    {{X}_n {P} }
+</p>
+$$
+<p class="course-paragraph">
+<em>Sezgisel Anlamı:</em> Madeni parayı 10 kez atarsanız \%70 yazı gelebilir. Ama 10.000 kez atarsanız yazı oranı kesinlikle 0.50'ye kilitlenir!
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: Örneklem Varyansının Tutarlılığı ($S_n^2 {P</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    ^2$)}
+Normal kitlede örneklem varyansı $S_n^2$'nin kitle varyansı $^2$'ye olasılıkta yakınsadığını gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+Normal dağılımda ${(n-1)S_n^2}{^2}  ^2_{n-1}$ olduğundan varyansı:
+</p>
+$$
+<p class="course-paragraph">
+    V(S_n^2) = {^4}{(n-1)^2}  2(n-1) = {2^4}{n-1}
+</p>
+$$
+<p class="course-paragraph">
+Chebyshev eşitsizliğinin tümleyenini yazalım:
+</p>
+$$
+<p class="course-paragraph">
+    P( |S_n^2 - ^2| <  )  1 - {V(S_n^2)}{^2} = 1 - {2^4}{(n-1)^2}
+</p>
+$$
+<p class="course-paragraph">
+$n  $ iken limit 1 olur. Dolayısıyla $S_n^2 {P} ^2$'dir; yani $S_n^2$ <strong>tutarlı (consistent)</strong> bir tahmin edicidir.
+</p>
+  </div>
+</div>
+<h3 id="2-kesinlikle-hemen-hemen-her-yerde-yak-nsama-almost-sure" class="subsection-title">2. Kesinlikle / Hemen Hemen Her Yerde Yakınsama (Almost Sure)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Kesinlikle Yakınsama ($X_n {a.s.</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    X$)}
+Örneklem uzayındaki istisnai olayların olasılığı sıfır olmak üzere, sürecin kendisi $X$'e yakınsıyorsa:
+</p>
+$$
+<p class="course-paragraph">
+    P( _{n  } X_n = X ) = 1
+</p>
+$$
+<p class="course-paragraph">
+ise $X_n {a.s.} X$ denir. (Bu, olasılıkta yakınsamadan çok daha güçlü bir yakınsamadır: $X_n {a.s.} X  X_n {P} X$).
+</p>
+  </div>
+</div>
+<h3 id="3-momentlerde-yak-nsama-l-r-yak-nsama" class="subsection-title">3. Momentlerde Yakınsama ($L^r$ Yakınsama)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Momentlerde Yakınsama ($X_n {L^r</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    X$)}
+$r > 0$ pozitif bir tam sayı olmak üzere:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } E( |X_n - X|^r ) = 0
+</p>
+$$
+<p class="course-paragraph">
+ise $X_n {L^r} X$ denir. Özellikle $r=2$ durumuna <strong>Ortalama Karede Yakınsama (Mean Square Convergence)</strong> adı verilir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Olasılıkta Yakınsayıp Momentte Yakınsamayan Meşhur Dizi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_n$ rastgele değişkeni şu olasılıklarla tanımlansın:
+</p>
+$$
+<p class="course-paragraph">
+    P(X_n = n^3) = {1}{n^2},  P(X_n = 0) = 1 - {1}{n^2}
+</p>
+$$
+<p class="course-paragraph">
+Bu dizinin $X=0$'a yakınsaklığını inceleyiniz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li><strong>Olasılıkta Yakınsama:</strong>  
+<p class="course-paragraph">
+    Herhangi bir $ > 0$ için $n$ büyüdüğünde $n^3 > $ olur:
+</p>
+    $$
+<p class="course-paragraph">
+        P(|X_n - 0|  ) = P(X_n = n^3) = {1}{n^2} {n  } 0
+</p>
+$$
+<p class="course-paragraph">
+    Demek ki <strong>olasılıkta sıfıra yakınsar</strong> ($X_n {P} 0$).</li>
+</p>
+<li><strong>1. Momentte ($r=1$) Yakınsama:</strong>
+    $$
+<p class="course-paragraph">
+        E(|X_n - 0|) = E(X_n) = n^3  ({1}{n^2}) + 0  (1 - {1}{n^2}) = n {n  }   0
+</p>
+$$
+<p class="course-paragraph">
+    Ortalaması sonsuza patladığı için <strong>momentte yakınsamaz</strong>!</li>
+</p>
+</ol>
+<p class="course-paragraph">
+<em>Püf Noktası:</em> Nadir görülen devasa uç değerler (black swan) olasılığı sıfıra çekse de ortalamayı havaya uçurabilir!
+</p>
+  </div>
+</div>
+<h3 id="4-da-l-mda-yak-nsama-convergence-in-distribution" class="subsection-title">4. Dağılımda Yakınsama (Convergence in Distribution)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Dağılımda Yakınsama ($X_n {d</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    X$)}
+$X_n$'nin birikimli dağılım fonksiyonu $F_n(x)$ olsun. $F(x)$'in sürekli olduğu her noktada:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } F_n(x) = F(x)    _{n  } M_{X_n}(t) = M_X(t)
+</p>
+$$
+<p class="course-paragraph">
+ise $X_n {d} X$ denir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Yakınsama türleri arasındaki hiyerarşik ilişki. Dağılımda yakınsama en zayıf olanıdır.}
+{center}
+</p>
+<h2 id="merkezi-limit-teoremi-clt-mlt-ve-i-spat" class="section-title"><span class="title-anchor">§</span> Merkezi Limit Teoremi (CLT / MLT) ve İspatı</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: İstatistiğin En Büyük Mucizesi: CLT</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Evrendeki ana kitle ister çarpık, ister iki tepeli, isterse tamamen düzensiz olsun; o kitleden bağımsız yeterince büyük ($n  30$) örneklemler çekip ortalamalarını aldığınızda, bu ortalamaların grafiği **kusursuz bir Çan Eğrisi (Normal Dağılım)** oluşturur!
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Merkezi Limit Teoremi (Central Limit Theorem)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$ bağımsız ve özdeş dağılımlı ($E(X_i)=, V(X_i)=^2 < $) değişkenler olsun. Standardize edilmiş değişken $n  $ iken:
+</p>
+$$
+<p class="course-paragraph">
+    Z_n = {{X}_n - }{ / {n}} = {_{i=1}^n (X_i - )}{ {n}} {d} N(0, 1)
+</p>
+$$
+  </div>
+</div>
+<h3 id="clt-nin-m-f-i-le-ad-m-ad-m-i-spat" class="subsection-title">CLT'nin MÇF İle Adım Adım İspatı</h3>
+<ol class="course-ordered-list">
+<li>$Z_n = _{i=1}^n {X_i - }{{n}}$ değişkeninin MÇF'sini yazalım:
+    $$
+<p class="course-paragraph">
+        M_{Z_n}(t) = ^n
+</p>
+$$</li>
+<li>$M_{X-}(s)$ fonksiyonunu $s=0$ etrafında Taylor serisine açalım:
+    $$
+<p class="course-paragraph">
+        M_{X-}(s) = 1 + s {E(X - )}_{0} + {s^2}{2} {E[(X - )^2]}_{^2} + o(s^2) = 1 + {^2 s^2}{2} + o(s^2)
+</p>
+$$</li>
+<li>Burada $s = {t}{{n}}$ yazarsak:
+    $$
+<p class="course-paragraph">
+        M_{X-}( {t}{{n}} ) = 1 + {^2}{2} {t^2}{^2 n} + o(1/n) = 1 + {t^2/2}{n} + o(1/n)
+</p>
+$$</li>
+<li>Analizdeki meşhur $_{n  } (1 + {a}{n})^n = e^a$ limit kuralını uygulayalım ($a = t^2/2$):
+    $$
+<p class="course-paragraph">
+        _{n  } M_{Z_n}(t) = _{n  } ( 1 + {t^2/2}{n} )^n = {( {t^2}{2} )}
+</p>
+$$</li>
+<li>$e^{t^2/2}$ fonksiyonu Standart Normal Dağılım $N(0, 1)$'in MÇF'si olduğundan teklik ve süreklilik teoreminden:
+    $$
+<p class="course-paragraph">
+        Z_n {d} N(0, 1)
+</p>
+$$</li>
+</ol>
+<h2 id="slutsky-teoremi-ve-s-ra-i-statistiklerinin-limitleri" class="section-title"><span class="title-anchor">§</span> Slutsky Teoremi ve Sıra İstatistiklerinin Limitleri</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Slutsky Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_n {d} X$ (dağılımda yakınsayan) ve $Y_n {P} c$ (bir sabite olasılıkta yakınsayan) ise:
+</p>
+<ol class="course-ordered-list">
+<li>$X_n + Y_n {d} X + c$</li>
+<li>$X_n Y_n {d} c X$</li>
+<li>${X_n}{Y_n} {d} {X}{c}  (c  0)$</li>
+</ol>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Sıra İstatistiği Tanımındaki Not Hatası (Sayfa 17):</strong>
+Notlarda $X_i  {Uniform}(0, 1)$ bağımsız değişkenleri için hem $Y_n$ hem de $Z_n$ minimum olarak yazılmıştır:
+</p>
+$$
+<p class="course-paragraph">
+    Z_n = (X_1, , X_n)  {<strong>{red</strong>{(NOTTAKİ YAZIM HATASI)}}}
+</p>
+$$
+<p class="course-paragraph">
+ve ardından $Z_n {P} 1$ gösterilmiştir.  
+Doğrusu $Z_n = {(X_1, , X_n)}$ olmalıdır; nitekim kullanılan $f_{Z_n}(z) = n z^{n-1}$ yoğunluğu maksimum sıra istatistiğine aittir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 4: Uniform(0,1) Uç Değerlerinin Yakınsaması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, , X_n {{i.i.d.}}{} {Uniform}(0, 1)$ olsun.  
+Minimum $Y_n = (X_i)$ ve Maksimum $Z_n = (X_i)$ nereye yakınsar?
+</p>
+<ul class="course-list">
+<li><strong>Minimum:</strong> $P(Y_n < ) = 1 - (1-)^n {n  } 1  {Y_n {P} 0}$</li>
+<li><strong>Maksimum:</strong> $P(Z_n > 1 - ) = 1 - (1-)^n {n  } 1  {Z_n {P} 1}$</li>
+</ul>
+<p class="course-paragraph">
+<em>Sezgisel Anlamı:</em> $(0,1)$ aralığından rastgele 1 milyon sayı seçerseniz; en küçüğü neredeyse $0$, en büyüğü ise neredeyse $1$ olmak zorundadır!
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{$n=5$ için Uniform(0,1) uç değerlerinin yoğunlukları. $n$ büyüdükçe minimum $0$'a, maksimum $1$'e doğru sıkışır.}
+{center}
+</p>
+<h2 id="3-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 3. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Ki-Kare Dağılımının Standart Normale Yakınsaması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Ödev Sorusu (Sayfa 18):</strong> $Z_n  ^2_n$ olsun. Standardize edilmiş değişkenin:
+</p>
+$$
+<p class="course-paragraph">
+    Y_n = {Z_n - n}{{2n}} {d} N(0, 1)
+</p>
+$$
+<p class="course-paragraph">
+olduğunu gösteriniz. *(Notlarda bu sorunun çözümü boş bırakılmıştır).*
+</p>
+<p class="course-paragraph">
+<strong>1. Çözüm Yolu (Moment Çıkaran Fonksiyon ve Taylor Açılımı):</strong>
+$Z_n  ^2_n$ dağılımının MÇF'si: $M_{Z_n}(t) = (1 - 2t)^{-n/2}$.  
+$Y_n = {Z_n - n}{{2n}}$ için MÇF'yi kuralım:
+</p>
+$$
+<p class="course-paragraph">
+    M_{Y_n}(t) = e^{-t {{n}{2}}} M_{Z_n}( {t}{{2n}} ) = e^{-t {{n}{2}}} ( 1 - t {{2}{n}} )^{-n/2}
+</p>
+$$
+<p class="course-paragraph">
+Her iki tarafın doğal logaritmasını alalım:
+</p>
+$$
+<p class="course-paragraph">
+     M_{Y_n}(t) = -t {{n}{2}} - {n}{2} ( 1 - t {{2}{n}} )
+</p>
+$$
+<p class="course-paragraph">
+$(1 - u) = -u - {u^2}{2} - $ Taylor açılımını $u = t {{2}{n}}$ için uygulayalım:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+     M_{Y_n}(t) &= -t {{n}{2}} - {n}{2}   \\
+    &= -t {{n}{2}} + t {{n}{2}} + {t^2}{2} + O(n^{-1/2}) = {t^2}{2} + O(n^{-1/2})
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+$n  $ limitinde:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  }  M_{Y_n}(t) = {t^2}{2}  _{n  } M_{Y_n}(t) = ( {t^2}{2} )
+</p>
+$$
+<p class="course-paragraph">
+Bu ifade $N(0, 1)$ dağılımının MÇF'sidir. Dolayısıyla:
+</p>
+$$
+<p class="course-paragraph">
+    {Y_n = {Z_n - n}{{2n}} {d} N(0, 1)}
+</p>
+$$
+<p class="course-paragraph">
+<strong>2. Çözüm Yolu (CLT Yardımıyla Tek Satırda Çözüm):</strong>
+$n$ serbestlik dereceli ki-kare değişkeni, $n$ adet bağımsız $W_i  ^2_1$ değişkeninin toplamıdır:
+</p>
+$$
+<p class="course-paragraph">
+    Z_n = _{i=1}^n W_i,  E(W_i) = 1,  V(W_i) = 2
+</p>
+$$
+<p class="course-paragraph">
+Merkezi Limit Teoremi gereğince:
+</p>
+$$
+<p class="course-paragraph">
+    { W_i - n E(W_1)}{{n V(W_1)}} = {Z_n - n  1}{{n  2}} = {{Z_n - n}{{2n}} {d} N(0, 1)}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Standardize ki-kare değişkenlerinin serbestlik derecesi ($n=4  n=20$) arttıkça $N(0,1)$ çan eğrisine kusursuz şekilde yakınsaması.}
+{center}
+</p>
+<h2 id="3-hafta-h-zl-tekrar-ve-yak-nsama-t-rleri-tablosu" class="section-title"><span class="title-anchor">§</span> 3. Hafta Hızlı Tekrar ve Yakınsama Türleri Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X l@{}}
+<p class="course-paragraph">
+<strong>Yakınsama Türü</strong></th><th><strong>Sembol</strong></th><th><strong>Matematiksel Kriter / Anlamı</strong></th><th><strong>Güç / Hiyerarşi</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Hemen Hemen H.Y.</strong></td><td>$X_n {a.s.} X$</td><td>$P( X_n = X) = 1$ (İstisnalar kümesinin olasılığı sıfırdır)</td><td>En Güçlü ($ P$)</td></tr>
+<tr><td><strong>Momentlerde ($L^r$)</strong></td><td>$X_n {L^r} X$</td><td>$ E(|X_n - X|^r) = 0$ ($r=2$ Ortalama Karede Yakınsama)</td><td>Güçlü ($ P$)</td></tr>
+<tr><td><strong>Olasılıkta Yakınsama</strong></td><td>$X_n {P} X$</td><td>$  > 0,  P(|X_n - X|  ) = 0$ (Hedefte sıkışma)</td><td>Orta ($ d$)</td></tr>
+<tr><td><strong>Dağılımda Yakınsama</strong></td><td>$X_n {d} X$</td><td>$ F_n(x) = F(x)$ veya $ M_{X_n}(t) = M_X(t)$ (Şekilce yakınsama)</td><td>En Zayıf</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{3. Haftada İncelenen 4 Farklı Yakınsama Türünün Özeti ve Hiyerarşik Karşılaştırması}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    <section id="hafta-4" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 4</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">4. Hafta: Genelleştirilmiş CLT ve Kolmogorov/Markov Kriterleri</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_04.pdf" target="_blank" class="btn-pdf">📄 Hafta 4 PDF İndir</a>
+          <a href="hafta-04.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 4. haftasında yer alan <strong>Genelleştirilmiş Merkezi Limit Teoremleri</strong> (Lindeberg-Feller ve Lyapunov), <strong>Büyük Sayılar Yasası Kriterleri</strong> (Kolmogorov ve Markov), <strong>De Moivre - Laplace Teoremi</strong> ve <strong>Rastgele Değişken Dönüşümleri (Transformations)</strong> konularını içermektedir. Ağır matematiksel koşullar sezgisel benzetmeler ve tam çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-4-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 4. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Dağılımlar Özdeş Olmadığında Ne Yaparız?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Geçen hafta gördüğümüz klasik Merkezi Limit Teoremi değişkenlerin hem bağımsız hem de <strong>aynı dağılıma sahip (i.i.d.)</strong> olduğunu varsayıyordu.  
+Fakat gerçek hayatta:
+</p>
+<ul class="course-list">
+<li>Topladığımız veriler farklı kaynaklardan (farklı fabrikalardan, farklı yaş gruplarından) gelebilir. Yani değişkenlerin varyansları ve ortalamaları birbirinden farklıdır!</li>
+<li>Soru şudur: <strong>Değişkenler aynı dağılıma sahip olmasa bile toplamları yine de Normal Dağılıma ($N(0,1)$) gider mi?</strong></li>
+</ul>
+<p class="course-paragraph">
+İşte 4. haftanın ilk konusu olan **Lindeberg-Feller** ve **Lyapunov** teoremleri bu soruya cevap verir: *"Evet, yeter ki içlerinden tek bir değişken devasa varyansıyla tüm sistemi domine etmesin!"*  
+İkinci kısımda ise bir $X$ değişkeninden $Y = g(X)$ yeni bir değişken ürettiğimizde (örneğin $Y = X^2$), yeni olasılık yoğunluğunu nasıl bulacağımızı (<strong>Değişken Dönüşümü</strong>) öğreniriz.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="genelle-tirilmi-merkezi-limit-teoremleri" class="section-title"><span class="title-anchor">§</span> Genelleştirilmiş Merkezi Limit Teoremleri</h2>
+<p class="course-paragraph">
+Klasik Lindeberg-Lévy MLT'sinde $X_i$ değişkenlerinin aynı dağılıma sahip olması şarttır. Değişkenlerin dağılımları birbirinden farklı olduğunda aşağıdaki genellemeler devreye girer.
+</p>
+<h3 id="1-lindeberg-feller-teoremi" class="subsection-title">1. Lindeberg - Feller Teoremi</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Lindeberg - Feller Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, $ bağımsız ancak farklı dağılımlara sahip olabilen rastgele değişkenler olsun. $E(X_k) = _k$ ve $V(X_k) = _k^2 < $ olmak üzere:
+</p>
+$$
+<p class="course-paragraph">
+    Y_k = X_k - _k,  T_n = _{k=1}^n Y_k,  s_n^2 = _{k=1}^n _k^2
+</p>
+$$
+<p class="course-paragraph">
+tanımlansın. Eğer $  > 0$ için <strong>Lindeberg Koşulu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } {1}{s_n^2} _{k=1}^n E( Y_k^2 \, I_{\{|Y_k|   s_n\}} ) = 0
+</p>
+$$
+<p class="course-paragraph">
+sağlanıyorsa, standartlaştırılmış toplam standart normale dağılımda yakınsar:
+</p>
+$$
+<p class="course-paragraph">
+    Z_n = {T_n}{s_n} = {_{k=1}^n (X_k - _k)}{{_{k=1}^n _k^2}} {d} N(0, 1)
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Lindeberg Koşulunun Anlamı: "Aşırı Baskın Değişken Yoktur"</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $I_{\{|Y_k|   s_n\}}$ bir gösterge fonksiyonudur; yani değişkenin toplam standart sapmadan ($ s_n$) daha büyük aşırı uç değerler alması durumudur.  
+Lindeberg koşulu der ki: Toplam varyans ($s_n^2$) büyüdükçe, hiçbir tekil değişkenin aşırı uç sapması toplam sistemi tek başına esir alamaz; her bir değişkenin toplama etkisi sıfıra gider.
+</p>
+  </div>
+</div>
+<h3 id="2-lyapunov-ko-ulu" class="subsection-title">2. Lyapunov Koşulu</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Lyapunov Koşulu (Daha Kolay Uygulanan Yeter Koşul)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Lindeberg koşulundaki gösterge fonksiyonlu integrali hesaplamak çoğu zaman zordur. Lyapunov şunu göstermiştir: Eğer bir $ > 0$ için:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } {1}{s_n^{2+}} _{i=1}^n E( |X_i - _i|^{2+} ) = 0
+</p>
+$$
+<p class="course-paragraph">
+sağlanıyorsa, Lindeberg koşulu <strong>otomatik olarak sağlanır</strong> ve MLT geçerli olur:
+</p>
+$$
+<p class="course-paragraph">
+    {_{i=1}^n (X_i - _i)}{s_n} {d} N(0, 1)
+</p>
+$$
+<p class="course-paragraph">
+(Pratikte genellikle $ = 1$ alınarak 3. momentler kontrol edilir).
+</p>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Lyapunov Koşulunun Uygulanış Alanı (Sayfa 19):</strong>
+Notlarda Lyapunov koşulu tanımlanırken değişkenler için "iid" ifadesi kullanılmıştır. Oysa değişkenler iid olduğunda zaten 2. momentin varlığı (Lindeberg-Lévy) yeterlidir. Lyapunov koşulu, değişkenlerin <strong>farklı dağılımlara sahip olduğu (özdeş olmayan)</strong> bağımsız serilerde MLT'yi garanti etmek için kullanılır.
+</p>
+  </div>
+</div>
+<h4 class="subsubsection-title">İspat: Lyapunov Koşulu $$ Lindeberg Koşulu</h4>
+<p class="course-paragraph">
+$|X_i - _i|   s_n$ bölgesinde ${|X_i - _i|}{ s_n}  1  ({|X_i - _i|}{ s_n})^  1$ olur. Buradan:
+</p>
+$$
+<p class="course-paragraph">
+    (X_i - _i)^2 I_{\{|X_i - _i|   s_n\}}  {|X_i - _i|^{2+}}{^ s_n^}
+</p>
+$$
+<p class="course-paragraph">
+Toplamı alıp $s_n^2$'ye bölersek:
+</p>
+$$
+<p class="course-paragraph">
+    {1}{s_n^2} _{i=1}^n E( (X_i - _i)^2 I_{\{|X_i - _i|   s_n\}} )  {1}{^} ( {1}{s_n^{2+}} _{i=1}^n E( |X_i - _i|^{2+} ) )
+</p>
+$$
+<p class="course-paragraph">
+Lyapunov terimi sıfıra gittiğinde sağ taraf sıfır olur; sandviç kuralından Lindeberg koşulu kanıtlanır.
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="b-y-k-say-lar-yasas-i-in-kolmogorov-ve-markov-kriterleri" class="section-title"><span class="title-anchor">§</span> Büyük Sayılar Yasası İçin Kolmogorov ve Markov Kriterleri</h2>
+<p class="course-paragraph">
+Değişkenlerin dağılımları aynı olmadığında ortalamanın kitle ortalamasına yakınsamasını test eden iki altın kriter vardır:
+</p>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Kolmogorov Kriteri (Güçlü BSY - SLLN)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $\{X_n\}$ bağımsız rastgele değişkenler dizisi olsun. Eğer:
+</p>
+$$
+<p class="course-paragraph">
+    _{k=1}^{} {_k^2}{k^2} < 
+</p>
+$$
+<p class="course-paragraph">
+ise $\{X_n\}$ dizisi <strong>Güçlü Büyük Sayılar Yasası (SLLN)</strong>'nı sağlar (${1}{n} (X_k - _k) {a.s.} 0$).
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Markov Koşulu (Zayıf BSY - WLLN)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $\{X_n\}$ bağımsız rastgele değişkenler dizisi olsun. Eğer:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } {1}{n^2} _{k=1}^n _k^2 = 0
+</p>
+$$
+<p class="course-paragraph">
+ise $\{X_n\}$ dizisi <strong>Zayıf Büyük Sayılar Yasası (WLLN)</strong>'nı sağlar (${1}{n} (X_k - _k) {P} 0$).
+</p>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Sayfa 21'deki $p$-Serisi Harf Hatası:</strong>
+Notlarda $_{k=1}^ {1}{k^p}$ serisi için "$k  1$ ise ıraksak, $k > 1$ ise yakınsak" yazılmıştır. Değişken serinin indeksi olan $k$ değil, serinin kuvveti olan <strong>$p$ sayısıdır</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    _{k=1}^{} {1}{k^p}  
+    {cases}
+        p  1, & {ıraksaktır (örneğin } p=1 { harmonik seridir)} \\
+        p > 1, & {yakınsaktır}
+    {cases}
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: $X_k  {Poisson</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    (k)$ İçin BSY İncelemesi}
+$V(X_k) = _k^2 = k$ olsun.
+</p>
+<ol class="course-ordered-list">
+<li><strong>Kolmogorov Kriteri:</strong>
+    $$
+<p class="course-paragraph">
+        _{k=1}^{} {_k^2}{k^2} = _{k=1}^{} {k}{k^2} =  _{k=1}^{} {1}{k} =   ({Harmonik seri ıraksak!})
+</p>
+$$
+<p class="course-paragraph">
+    Kolmogorov kriteri sağlanmaz; Güçlü BSY garanti edilemez.</li>
+</p>
+<li><strong>Markov Koşulu:</strong>
+    $$
+<p class="course-paragraph">
+        _{n  } {1}{n^2} _{k=1}^n k = _{n  } {}{n^2} {n(n+1)}{2} = {}{2}  0
+</p>
+$$
+<p class="course-paragraph">
+    Limit sıfır çıkmadığı için Markov koşulu da sağlanmaz.</li>
+</p>
+</ol>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Sayfa 22'deki $^2_k$ Örneğindeki Cebir Hatası:</strong>
+$Y_k  ^2_k  V(Y_k) = 2k$ için notta limit hesaplanırken: $_{n  } {2n}{n^2}{n(n+1)}{2} = n+1 = $ yazılmıştır.  
+Doğru limit hesabı:
+</p>
+$$
+<p class="course-paragraph">
+    _{n  } {1}{n^2} _{k=1}^n 2k = _{n  } {2}{n^2} {n(n+1)}{2} = _{n  } {n^2 + n}{n^2} = 1  0
+</p>
+$$
+<p class="course-paragraph">
+Limit sonsuz değil $1$'dir; ancak yine de $0$ olmadığından Markov koşulu sağlanmaz.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: $Y  {Bernoulli</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    (p)$ ve $X_n = {Y}{n}$ Dizisi}
+$V(X_n) = {pq}{n^2}$.
+</p>
+<ol class="course-ordered-list">
+<li><strong>Kolmogorov:</strong> $_{k=1}^ {_k^2}{k^2} = pq _{k=1}^ {1}{k^4} = pq {^4}{90} <  $ <strong>Güçlü BSY sağlar</strong>.</li>
+<li><strong>Markov:</strong> $_{n  } {1}{n^2} _{k=1}^n {pq}{k^2} = 0  {^2}{6} = 0 $ <strong>Zayıf BSY sağlar</strong>.</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="4-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 4. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: De Moivre - Laplace Teoreminin MÇF İle İspatı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Ödev Sorusu (Sayfa 22):</strong> $X_1, , X_n {{i.i.d.}}{} {Bernoulli}(p)$ ve $Y_n = _{i=1}^n X_i  {Binom}(n, p)$ olsun.
+</p>
+$$
+<p class="course-paragraph">
+    Z_n = {Y_n - E(Y_n)}{{V(Y_n)}} = {Y_n - np}{{npq}} {d} N(0, 1)
+</p>
+$$
+<p class="course-paragraph">
+olduğunu Moment Çıkaran Fonksiyon (MGF) yöntemiyle gösteriniz. *(Notlarda çözümü boş bırakılmıştır).*
+</p>
+<p class="course-paragraph">
+<strong>Detaylı ve Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir Bernoulli değişkeninin MÇF'si:
+    $$
+<p class="course-paragraph">
+        M_X(t) = E(e^{tX}) = p e^t + q,  (q = 1 - p)
+</p>
+$$</li>
+<li>Bağımsız toplam $Y_n  {Binom}(n, p)$ için:
+    $$
+<p class="course-paragraph">
+        M_{Y_n}(t) = [M_X(t)]^n = (p e^t + q)^n
+</p>
+$$</li>
+<li>Standardize edilmiş değişken $Z_n = {Y_n - np}{{npq}}$'nin MÇF'si:
+    $$
+<p class="course-paragraph">
+        M_{Z_n}(t) = e^{-{npt}{{npq}}} M_{Y_n}( {t}{{npq}} ) = ^n
+</p>
+$$</li>
+<li>$u = {t}{{npq}}$ diyelim ($n  $ iken $u  0$). Doğal logaritmasını alalım:
+    $$
+<p class="course-paragraph">
+         M_{Z_n}(t) = n  = n \, g(u)
+</p>
+$$</li>
+<li>$g(u) = -pu + (pe^u + q)$ fonksiyonunun $u=0$'da Taylor serisini açalım:
+    $$
+<p class="course-paragraph">
+{aligned}
+        g(0) &= 0 \\
+        g'(u) &= -p + {p e^u}{p e^u + q}  g'(0) = -p + p = 0 \\
+        g''(u) &= {p e^u(p e^u + q) - p^2 e^{2u}}{(p e^u + q)^2} = {pq e^u}{(p e^u + q)^2}  g''(0) = pq
+    {aligned}
+</p>
+$$</li>
+<li>Taylor formülü gereği: $g(u) = 0 + 0  u + {pq}{2} u^2 + O(u^3)$.  
+<p class="course-paragraph">
+    $u = {t}{{npq}}$ yerine yazılırsa:
+</p>
+    $$
+<p class="course-paragraph">
+         M_{Z_n}(t) = n  = {t^2}{2} + O(n^{-1/2})
+</p>
+$$</li>
+<li>Limit alındığında:
+    $$
+<p class="course-paragraph">
+        _{n  } M_{Z_n}(t) = ( {t^2}{2} )  {Z_n {d} N(0, 1)}
+</p>
+$$</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{De Moivre-Laplace Teoremi: Binom olasılık sütunlarının kesikli yapısına rağmen Normal çan eğrisine mükemmel oturması.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="rastgele-de-i-kenlerde-d-n-mler-transformations" class="section-title"><span class="title-anchor">§</span> Rastgele Değişkenlerde Dönüşümler (Transformations)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Değişken Dönüşümü Nedir? Neden Jacobian / Türev Çarpanı Gelir?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir $X$ rastgele değişkenini bir formülden geçirip yeni bir $Y = g(X)$ değişkeni elde ettiğimizde (örneğin sıcaklığı Santigrat'tan Fahrenhayt'a veya boyutu alana $Y = X^2$ çevirdiğimizde), yeni $f_Y(y)$ yoğunluğu sadece yerine koymakla bulunmaz!  
+Çünkü olasılık kütlesi esner veya sıkışır. Bu esnemeyi dengelemek için diferansiyel oran olan türev çarpanı $|dx/dy|$ (Jacobian) mutlaka eklenmelidir.
+</p>
+  </div>
+</div>
+<h3 id="1-birebir-ve-monoton-d-n-mler" class="subsection-title">1. Birebir ve Monoton Dönüşümler</h3>
+<p class="course-paragraph">
+$X$ sürekli rastgele değişkeninin yoğunluğu $f_X(x)$ olsun. $Y = g(X)$ kesin monoton ve türevlenebilir ise:
+</p>
+$$
+<p class="course-paragraph">
+    {f_Y(y) = f_X(g^{-1}(y)) | {d g^{-1}(y)}{dy} | = f_X(x) | {dx}{dy} |}
+</p>
+$$
+<h3 id="2-birebir-olmayan-d-n-mler-y-x-2" class="subsection-title">2. Birebir Olmayan Dönüşümler ($Y = X^2$)</h3>
+<p class="course-paragraph">
+$Y = X^2$ parabolik dönüşümünde hem pozitif hem de negatif $x$ değerleri aynı $y$'ye gider:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    F_Y(y) &= P(X^2  y) = P(-{y}  X  {y}) = F_X({y}) - F_X(-{y}),  (y > 0)
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Türev alarak yoğunluğa geçersek:
+</p>
+$$
+<p class="course-paragraph">
+    {f_Y(y) = {1}{2{y}} ,  (y > 0)}
+</p>
+$$
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Parçalı Yoğunluk Dönüşümü</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  {Uniform}(-1, 2)  f(x) = {1}{3}, \; -1 < x < 2$ olsun. $Y = X^2$'nin yoğunluğunu bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+$x  (-1, 2)$ iken $y = x^2  (0, 4)$ olur. Ancak simetri bozulduğu için bölge ikiye ayrılır:
+</p>
+<ul class="course-list">
+<li><strong>1. Bölge ($0 < y < 1$):</strong> Hem sol dal ($-{y}$) hem sağ dal ($+{y}$) mevcuttur (2 kol aktif):
+    $$
+<p class="course-paragraph">
+        f_Y(y) = {1}{2{y}}  = {{1}{3{y}}}
+</p>
+$$</li>
+<li><strong>2. Bölge ($1  y < 4$):</strong> Negatif kol $-1$'de bittiği için $-{y}$ tanım dışıdır ($f_X(-{y})=0$). Yalnızca pozitif kol ($+{y}$) aktiftir (Tek kol aktif):
+    $$
+<p class="course-paragraph">
+        f_Y(y) = {1}{2{y}}  = {{1}{6{y}}}
+</p>
+$$</li>
+</ul>
+<p class="course-paragraph">
+Sonuç olarak:
+</p>
+$$
+<p class="course-paragraph">
+    f_Y(y) = 
+    {cases}
+        {1}{3{y}}, & 0 < y < 1 \\
+        {1}{6{y}}, & 1  y < 4 \\
+        0, & {diğer yerlerde}
+    {cases}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{$Y = X^2$ dönüşümünde $-1 < x < 2$ aralığının bölgelere ayrılması.}
+{center}
+</p>
+<h2 id="4-hafta-h-zl-tekrar-ve-form-l-tablosu" class="section-title"><span class="title-anchor">§</span> 4. Hafta Hızlı Tekrar ve Formül Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Teorem / Kriter</strong></th><th><strong>Matematiksel Şart</strong></th><th><strong>Ne İşe Yarar / Anlamı</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Lindeberg Koşulu</strong></td><td>$ {1}{s_n^2}  E(Y_k^2 I_{\{|Y_k|   s_n\}}) = 0$</td><td>Dağılımları farklı değişkenlerin toplamında MLT'yi garanti eder.</td></tr>
+<tr><td><strong>Lyapunov Koşulu</strong></td><td>$ {1}{s_n^{2+}}  E(|X_k-_k|^{2+}) = 0$</td><td>Lindeberg'den daha kolay hesaplanan üst moment yeter koşulu.</td></tr>
+<tr><td><strong>Kolmogorov Kriteri</strong></td><td>$_{k=1}^ {_k^2}{k^2} < $</td><td>Farklı varyanslı bağımsız serilerde Güçlü BSY ($a.s.$) garantisi.</td></tr>
+<tr><td><strong>Markov Kriteri</strong></td><td>$_{n  } {1}{n^2} _{k=1}^n _k^2 = 0$</td><td>Zayıf BSY (olasılıkta yakınsama) için pratik varyans limiti.</td></tr>
+<tr><td><strong>Monoton Dönüşüm</strong></td><td>$f_Y(y) = f_X(x) |dx/dy|$</td><td>Tek değişkenli birebir dönüşümde yoğunluk bulma.</td></tr>
+<tr><td><strong>Karesel Dönüşüm ($X^2$)</strong></td><td>$f_Y(y) = {1}{2{y}}[f_X({y}) + f_X(-{y})]$</td><td>Parabolün iki kolunu birleştirerek $Y=X^2$ yoğunluğu bulma.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{4. Haftanın Temel Teoremleri, Yakınsama Kriterleri ve Dönüşüm Kuralları}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    <section id="hafta-5" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 5</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">5. Hafta: Örnekleme Dağılımları (t, F, Ki-Kare)</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_05.pdf" target="_blank" class="btn-pdf">📄 Hafta 5 PDF İndir</a>
+          <a href="hafta-05.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 5. haftasında yer alan <strong>Örnekleme Dağılımları</strong> ($^2$, Student-$t$, Fisher-$F$), <strong>İki Değişkenli Dönüşümler ve Konvolüsyon</strong>, <strong>Sürekli Eşleme Teoremi (CMT)</strong> ve <strong>Hata Kareler Ortalaması (MSE) Optimizasyonu</strong> konularını içermektedir. Ağır matematiksel türetimler sezgisel şemalar ve adım adım örneklerle basitleştirilmiştir.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-5-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 5. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Normal Dağılımın Çekirdek Ailesi ($^2$, $t$ ve $F$)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    İstatistikte en sık kullandığımız testler ($t$-testi, ANOVA, Ki-Kare testi) gökten zembille inmemiştir; hepsi tek bir kaynaktan: **Standart Normal Dağılımdan ($Z  N(0,1)$)** türetilmiştir!
+</p>
+<ul class="course-list">
+<li>Standart normal değişkenlerin karelerini toplarsanız $$ <strong>Ki-Kare Dağılımı</strong> ($^2$) doğar.</li>
+<li>Kitle varyansı bilinmediğinde $$ yerine örneklem varyansı $S$ koyarsanız $$ <strong>Student-$t$ Dağılımı</strong> doğar.</li>
+<li>İki farklı grubun varyanslarını birbirine oranlarsanız $$ <strong>Fisher-$F$ Dağılımı</strong> doğar.</li>
+</ul>
+<p class="course-paragraph">
+Haftanın ikinci kısmında ise istatistiksel tahmin edicilerin kalitesini ölçen en temel kriter olan <strong>Hata Kareler Ortalamasını (MSE)</strong> ve sapma-varyans dengesini (bias-variance tradeoff) öğreniriz.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Normal dağılımdan türetilen örnekleme dağılımları arasındaki hiyerarşik ilişkiler.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="rnekleme-da-l-mlar-sampling-distributions" class="section-title"><span class="title-anchor">§</span> Örnekleme Dağılımları (Sampling Distributions)</h2>
+<h3 id="1-standart-normalin-karesi-ve-chi-2-1-da-l-m" class="subsection-title">1. Standart Normalin Karesi ve $^2_1$ Dağılımı</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Teorem: $Z  N(0, 1)  Y = Z^2  ^2_1$</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $Z  N(0, 1)$ olsun. $Y = Z^2$ karesel dönüşümünün dağılım fonksiyonu simetriden $F_Y(y) = P(Z^2  y) = 2F_Z({y}) - 1$'dir ($y > 0$).  
+Türevi alınırsa:
+</p>
+$$
+<p class="course-paragraph">
+    f_Y(y) = 2 f_Z({y}) {1}{2{y}} = {1}{{y}} {1}{{2}} e^{-y/2} = {1}{2^{1/2} (1/2)} y^{1/2 - 1} e^{-y/2}
+</p>
+$$
+<p class="course-paragraph">
+Bu yoğunluk $k=1$ serbestlik dereceli <strong>Ki-Kare ($^2_1$)</strong> dağılımıdır.
+</p>
+  </div>
+</div>
+<h3 id="2-ba-ms-z-ki-karelerin-toplam" class="subsection-title">2. Bağımsız Ki-Karelerin Toplamı</h3>
+<p class="course-paragraph">
+$Z_i {{i.i.d.}}{} N(0, 1)$ ise $X_i = Z_i^2  ^2_1$ değişkeninin MÇF'si:
+</p>
+$$
+<p class="course-paragraph">
+    M_{X_i}(t) = _{-}^{} e^{tz^2} {1}{{2}} e^{-z^2/2} dz = {1}{{2}} _{-}^{} e^{-{z^2}{2}(1 - 2t)} dz = (1 - 2t)^{-1/2}
+</p>
+$$
+<p class="course-paragraph">
+Bağımsız $k$ tanesinin toplamı $Y = _{i=1}^k Z_i^2$ için MÇF:
+</p>
+$$
+<p class="course-paragraph">
+    M_Y(t) = _{i=1}^k M_{X_i}(t) = ^k = (1 - 2t)^{-k/2}  {Y = _{i=1}^k Z_i^2  ^2_k}
+</p>
+$$
+<h3 id="3-rneklem-varyans-n-n-da-l-m-frac-n-1-s-2-sim-chi-2-n-1" class="subsection-title">3. Örneklem Varyansının Dağılımı: ${(n-1)S^2  ^2_{n-1</h3>
+<p class="course-paragraph">
+$}{(n-1)S^2/sigma^2 ~ Ki-kare(n-1)}}
+</p>
+<p class="course-paragraph">
+$X_i {{i.i.d.}}{} N(, ^2)$ olsun. Cebirsel toplam kareler özdeşliğini yazalım:
+</p>
+$$
+<p class="course-paragraph">
+    _{i=1}^n (X_i - )^2 = _{i=1}^n (X_i - {X})^2 + n({X} - )^2
+</p>
+$$
+<p class="course-paragraph">
+Her iki tarafı kitle varyansı $^2$'ye bölelim:
+</p>
+$$
+<p class="course-paragraph">
+    {_{i=1}^n ({X_i - }{})^2}_{A  ^2_n} = {{(n-1)S^2}{^2}}_{B} + {({{X} - }{/{n}})^2}_{C  ^2_1}
+</p>
+$$
+<p class="course-paragraph">
+Normal kitlelerde örneklem ortalaması (${X}$) ile örneklem varyansı ($S^2$) istatistiksel olarak <strong>bağımsızdır</strong> (Basu / Cochran teoremi). Dolayısıyla $B$ ile $C$ bağımsızdır:
+</p>
+$$
+<p class="course-paragraph">
+    M_A(t) = M_B(t)  M_C(t)  M_B(t) = {M_A(t)}{M_C(t)} = {(1 - 2t)^{-n/2}}{(1 - 2t)^{-1/2}} = (1 - 2t)^{-{n-1}{2}}
+</p>
+$$
+<p class="course-paragraph">
+Teklik teoremi gereğince:
+</p>
+$$
+<p class="course-paragraph">
+    {{(n-1)S^2}{^2}  ^2_{n-1}}
+</p>
+$$
+<p class="course-paragraph">
+<em>Sezgisel Anlamı:</em> Serbestlik derecesi $n$ değil $n-1$'dir; çünkü örneklem ortalaması ${X}$ tahmin edildiğinde 1 serbestlik derecesi (bilgi) harcanmıştır!
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="student-t-ve-fisher-f-da-l-mlar-n-n-t-retilmesi" class="section-title"><span class="title-anchor">§</span> Student-$t$ ve Fisher-$F$ Dağılımlarının Türetilmesi</h2>
+<h3 id="1-student-t-da-l-m-n-n-jacobiyen-i-le-t-retimi" class="subsection-title">1. Student-$t$ Dağılımının Jacobiyen İle Türetimi</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Student-$t$ Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $Z  N(0, 1)$ ve $V  ^2_r$ bağımsız iki değişken olsun.  
+</p>
+$$
+<p class="course-paragraph">
+    T = {Z}{{V/r}}
+</p>
+$$
+<p class="course-paragraph">
+değişkenine $r$ serbestlik dereceli <strong>Student-$t$</strong> dağılımı denir ($T  t_r$).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Türetim Adımları:</strong>  
+$T = {Z}{{V/r}}$ ve $U = V$ dönüşümü yapalım:
+</p>
+$$
+<p class="course-paragraph">
+    z = t {u/r},  v = u  |J| = | {matrix} {u/r} & {t}{2{ur}} \\ 0 & 1 {matrix} | = {{u}{r}}
+</p>
+$$
+<p class="course-paragraph">
+Bileşik yoğunluk $f(t, u) = f_Z(z(t, u)) f_V(u) |J|$:
+</p>
+$$
+<p class="course-paragraph">
+    f(t, u) = {1}{{2}} {1}{2^{r/2}(r/2)} u^{r/2 - 1} ( -{u}{2}( 1 + {t^2}{r} ) ) u^{1/2} r^{-1/2}
+</p>
+$$
+<p class="course-paragraph">
+$u  (0, )$ üzerinden Gamma integrali ($_0^ u^{-1} e^{- u} du = {()}{^}$) ile marjinal yoğunluk hesaplanırsa:
+</p>
+$$
+<p class="course-paragraph">
+    {f(t) = {({r+1}{2})}{{r} \, ({r}{2})} ( 1 + {t^2}{r} )^{-{r+1}{2}},  - < t < }
+</p>
+$$
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Student-$t$ dağılımlarının Normal dağılımla karşılaştırması ($r  $ iken $t_r {d} N(0, 1)$, $r=1$ iken Cauchy dağılımıdır).}
+{center}
+</p>
+<h3 id="2-fisher-f-da-l-m-n-n-t-retimi" class="subsection-title">2. Fisher-$F$ Dağılımının Türetimi</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Fisher-$F$ Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $U  ^2_{r_1}$ ve $V  ^2_{r_2}$ bağımsız iki ki-kare değişkeni olsun.
+</p>
+$$
+<p class="course-paragraph">
+    W = {U / r_1}{V / r_2}
+</p>
+$$
+<p class="course-paragraph">
+oranına $r_1$ ve $r_2$ serbestlik dereceli <strong>Snedecor-Fisher $F$</strong> dağılımı denir ($W  F_{r_1, r_2}$).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+Jacobiyen dönüşümü yapılıp marjinal integral alındığında:
+</p>
+$$
+<p class="course-paragraph">
+    {f(w) = {({r_1 + r_2}{2})}{({r_1}{2}) ({r_2}{2})} ({r_1}{r_2})^{r_1/2} {w^{{r_1}{2} - 1}}{(1 + {r_1}{r_2}w)^{{r_1+r_2}{2}}},  w > 0}
+</p>
+$$
+<p class="course-paragraph">
+---
+</p>
+<h2 id="i-ki-de-i-kenli-d-n-mler-ve-konvol-syon" class="section-title"><span class="title-anchor">§</span> İki Değişkenli Dönüşümler ve Konvolüsyon</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Konvolüsyon İntegrali (Toplamın Yoğunluğu)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X$ ve $Y$ bağımsız sürekli rastgele değişkenler olsun. Toplamları olan $U = X + Y$ değişkeninin olasılık yoğunluk fonksiyonu:
+</p>
+$$
+<p class="course-paragraph">
+    f_U(u) = (f_X * f_Y)(u) = _{-}^{} f_X(v) \, f_Y(u - v) \, dv
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: $f(x) = 2x, \; 0 < x < 1$ İçin $Y = X_1 + X_2$'nin Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $f(x_1, x_2) = 4x_1 x_2$. $Y_1 = X_1 + X_2, Y_2 = X_2  |J| = 1$.  
+Sınırlar: $0 < y_1 - y_2 < 1$ ve $0 < y_2 < 1$.
+</p>
+<ul class="course-list">
+<li><strong>Bölge I ($0 < y_1 < 1$):</strong> $y_2  (0, y_1)$
+    $$
+<p class="course-paragraph">
+        f(y_1) = _{0}^{y_1} 4(y_1 y_2 - y_2^2) dy_2 = _0^{y_1} = {{2}{3}y_1^3}
+</p>
+$$</li>
+<li><strong>Bölge II ($1  y_1 < 2$):</strong> $y_2  (y_1 - 1, 1)$
+    $$
+<p class="course-paragraph">
+        f(y_1) = _{y_1 - 1}^{1} 4(y_1 y_2 - y_2^2) dy_2 = {{2}{3}( -y_1^3 + 6y_1 - 4 )}
+</p>
+$$</li>
+</ul>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: Üçgensel Dağılım ($Y = X_2 - X_1$)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $f(x_1, x_2) = 1/2, \; x_1 + x_2 < 2, \; x_1, x_2 > 0$ bölgesinde $Y = X_2 - X_1$ dönüşümü:
+</p>
+$$
+<p class="course-paragraph">
+    f_Y(y) = {2 - |y|}{4},  -2 < y < 2
+</p>
+$$
+<p class="course-paragraph">
+şeklinde simetrik bir üçgensel dağılım üretir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{$Y = X_2 - X_1$ değişkeninin simetrik üçgensel olasılık yoğunluk fonksiyonu.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="5-hafta-devi-ve-eksiksiz-z-m" class="section-title"><span class="title-anchor">§</span> 5. Hafta Ödevi ve Eksiksiz Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Sürekli Eşleme Teoremi (Continuous Mapping Theorem - CMT)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Ödev Sorusu (Sayfa 35):</strong> $g: {R}  {R}$ fonksiyonu sürekli olsun. ${}_n {P} $ ise:
+</p>
+$$
+<p class="course-paragraph">
+    g({}_n) {P} g()
+</p>
+$$
+<p class="course-paragraph">
+olduğunu ispatlayınız. *(Notlarda "İspatı ödev..." olarak bırakılmıştır).*
+</p>
+<p class="course-paragraph">
+<strong>Adım Adım Detaylı İspat:</strong>
+Göstermemiz gereken matematiksel hedef:
+</p>
+$$
+<p class="course-paragraph">
+      > 0  {için}  _{n  } P( |g({}_n) - g()|   ) = 0
+</p>
+$$
+<ol class="course-ordered-list">
+<li>Herhangi bir $ > 0$ sabitlensin.</li>
+<li>$g$ fonksiyonu $$ noktasında sürekli olduğundan analizin $-$ tanımı gereği:
+    $$
+<p class="course-paragraph">
+        |x - | <   |g(x) - g()| < 
+</p>
+$$
+<p class="course-paragraph">
+    olacak şekilde bir $ > 0$ sayısı mevcuttur.</li>
+</p>
+<li>Mantık kurallarına göre $(P  Q)  ( Q   P)$ karşıt-tersi denktir:
+    $$
+<p class="course-paragraph">
+        |g(x) - g()|    |x - |  
+</p>
+$$</li>
+<li>Bu bağıntı rastgele değişkenlerin olay kümeleri için bir alt küme ilişkisi tanımlar:
+    $$
+<p class="course-paragraph">
+        \{  : |g({}_n()) - g()|   \}  \{  : |{}_n() - |   \}
+</p>
+$$</li>
+<li>Olasılık ölçüsünün monotonluğundan ($A  B  P(A)  P(B)$):
+    $$
+<p class="course-paragraph">
+        P( |g({}_n) - g()|   )  P( |{}_n - |   )
+</p>
+$$</li>
+<li>Hipotez gereği ${}_n {P} $ olduğundan sabit $ > 0$ için sağ taraf sıfıra gider:
+    $$
+<p class="course-paragraph">
+        _{n  } P( |{}_n - |   ) = 0
+</p>
+$$</li>
+<li>Sandviç Teoremi gereğince:
+    $$
+<p class="course-paragraph">
+        0  _{n  } P( |g({}_n) - g()|   )  0  {g({}_n) {P} g()}
+</p>
+$$</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="hata-kareler-ortalamas-mse-ve-optimal-tahmin" class="section-title"><span class="title-anchor">§</span> Hata Kareler Ortalaması (MSE) ve Optimal Tahmin</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Hata Kareler Ortalaması (Mean Squared Error - MSE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir $$ parametresinin tahmin edicisi ${}$ olsun.
+</p>
+$$
+<p class="course-paragraph">
+    {{MSE}_({}) = E = V({}) + ^2}
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Yansızlık mı, Düşük MSE mi? (Bias-Variance Tradeoff)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Geleneksel olarak tahmin edicinin ortalamasının kitle parametresine eşit olması istenir ($E({})=$, Yansızlık / Unbiasedness).  
+Ancak bir tahmin edici yansız olsa bile varyansı (savrulması) çok büyük olabilir!  
+Bazen birazcık yanlılığa (bias) izin vermek varyansı öyle muazzam düşürür ki, toplam hata karesi (MSE) çok daha küçük kalır. Modern istatistik ve yapay zekanın (Ridge Regresyon vb.) kalbinde bu ilke yatar.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: Normal Dağılımda $^2$ İçin En Küçük MSE'li Tahmin Edici</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $T = _{i=1}^n (X_i - {X})^2  ^2 ^2_{n-1}$ olsun. ${}^2 = a T$ biçimindeki tahmin ediciler arasında MSE'yi minimize eden $a$ değerini bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+$E(T) = (n-1)^2$ ve $V(T) = 2(n-1)^4$.
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    {MSE}(aT) &= V(aT) + [E(aT) - ^2]^2 = a^2 2(n-1)^4 + [a(n-1)^2 - ^2]^2  \\
+    &= ^4 
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+$a$'ya göre türev alıp sıfıra eşitleyelim:
+</p>
+$$
+<p class="course-paragraph">
+    {d}{da} {MSE}(aT) = ^4  = 0
+</p>
+$$
+<p class="course-paragraph">
+$2(n-1)$ çarpanını sadeleştirelim ($n > 1$):
+</p>
+$$
+<p class="course-paragraph">
+    2a + (n-1)a - 1 = 0  a(n + 1) = 1  {a = {1}{n+1}}
+</p>
+$$
+<p class="course-paragraph">
+<strong>Çarpıcı Sonuç:</strong>
+</p>
+<ul class="course-list">
+<li>Klasik yansız tahmin edici: $S^2 = {T}{n-1}$</li>
+<li>En küçük MSE'ye sahip tahmin edici: ${}^2_{{MSE}} = {T}{n+1}$</li>
+</ul>
+<p class="course-paragraph">
+$n+1$'e bölünen tahmin edici yansız değildir (bir miktar sapmalıdır); ancak varyansı çok daha küçük olduğu için ortalama hata karesi (MSE) $S^2$'den daha düşüktür!
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{$n=10$ için MSE parabolü. $a={1}{n+1}$ noktasında MSE global minimum yapar.}
+{center}
+</p>
+<h2 id="5-hafta-h-zl-tekrar-ve-form-l-tablosu" class="section-title"><span class="title-anchor">§</span> 5. Hafta Hızlı Tekrar ve Formül Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Dağılım / Teorem</strong></th><th><strong>Tanım ve Formül</strong></th><th><strong>Pratik Anlamı / Kullanım Alanı</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Ki-Kare ($^2_k$)</strong></td><td>$_{i=1}^k Z_i^2,  Z_i  N(0,1)$</td><td>Standart normallerin kareler toplamı; varyans testlerinin temeli.</td></tr>
+<tr><td><strong>Örneklem Varyansı</strong></td><td>${(n-1)S^2}{^2}  ^2_{n-1}$</td><td>Normal kitlede $S^2$'nin kitle varyansına oranı $n-1$ serbestlikli ki-karedir.</td></tr>
+<tr><td><strong>Student-$t_r$</strong></td><td>${Z}{{V/r}},  Z  N(0,1), V  ^2_r$</td><td>Kitle varyansı $$ bilinmediğinde ortalama testleri ($t$-testi).</td></tr>
+<tr><td><strong>Fisher-$F_{r_1, r_2</strong>$}</td><td>${U/r_1}{V/r_2},  U  ^2_{r_1}, V  ^2_{r_2}$</td><td>İki bağımsız varyansın karşılaştırılması (ANOVA testi).</td></tr>
+<tr><td><strong>CMT Teoremi</strong></td><td>${}_n {P}   g({}_n) {P} g()$</td><td>Sürekli fonksiyonlar olasılıkta yakınsamayı korur.</td></tr>
+<tr><td><strong>MSE Ayrışımı</strong></td><td>${MSE}({}) = V({}) + {Bias}^2$</td><td>Sapma ile varyans arasındaki değiş-tokuş kriteri.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{5. Haftanın Temel Örnekleme Dağılımları, Dönüşümleri ve Tahmin Kriterleri}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    <section id="hafta-6" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 6</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">6. Hafta: Nokta Tahmini ve Yansızlık Kriteri</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_06.pdf" target="_blank" class="btn-pdf">📄 Hafta 6 PDF İndir</a>
+          <a href="hafta-06.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 6. haftasında yer alan <strong>Olabilirlik İlkesi</strong>, <strong>En Çok Olabilirlik Tahmini (MLE)</strong>, <strong>Zehna Değişmezlik Teoremi</strong>, <strong>Skor Fonksiyonu</strong>, <strong>Fisher Bilgisi</strong> ve <strong>Rao-Cramér Alt Sınırı (CRLB / UMVUE)</strong> konularını içermektedir. Nokta tahmininin bu en kritik araçları sezgisel benzetmeler ve tam çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-6-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 6. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Nokta Tahmini ve Sherlock Holmes Mantığı (MLE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Olasılık teorisinde kitle parametresi ($$) bilinir ve *"elimdeki torbadan kırmızı bilye gelme olasılığı nedir?"* sorusu sorulur.  
+İstatistik teorisinde ise durum tam tersidir: **Torbanın içini bilmiyoruz!**  
+Elimizde sadece torbadan çekilmiş bir örneklem ($x_1, x_2, , x_n$) vardır.  
+Soru şudur: *"Mevcut veriyi üretmiş olma ihtimali en yüksek olan $$ parametresi hangisidir?"*  
+İşte bu soruya cevap veren yöntem <strong>En Çok Olabilirlik Yöntemi (MLE)</strong>'dir.  
+Peki bulduğumuz tahmin edicinin "en iyisi" olduğunu nereden biliriz? Evrende yapılabilecek en kusursuz tahminin varyansı için konulmuş bir fiziksel alt sınır vardır; buna da **Rao-Cramér Alt Sınırı (CRLB)** denir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olabilirlik-ve-en-ok-olabilirlik-y-ntemi-mle" class="section-title"><span class="title-anchor">§</span> Olabilirlik ve En Çok Olabilirlik Yöntemi (MLE)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olabilirlik ve Log-Olabilirlik Fonksiyonu</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n {{i.i.d.}}{} f_(x)$ olsun. Örneklem verisi $x_1, , x_n$ toplandıktan sonra, parametre $$'nın <strong>Olabilirlik Fonksiyonu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    L() = L(; x_1, , x_n) = _{i=1}^n f_(x_i)
+</p>
+$$
+<p class="course-paragraph">
+ve çarpımları toplama çevirerek türev almayı kolaylaştıran <strong>Log-Olabilirlik Fonksiyonu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    () =  L() = _{i=1}^n  f_(x_i)
+</p>
+$$
+<p class="course-paragraph">
+şeklinde tanımlanır.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: En Çok Olabilirlik Tahmin Edicisi (MLE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Gözlenen veriyi üretme olasılığını (olabilirliğini) maksimize eden parametre değeri ${}_{{MLE}}$'dir:
+</p>
+$$
+<p class="course-paragraph">
+    {}_{{MLE}} = _{  } L() = _{  } ()
+</p>
+$$
+<p class="course-paragraph">
+$()$ fonksiyonu içbükey (konkav) ve türevlenebilir ise en çok olabilirlik denklemi (skor denklemi):
+</p>
+$$
+<p class="course-paragraph">
+    {d()}{d} = 0
+</p>
+$$
+<p class="course-paragraph">
+ve tepe noktasını doğrulamak için ikinci mertebe koşulu $. {d^2()}{d^2} |_{ = {}} < 0$'dır.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Log-olabilirlik fonksiyonu ve tepe noktasında eğimin sıfır olduğu ($'()=0$) MLE çözümü.}
+{center}
+</p>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: $N(, 1)$ Dağılımında $$'nın MLE'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $f(x_i) = {1}{{2}} e^{-{1}{2}(x_i - )^2}$.
+</p>
+$$
+<p class="course-paragraph">
+    () = -{n}{2} (2) - {1}{2} _{i=1}^n (x_i - )^2
+</p>
+$$
+<p class="course-paragraph">
+Türevi sıfıra eşitleyelim:
+</p>
+$$
+<p class="course-paragraph">
+    {d()}{d} = _{i=1}^n (x_i - ) = 0  _{i=1}^n x_i - n = 0  {{}_{{MLE}} = {X}_n}
+</p>
+$$
+<p class="course-paragraph">
+İkinci türev ${d^2}{d^2} = -n < 0$ olduğundan yerel ve mutlak tepe noktasıdır.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: ${Bernoulli</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    (p)$ Dağılımında $p$'nin MLE'si}
+$P(X=x) = p^x (1-p)^{1-x}, \; x  \{0, 1\}$. Başarı sayısı $Y = _{i=1}^n X_i$ olsun:
+</p>
+$$
+<p class="course-paragraph">
+    L(p) = p^Y (1-p)^{n-Y}  (p) = Y (p) + (n-Y) (1-p)
+</p>
+$$
+<p class="course-paragraph">
+Türev:
+</p>
+$$
+<p class="course-paragraph">
+    {d(p)}{dp} = {Y}{p} - {n-Y}{1-p} = 0  Y(1-p) = p(n-Y)  Y = np  {{p}_{{MLE}} = {Y}{n} = {X}_n}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="mle-nin-temel-zellikleri" class="section-title"><span class="title-anchor">§</span> MLE'nin Temel Özellikleri</h2>
+<h3 id="1-de-i-mezlik-zelli-i-invariance-property-zehna-teoremi" class="subsection-title">1. Değişmezlik Özelliği (Invariance Property - Zehna Teoremi)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Zehna Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Eğer ${}$, $$ parametresinin en çok olabilirlik tahmin edicisi ise, herhangi bir $g()$ fonksiyonunun en çok olabilirlik tahmin edicisi de doğrudan:
+</p>
+$$
+<p class="course-paragraph">
+    {{g()}_{{MLE}} = g({}_{{MLE}})}
+</p>
+$$
+<p class="course-paragraph">
+olur.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Zehna Teoreminin Muazzam Pratikliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Yansız tahmin ediciler fonksiyon dönüşümlerinde bozulur: ${}$ yansız olsa bile $g({})$ genellikle $g()$ için yansız <strong>değildir</strong> ($E[g({})]  g(E[{}])$).  
+Fakat MLE'de böyle bir dert yoktur! Örneğin $$'nın MLE'si ${X}$ ise; $^2$'nin MLE'si doğrudan ${X}^2$, $e^{-}$'nın MLE'si ise doğrudan $e^{-{X}}$ olur.
+</p>
+  </div>
+</div>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Poisson Sürecinde Boş Bırakılan Problem ve Çözümü</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Soru (Sayfa 39):</strong> $X_1, , X_n {{i.i.d.}}{} {Poisson}()$ olsun. $ = g() = e^{-2}$ parametresinin en çok olabilirlik tahmin edicisini bulunuz ve yansızlığını inceleyiniz. *(Notlarda soru sorulup çözümü boş bırakılmıştır).*
+</p>
+<p class="course-paragraph">
+<strong>Detaylı Çözüm Adımları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Önce ana parametre $$'nın MLE'sini bulalım:
+    $$
+<p class="course-paragraph">
+{aligned}
+        L() &= {e^{-n} ^{ x_i}}{ x_i!}  () = -n + (_{i=1}^n x_i)  - ( x_i!)  \\
+        {d()}{d} &= -n + { x_i}{} = 0  {}_{{MLE}} = {X}_n
+    {aligned}
+</p>
+$$</li>
+<li>Zehna değişmezlik özelliği gereğince $ = e^{-2}$'nın MLE'si:
+    $$
+<p class="course-paragraph">
+        {{}_{{MLE}} = e^{-2{}} = e^{-2{X}_n}}
+</p>
+$$</li>
+<li><strong>Yansızlık İncelemesi:</strong>  
+<p class="course-paragraph">
+    Beklenen değerini hesaplayalım ($Y =  X_i  {Poisson}(n)$):
+</p>
+    $$
+<p class="course-paragraph">
+{aligned}
+        E({}) &= E( e^{-{2}{n}_{i=1}^n X_i} ) = ^n = ^n = ( n(e^{-2/n} - 1) )
+    {aligned}
+</p>
+$$
+<p class="course-paragraph">
+    $n(e^{-2/n} - 1)  -2$ olduğundan sonlu örneklemde ${}$ <strong>yansız değildir</strong>.  
+    Ancak $n  $ iken Taylor açılımından $n(e^{-2/n} - 1)  -2$ olur:
+</p>
+    $$
+<p class="course-paragraph">
+        _{n  } E({}) = e^{-2} = 
+</p>
+$$
+<p class="course-paragraph">
+    Yani tahmin edici <strong>asemptotik olarak yansız ve tutarlıdır</strong>.</li>
+</p>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="fisher-bilgisi-ve-rao-cram-r-e-itsizli-i-crlb" class="section-title"><span class="title-anchor">§</span> Fisher Bilgisi ve Rao-Cramér Eşitsizliği (CRLB)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Skor Fonksiyonu ve Fisher Bilgisi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Tek bir gözlem $X  f_(x)$ için <strong>Skor Fonksiyonu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    U_(X) = {d}{d}  f_(X)
+</p>
+$$
+<p class="course-paragraph">
+Regülerlik koşulları altında skor fonksiyonunun beklenen değeri sıfırdır:
+</p>
+$$
+<p class="course-paragraph">
+    E_ = 0
+</p>
+$$
+<p class="course-paragraph">
+<strong>Fisher Bilgisi (Fisher Information)</strong>, bu skor fonksiyonunun varyansıdır:
+</p>
+$$
+<p class="course-paragraph">
+    {I() = V_(U_(X)) = E_ = - E_}
+</p>
+$$
+<p class="course-paragraph">
+$n$ boyutlu bağımsız örneklem için toplam bilgi: $I_n() = n I()$'dır.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Fisher Bilgisinin Geometrik ve Sezgisel Anlamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    İkinci türev $-{d^2 }{d^2}$ log-olabilirlik eğrisinin tepe noktasındaki **eğriliğini (kavisini)** ölçer:
+</p>
+<ul class="course-list">
+<li>Eğer tepe çok sivri ve dik ise: Eğrilik büyüktür $$ Fisher Bilgisi büyüktür. Bu demektir ki veriler doğru parametreyi nokta atışı işaret eder; tahmin hatası ve varyansı küçüktür!</li>
+<li>Eğer tepe yayvan ve düz ise: Eğrilik küçüktür $$ Fisher Bilgisi azdır. Veriler parametre hakkında yetersiz bilgi taşır.</li>
+</ul>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Rao - Cramér Alt Sınırı (CRLB)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $T_n = T(X_1, , X_n)$ yansız bir tahmin edici ($E_(T_n) = $) ise, varyansı hiçbir zaman belirli bir sınırın altına inemez:
+</p>
+$$
+<p class="course-paragraph">
+    {V_(T_n)  {1}{n I()} = {CRLB}}
+</p>
+$$
+<p class="course-paragraph">
+Eğer yansız bir tahmin edicinin varyansı bu sınıra eşit çıkarsa ($V(T_n) = {CRLB}$), o tahmin ediciye <strong>En Küçük Varyanslı Düzgün Yansız Tahmin Edici (UMVUE / MVUE)</strong> veya <strong>Tam Etkin (Efficient)</strong> tahmin edici denir.
+</p>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Notlardaki Sembolik Düzeltme (Sayfa 42):</strong>
+Notta Poisson örneği çözülürken parametre için hem $$ hem $$ sembolleri birbirinin yerine kullanılmıştır. Standart kitle parametresi olarak $$ alınmıştır.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: ${Poisson</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    ()$ Dağılımında CRLB ve UMVUE}
+$f(x) = {e^{-}^x}{x!}$ dağılımı için:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+     f(x) &= - + x  - (x!) \\
+    {d}{d}  f(x) &= -1 + {x}{} \\
+    {d^2}{d^2}  f(x) &= -{x}{^2}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Tek gözlemin Fisher bilgisi:
+</p>
+$$
+<p class="course-paragraph">
+    I() = -E( -{X}{^2} ) = {E(X)}{^2} = {}{^2} = {1}{}
+</p>
+$$
+<p class="course-paragraph">
+$n$ boyutlu örneklem için Rao-Cramer Alt Sınırı:
+</p>
+$$
+<p class="course-paragraph">
+    {CRLB} = {1}{n I()} = {1}{n (1/)} = {}{n}
+</p>
+$$
+<p class="course-paragraph">
+Şimdi örneklem ortalaması ${X}_n$'in varyansına bakalım:
+</p>
+$$
+<p class="course-paragraph">
+    V({X}_n) = {V(X)}{n} = {}{n}
+</p>
+$$
+<p class="course-paragraph">
+Görüldüğü üzere $V({X}_n) = {CRLB} = {}{n}$'dir.  
+Dolayısıyla ${X}_n$, $$ parametresi için <strong>UMVUE</strong>'dir (daha düşük varyanslı bir yansız tahmin edici bulmak matematiksel olarak imkansızdır!).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Örneklem büyüklüğü arttıkça Rao-Cramer alt sınırının azalması ve UMVUE varyansının bu sınıra tam oturması.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="6-hafta-h-zl-tekrar-ve-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 6. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Kavram</strong></th><th><strong>Matematiksel Formül</strong></th><th><strong>Ne İşe Yarar / Sezgisel Anlamı</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Olabilirlik $L()$</strong></td><td>$_{i=1}^n f(x_i; )$</td><td>Verilen verinin gerçekleşme ihtimalini parametrenin fonksiyonu yapar.</td></tr>
+<tr><td><strong>MLE (${</strong>$)}</td><td>$ ()  '() = 0$</td><td>Veriyi en olası kılan parametre değerini bulur.</td></tr>
+<tr><td><strong>Zehna Teoremi</strong></td><td>${g()}_{{MLE}} = g({}_{{MLE}})$</td><td>Parametre tahmini biliniyorsa fonksiyonunun tahmini doğrudan yerine koymadır.</td></tr>
+<tr><td><strong>Skor Fonksiyonu</strong></td><td>$U() = {d}{d} f(X)$</td><td>Log-olabilirliğin eğimidir; beklenen değeri daima sıfırdır ($E(U)=0$).</td></tr>
+<tr><td><strong>Fisher Bilgisi</strong></td><td>$I() = -E[''()]$</td><td>Log-olabilirliğin tepe sivrilğidir; parametre hakkındaki bilgi miktarını ölçer.</td></tr>
+<tr><td><strong>CRLB</strong></td><td>${Alt Sınır} = {1}{n I()}$</td><td>Yansız bir tahmin edicinin sahip olabileceği teorik minimum varyanstır.</td></tr>
+<tr><td><strong>UMVUE</strong></td><td>$V({}) = {CRLB}$</td><td>Alt sınıra ulaşan, en küçük varyanslı kusursuz yansız tahmin edici.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{6. Haftanın Temel Olabilirlik ve Optimal Tahmin Kavramları Özeti}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    <section id="hafta-7" style="margin-bottom: 4rem; scroll-margin-top: 80px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase;">İstatistik Teorisi • Hafta 7</span>
+          <h2 style="font-size: 1.7rem; color: var(--text-primary); margin-top: 0.2rem;">7. Hafta: En Çok Olabilirlik Yöntemi (MLE) ve CRLB</h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <a href="pdf/Hafta_07.pdf" target="_blank" class="btn-pdf">📄 Hafta 7 PDF İndir</a>
+          <a href="hafta-07.html" class="btn-secondary">🔗 Tekil Sayfa</a>
+        </div>
+      </div>
+      
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; el yazısı istatistik teorisi ders notlarının 43, 44 ve 45. sayfalarında yer alan <strong>Nokta Tahmini Temelleri</strong> konusunu kapsamaktadır. Nokta tahmin edicilerin taşıması gereken temel özelliklerden <strong>Yansızlık (Unbiasedness)</strong>, <strong>Hata Kareler Ortalaması (MSE)</strong>, Chebyshev eşitsizliği ışığında <strong>Tutarlılık (Consistency)</strong> kriterleri ele alınmıştır. Poisson dağılımında $e^{-2{X}}$'in yansız olmadığı, Jensen eşitsizliği ve MÇF ile eksiksiz ispatlanmış, hedef tahtası benzetmeleri ve TikZ grafikleriyle görselleştirilmiştir.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-7-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 7. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Bir Tahmin Edicinin Kalitesini Nasıl Ölçeriz?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bilinmeyen bir $$ kitle parametresi (örneğin Türkiye'deki ortalama boy, bir fabrikanın hata oranı vb.) için elimizdeki örneklemden bir formül ${} = T(X_1, , X_n)$ ürettik.  
+Peki bu formülün "iyi" bir tahmin edici olup olmadığını nasıl anlarız? İstatistikte iki temel altın standart vardır:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Yansızlık (Doğruluk - Accuracy):</strong> Farklı örneklemler aldığımızda bulduğumuz tahminlerin ortalaması tam kitle parametresine oturuyor mu? ($E({}) = $).</li>
+<li><strong>Tutarlılık (Hassasiyet - Consistency):</strong> Örneklem büyüklüğü sonsuza gittikçe ($n  $), tahminimiz gerçek parametrenin üstüne kusursuzca kilitleniyor mu? (${} {P} $).</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="nokta-tahmini-kavram-ve-matematiksel-er-eve" class="section-title"><span class="title-anchor">§</span> Nokta Tahmini Kavramı ve Matematiksel Çerçeve</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Nokta Tahmin Edici (Point Estimator)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$, dağılım fonksiyonu $F_$ ($    {R}^k$) olan bir anakütleden elde edilmiş rastgele bir örneklem olsun. Bilinmeyen $$ parametresini tahmin etmek amacıyla tanımlanan ve örneklem değerlerine bağlı olan bir ölçülebilir fonksiyona:
+\[
+{} = T(X_1, X_2, , X_n)
+\]
+<strong>nokta tahmin edici</strong> (<em>point estimator</em>) denir. Sayısal olarak hesaplanan $T(x_1, , x_n)$ değerine ise <strong>nokta tahmini</strong> (<em>point estimate</em>) adı verilir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="tahmin-edicilerin-zellikleri-yans-zl-k-unbiasedness" class="section-title"><span class="title-anchor">§</span> Tahmin Edicilerin Özellikleri: Yansızlık (Unbiasedness)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Yansızlık ve Yanlılık (Bias)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    ${}$, $$ parametresi için bir tahmin edici olsun. ${}$'nın <strong>yanlılığı</strong> (<em>bias</em>) şu şekilde tanımlanır:
+\[
+b_({}) = E_({}) - 
+\]
+Eğer her $  $ için:
+\[
+b_({}) = 0  E_({}) = 
+\]
+sağlanıyorsa, ${}$ tahmin edicisine $$ için <strong>yansız tahmin edici</strong> (<em>unbiased estimator</em>) denir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{figure}[htbp]
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{Tahmin edicilerin doğruluk (yansızlık) ve hassasiyet (varyans) davranışlarının hedef tahtası üzerindeki temsili.}
+{figure}
+</p>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örneklem Ortalaması ve Örneklem Varyansının Yansızlığı (Sayfa 43)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$ bağımsız ve aynı dağılımlı (<em>i.i.d.</em>) rastlantı değişkenleri olsun. $E(X_i) = $ ve $V(X_i) = ^2 < $ verilsin.
+</p>
+<ol class="course-ordered-list">
+<li>Örneklem ortalaması ${} = {X} = {1}{n}_{i=1}^n X_i$'nin $$ için yansızlığı:
+<p class="course-paragraph">
+    \[
+    E({X}) = E( {1}{n} _{i=1}^n X_i ) = {1}{n} _{i=1}^n E(X_i) = {1}{n}  (n) =   b_({X}) = 0.
+    \]</li>
+</p>
+<li>Örneklem varyansı $S^2 = {1}{n-1} _{i=1}^n (X_i - {X})^2 = { X_i^2 - n{X}^2}{n-1}$'nin $^2$ için yansızlığı:
+<p class="course-paragraph">
+    Her bir $X_i$ için $E(X_i^2) = ^2 + ^2$ ve ${X}$ için $E({X}^2) = {^2}{n} + ^2$ olduğundan:
+</p>
+    $$
+<p class="course-paragraph">
+{aligned}
+    E(S^2) &= {1}{n-1} \{ _{i=1}^n E(X_i^2) - n E({X}^2) \} \\
+    &= {1}{n-1} \{ n(^2 + ^2) - n ( {^2}{n} + ^2 ) \} \\
+    &= {1}{n-1} \{ n^2 - ^2 \} = {n-1}{n-1}^2 = ^2.
+    {aligned}
+</p>
+$$
+<p class="course-paragraph">
+    Böylece $E(S^2) = ^2$ bulunarak $S^2$'nin $^2$ için <strong>yansız</strong> olduğu ispatlanmış olur.</li>
+</p>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="yans-zl-n-tuzaklar-patolojik-kar-rnek" class="section-title"><span class="title-anchor">§</span> Yansızlığın Tuzakları: Patolojik Karşı-Örnek</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Yansız Olmak Her Zaman İyi Olmak Anlamına Gelmez!</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir tahmin edicinin sadece ortalamada doğru olması onun mantıklı bir tahmin ürettiğini garanti etmez. Bir insan bir ayağını kaynar suya, diğer ayağını buz kütlesine koysa "ortalama sıcaklığı" mükemmeldir; fakat kendisi perişan haldedir! İstatistikte de böyledir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Poisson Dağılımı ve $(-1)^X$ Patolojisi (Sayfa 44)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  {Poisson}()$ olsun ($n=1$ tek bir gözlem). Tahmin edilmek istenen parametre fonksiyonu $() = e^{-2}$ olsun.  
+${} = (-1)^X$ tahmin edicisini tanımlayalım. Bu tahmin edicinin beklenen değeri:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+E_( (-1)^X ) &= _{x=0}^ (-1)^x {e^{-} ^x}{x!} = e^{-} _{x=0}^ {(-)^x}{x!} = e^{-}  e^{-} = e^{-2}.
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>Çarpıcı Çıkarım:</strong> $E_((-1)^X) = e^{-2}$ olduğundan ${} = (-1)^X$ matematiksel olarak $e^{-2}$ için <strong>kesinlikle yansızdır!</strong>  
+Fakat parametre $ > 0$ iken hedef değer $() = e^{-2}  (0, 1)$ aralığındadır. Oysa $(-1)^X$ tahmin edicisi $X$ çift ise $+1$, tek ise $-1$ değerini alır! Tahmin edici asla $(0, 1)$ aralığında bir değer üretemez. Dolayısıyla:
+\[
+{Yansız olmak }  {İyi bir tahmin edici olmak!}
+\]
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{figure}[htbp]
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{$(-1)^X$ tahmin edicisinin aldığı ayrık değerler ($\{-1, +1\}$) ile tahmin edilmek istenen sürekli $e^{-2}$ eğrisinin karşılaştırması.}
+{figure}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="ders-notundaki-devin-ayr-nt-l-z-m" class="section-title"><span class="title-anchor">§</span> Ders Notundaki Ödevin Ayrıntılı Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Sayfa 44'teki Ödev: $e^{-2{X</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    }$'in $e^{-2}$ İçin Yansız Olmadığının İspatı}
+<strong>Soru Metni:</strong> $X_1, X_2, , X_n  {Poisson}()$ bağımsız ve aynı dağılımlı örneklem olsun. ${} = e^{-2{X}}$ tahmin edicisinin $() = e^{-2}$ parametresi için yansız olmadığını gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>1. Çözüm Yolu (Moment Çıkaran Fonksiyon İle):</strong>
+$Y = _{i=1}^n X_i  {Poisson}(n)$ olduğundan:
+\[
+E( e^{-2{X}} ) = E( e^{-{2}{n} Y} ) = M_Y(-{2}{n}) = \{ n ( e^{-2/n} - 1 ) \}
+\]
+Konvekslikten dolayı $e^{-2/n} > 1 - {2}{n}  n(e^{-2/n} - 1) > -2$ olur. Üstel fonksiyon artan olduğundan:
+\[
+E( e^{-2{X}} ) > e^{-2}
+\]
+Sonuç olarak $E(e^{-2{X}})  e^{-2}$ olup $e^{-2{X}}$ <strong>yansız değildir</strong> (pozitif yanlıdır).
+</p>
+<p class="course-paragraph">
+<strong>2. Çözüm Yolu (Jensen Eşitsizliği İle Tek Satırda İspat):</strong>
+$g(u) = e^{-2u}$ fonksiyonunun 2. türevi $g''(u) = 4e^{-2u} > 0$ olduğundan kesinlikle konvekstir. Jensen eşitsizliğine göre:
+\[
+E(g({X})) > g(E({X}))  E( e^{-2{X}} ) > e^{-2 E({X})} = e^{-2}
+\]
+<strong>Asemptotik Analiz:</strong> $n  $ iken Taylor serisinden $n(e^{-2/n}-1)  -2$ olduğundan $_{n  } E(e^{-2{X}}) = e^{-2}$ olur. Yani tahmin edici <strong>asemptotik olarak yansız ve tutarlıdır</strong>.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="tahmin-edicilerin-zellikleri-tutarl-l-k-consistency" class="section-title"><span class="title-anchor">§</span> Tahmin Edicilerin Özellikleri: Tutarlılık (Consistency)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Tutarlılık (Consistency)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $T_n$ tahmin edici dizisi olsun. Her $ > 0$ için:
+\[
+_{n} P( |T_n - | >  ) = 0  T_n {P} 
+\]
+ise $T_n$'ye $$ için <strong>tutarlı tahmin edici</strong> denir.
+</p>
+  </div>
+</div>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Tutarlılık İçin Yeter Koşul (MSE Kriteri)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Markov ve Chebyshev eşitsizliklerinden ötürü:
+\[
+P(|T_n - | > )  {{MSE}(T_n)}{^2} = {V(T_n) + [b_(T_n)]^2}{^2}
+\]
+Eğer:
+\[
+_{n} {MSE}(T_n) = 0  ( _{n} V(T_n) = 0  {ve}  _{n} E(T_n) =  )
+\]
+sağlanıyorsa, $T_n$ tahmin edicisi <strong>kesinlikle tutarlıdır</strong> ($T_n {P} $).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="sayfa-45-teki-rnek-f-x-theta-frac-1-1-theta-x" class="section-title"><span class="title-anchor">§</span> Sayfa 45'teki Örnek: $f(x;) = {1(1 +  x)$</h2>
+<p class="course-paragraph">
+{f(x;theta) = 1/2(1 + theta x)} Dağılımı}
+</p>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Yansızlık ve Tutarlılık İncelemesi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $f(x;) = {1}{2}(1 +  x), \; -1 < x < 1, \; -1    1$ olsun. ${} = 3{X}_n$ tahmin edicisinin yansız ve tutarlı olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>$E(X) = _{-1}^1 x {1}{2}(1+ x) dx = _{-1}^1 = {}{3}$.</li>
+<li>$E({}) = E(3{X}_n) = 3 E(X) = 3 ({}{3}) =  $ <strong>Yansızdır!</strong></li>
+<li>$E(X^2) = _{-1}^1 x^2 {1}{2}(1+ x) dx = _{-1}^1 = {1}{3}$.</li>
+<li>$V(X) = E(X^2) - [E(X)]^2 = {1}{3} - ({}{3})^2 = {3-^2}{9}$.</li>
+<li>$V({}) = V(3{X}_n) = 9 {V(X)}{n} = 9 {3-^2}{9n} = {3-^2}{n}$.</li>
+<li>$_{n  } V({}) = 0$ ve $b({})=0$ olduğundan $_{n  } {MSE}({}) = 0  {{} {P} }$ (<strong>Tutarlıdır!</strong>).</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+{figure}[htbp]
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{$f(x;) = {1}{2}(1 +  x)$ yoğunluk fonksiyonunun farklı $$ değerleri altındaki davranışı.}
+{figure}
+</p>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Sayfa 45'teki Cebirsel İşaret Karalaması ve Doğrusu:</strong>  
+Varyans daima $V(X) = E(X^2) - [E(X)]^2$ olduğundan aradaki işaret <strong>kesinlikle eksi</strong> olmalıdır:
+\[
+V(X) = {1}{3} - ({}{3})^2 = {1}{3} - {^2}{9} = {3 - ^2}{9}.
+\]
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="7-hafta-h-zl-tekrar-ve-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 7. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Özellik / Kriter</strong></th><th><strong>Matematiksel Şart</strong></th><th><strong>Sezgisel Anlamı / Ne İfade Eder?</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Yansızlık</strong></td><td>$E({}) =   {Bias} = 0$</td><td>Tahminlerin ortalaması tam hedefi bulur; sistematik kayma yoktur.</td></tr>
+<tr><td><strong>Tutarlılık</strong></td><td>$_{n  } P(|{}_n - | > ) = 0$</td><td>Örneklem büyüdükçe hata olasılığı sıfıra iner; tahmin parametreye kilitlenir.</td></tr>
+<tr><td><strong>MSE Kriteri</strong></td><td>$_{n  } [V({}_n) + {Bias}^2] = 0$</td><td>Tutarlılığı garanti eden pratik limit şartı.</td></tr>
+<tr><td><strong>Jensen Eşitsizliği</strong></td><td>$g$ konveks ise $E(g(X)) > g(E(X))$</td><td>Doğrusal olmayan dönüşümlerin yansızlığı bozduğunu gösterir.</td></tr>
+<tr><td><strong>Örneklem Ortalaması</strong></td><td>$E({X}) = , \; V({X}) = ^2/n$</td><td>Her zaman hem yansız hem de tutarlı bir tahmin edicidir.</td></tr>
+<tr><td><strong>Örneklem Varyansı</strong></td><td>$E(S^2) = ^2, \; V(S^2)  0$</td><td>$n-1$'e bölünmesi sayesinde yansız ve tutarlı varyans tahminidir.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{7. Haftanın Nokta Tahmini Kriterleri ve Özet Karşılaştırması}
+{table}
+</p>
+      </div>
+    </section>
+    <hr style="border: 0; border-top: 2px dashed var(--border-color); margin: 3rem 0;"/>
+    
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Akademik Notlar ve Ders Kitapları Portalı</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller MathJax 3 ile işlenmekte ve LaTeX standartlarına uygun olarak sunulmaktadır.</p>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

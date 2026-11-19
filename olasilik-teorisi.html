@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olasılık & Yakınsama Teorisi - Ders Notları</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="logo-badge">PORTAL</span>
+    <span>Akademik Notlar</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="">Ana Sayfa</a></li>
+    <li><a href="istatistik-teorisi.html" class="">İstatistik Teorisi</a></li>
+    <li><a href="olasilik-teorisi.html" class="active">Olasılık & Yakınsama</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Konu Başlıkları</div>
+      <ul class="sidebar-menu">
+        <li><a href="#1-olas-l-kta-yak-nsama-convergence-in-probability">1. Olasılıkta Yakınsama</a></li>
+        <li><a href="#2-hemen-hemen-kesin-yak-nsama-almost-sure-convergence">2. Hemen Hemen Kesin Yakınsama</a></li>
+        <li><a href="#3-momentlerde-ortalamada-yak-nsama-convergence-in-l-p-moments">3. Momentlerde Yakınsama</a></li>
+        <li><a href="#4-da-l-mda-yak-nsama-convergence-in-distribution-weak-convergence">4. Dağılımda Yakınsama</a></li>
+      </ul>
+      <div class="sidebar-title" style="margin-top: 2rem;">PDF Dokümanı</div>
+      <div style="padding: 0.5rem;">
+        <a href="pdf/dersler.pdf" target="_blank" class="btn-pdf" style="width: 100%; justify-content: center;">
+          📄 Yakınsama PDF İndir
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="course-header" style="margin-bottom: 2.5rem;">
+        <div class="course-meta-bar">
+          <span>🎲 Ders Kodu: PROB-402</span>
+          <span>📅 Konu: Rassal Değişkenlerin Yakınsaması</span>
+          <span>✍️ Limit Teoremleri & Stokastik Süreçler</span>
+        </div>
+        <h1 class="course-main-title">Olasılık Teorisi: Rassal Değişkenlerin Yakınsaması</h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+          Deterministik matematikteki limitlerden farklı olarak olasılık teorisinde rassal değişkenlerin 4 temel yakınsama türü, hiyerarşisi, zayıf/güçlü büyük sayılar yasaları ve çözümlü ispatları.
+        </p>
+      </div>
+
+      <div class="course-content">
+        <p class="course-paragraph">Olasılık teorisinde <strong>Rassal Değişkenlerin Yakınsaması</strong> (Convergence of Random Variables), deterministik (kesin) matematikteki limit kavramından biraz daha karmaşıktır. Çünkü rassal değişkenler sabit sayılar değil, bir örnek uzaydan sayı doğrusuna giden fonksiyonlardır. Bu yüzden <em>"X_n dizisi X'e yaklaşıyor"</em> dediğimizde, bunun <strong>nasıl</strong> yaklaştığını belirtmemiz gerekir.</p>
+<p class="course-paragraph">İşte bu yüzden 4 temel yakınsama türü vardır. Bunlar arasındaki güç hiyerarşisi genel olarak şöyledir:</p>
+<p class="course-paragraph"><strong>Hemen Hemen Kesin Yakınsama</strong> ve <strong>Momentlerde Yakınsama</strong> $\implies$ <strong>Olasılıkta Yakınsama</strong> $\implies$ <strong>Dağılımda Yakınsama</strong></p>
+<p class="course-paragraph">Aşağıda her birini önce günlük dilde anlayacağın şekilde, sonra matematiksel tanımıyla açıklayıp, her biri için 3 adet detaylı çözümlü örnek sunuyorum.</p>
+<hr style="margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border-color);"/>
+<h3 id="1-olas-l-kta-yak-nsama-convergence-in-probability" class="subsection-title">1. Olasılıkta Yakınsama (Convergence in Probability)</h3>
+<p class="course-paragraph"><strong>Kavramsal Anlamı:</strong> $n$ büyüdükçe, $X_n$ rassal değişkeninin $X$ limitinden "farklı olma" (belirli bir $\epsilon$ toleransından daha uzak olma) ihtimali sıfıra yaklaşır. Yani çok ekstrem, uçuk değerler çıkabilir ama bunların çıkma <strong>olasılığı</strong> giderek imkansızlaşır.</p>
+<p class="course-paragraph"><strong>Matematiksel Tanımı:</strong> Her $\epsilon > 0$ için,</p>
+<p class="course-paragraph">$\lim_{n \to \infty} P(|X_n - X| \ge \epsilon) = 0$</p>
+<p class="course-paragraph">ise $X_n$, $X$'e olasılıkta yakınsar denir ve $X_n \xrightarrow{P} X$ ile gösterilir.</p>
+<h3 id="r1" class="subsection-title">ör1</h3>
+<div class="callout callout-odev"><div class="callout-header"><span class="callout-icon">✏️</span><span class="callout-title">Uygulama Sorusu & İspat</span></div><div class="callout-body">
+<p class="course-paragraph">$X_1, X_2, \dots, X_n$ bağımsız ve aynı dağılımlı (iid) rastgele değişkenler dizisi olmak üzere; bu değişkenlerin beklenen değeri $E[X_i] = \mu$ ve varyansı $Var(X_i) = \sigma^2 < \infty$ olarak verilmektedir. </p>
+<p class="course-paragraph">Örneklem varyansının formülü $S_n^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X}_n)^2$ şeklindedir. </p>
+<p class="course-paragraph">Zayıf Büyük Sayılar Yasası (WLLN) ve olasılıkta yakınsama özelliklerini kullanarak; örneklem boyutu ($n$) sonsuza giderken $S_n^2$'nin kitle varyansı $\sigma^2$'ye olasılıkta yakınsadığını, yani herhangi bir $\epsilon > 0$ sayısı için;</p>
+<p class="course-paragraph">$$ \lim_{n \to \infty} P(|S_n^2 - \sigma^2| < \epsilon) = 1 $$</p>
+<p class="course-paragraph">olduğunu matematiksel olarak ispatlayınız.</p>
+</div></div><div class="callout callout-ornek"><div class="callout-header"><span class="callout-icon">📝</span><span class="callout-title">Adım Adım Çözüm & İspat</span></div><div class="callout-body">
+<p class="course-paragraph"><strong>Adım 1: Örneklem varyansı formülünün cebirsel olarak düzenlenmesi</strong></p>
+<p class="course-paragraph">Öncelikle $S_n^2$ formülündeki kare alma işlemini açmalı ve toplam sembolünü ($\sum$) dağıtmalıyız:</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X}_n)^2 $$</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i^2 - 2X_i\bar{X}_n + \bar{X}_n^2) $$</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{1}{n-1} \left( \sum_{i=1}^{n} X_i^2 - 2\bar{X}_n\sum_{i=1}^{n} X_i + \sum_{i=1}^{n} \bar{X}_n^2 \right) $$</p>
+<p class="course-paragraph">$\sum_{i=1}^{n} X_i = n\bar{X}_n$ olduğunu ve sabit bir terimin $n$ defa toplanmasının $n\bar{X}_n^2$ yapacağını biliyoruz. Yerine koyarsak:</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{1}{n-1} \left( \sum_{i=1}^{n} X_i^2 - 2\bar{X}_n(n\bar{X}_n) + n\bar{X}_n^2 \right) $$</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{1}{n-1} \left( \sum_{i=1}^{n} X_i^2 - 2n\bar{X}_n^2 + n\bar{X}_n^2 \right) $$</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{1}{n-1} \left( \sum_{i=1}^{n} X_i^2 - n\bar{X}_n^2 \right) $$</p>
+<p class="course-paragraph">Olasılıkta yakınsama kurallarını (WLLN) uygulayabilmek için formülü "ortalama" ($\frac{1}{n}$) formatına getirmeliyiz. Bunun için ifadeyi $n$ ile çarpıp bölelim:</p>
+<p class="course-paragraph">$$ S_n^2 = \frac{n}{n-1} \left( \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}_n^2 \right) $$</p>
+<hr style="margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border-color);"/>
+<p class="course-paragraph"><strong>Adım 2: Parçaların Olasılıkta Yakınsadığı Değerlerin Bulunması</strong></p>
+<p class="course-paragraph">İfadeyi üç ana limite ayırıp, $n \to \infty$ iken ayrı ayrı nereye gittiklerini inceleyelim:</p>
+<p class="course-paragraph">1.  <strong>Sabit Çarpan:</strong> Dizinin limiti alınırsa;</p>
+<p class="course-paragraph">    $$ \lim_{n \to \infty} \frac{n}{n-1} = 1 $$</p>
+<p class="course-paragraph">2.  <strong>Birinci Terim:</strong> $X_i^2$ terimleri bağımsız ve aynı dağılımlıdır. Zayıf Büyük Sayılar Yasası (WLLN) gereği örneklem ortalaması beklenen değere yakınsar:</p>
+<p class="course-paragraph">    $$ \frac{1}{n} \sum_{i=1}^{n} X_i^2 \xrightarrow{p} E[X^2] $$</p>
+<p class="course-paragraph">    Kitle varyansının tanımından $Var(X) = E[X^2] - (E[X])^2$ olduğunu biliyoruz. Buradan $E[X^2] = \sigma^2 + \mu^2$ elde edilir. Yerine koyarsak:</p>
+<p class="course-paragraph">    $$ \frac{1}{n} \sum_{i=1}^{n} X_i^2 \xrightarrow{p} \sigma^2 + \mu^2 $$</p>
+<p class="course-paragraph">3.  <strong>İkinci Terim:</strong> WLLN gereği $\bar{X}_n \xrightarrow{p} \mu$ olur. Sürekli Dönüşüm Teoremi (Continuous Mapping Theorem) gereğince, bir değişken $\mu$'ye yakınsıyorsa karesi de $\mu^2$'ye yakınsar:</p>
+<p class="course-paragraph">    $$ \bar{X}_n^2 \xrightarrow{p} \mu^2 $$</p>
+<hr style="margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border-color);"/>
+<p class="course-paragraph"><strong>Adım 3: Sonuçların Birleştirilmesi ve İspat</strong></p>
+<p class="course-paragraph">Olasılıkta yakınsamanın özellikleri gereği, bulduğumuz limitleri ana denklemde birleştirebiliriz:</p>
+<p class="course-paragraph">$$ S_n^2 \xrightarrow{p} 1 \cdot \Big[ (\sigma^2 + \mu^2) - \mu^2 \Big] $$</p>
+<p class="course-paragraph">$$ S_n^2 \xrightarrow{p} \sigma^2 $$</p>
+<p class="course-paragraph">Örneklem varyansının kitle varyansına olasılıkta yakınsadığını bulduk. Olasılıkta yakınsamanın matematiksel tanımı gereğince, herhangi bir $\epsilon > 0$ sayısı için bu durum şu şekilde ifade edilir:</p>
+<p class="course-paragraph">$$ \lim_{n \to \infty} P(|S_n^2 - \sigma^2| \ge \epsilon) = 0 $$</p>
+<p class="course-paragraph">İfadenin tümleyeni (olasılıkların toplamının 1 olması kuralı) alınarak soruda istenen forma ulaşılır:</p>
+<p class="course-paragraph">$$ \lim_{n \to \infty} P(|S_n^2 - \sigma^2| < \epsilon) = 1 $$</p>
+<p class="course-paragraph"><strong>İspat tamamlanmıştır.</strong></p>
+<h3 id="1-verilenler-ve-tan-mlar" class="subsection-title">1. Verilenler ve Tanımlar</h3>
+<p class="course-paragraph">*   $X_1, X_2, \dots, X_n$ bağımsız ve aynı dağılımlı (iid) rastgele değişkenlerdir.</p>
+<p class="course-paragraph">*   Beklenen değer: $E[X_i] = \mu$</p>
+<p class="course-paragraph">*   Varyans: $Var(X_i) = \sigma^2$</p>
+<p class="course-paragraph">*   <strong>Örneklem Ortalaması:</strong> $\bar{X}_n = \frac{X_1 + X_2 + \dots + X_n}{n} = \frac{1}{n}\sum_{i=1}^{n} X_i$</p>
+<h3 id="2-rneklem-ortalamas-n-n-beklenen-de-eri-ve-varyans" class="subsection-title">2. Örneklem Ortalamasının Beklenen Değeri ve Varyansı</h3>
+<p class="course-paragraph">Öncelikle $\bar{X}_n$ rastgele değişkeninin beklenen değerini ve varyansını bulmalıyız.</p>
+<p class="course-paragraph">*   <strong>Beklenen Değer (Ortalama):</strong></p>
+<p class="course-paragraph">    Beklenen değerin doğrusal (lineer) olma özelliğinden dolayı:</p>
+<p class="course-paragraph">    $$E[\bar{X}_n] = E\left[ \frac{1}{n}\sum_{i=1}^{n} X_i \right] = \frac{1}{n}\sum_{i=1}^{n} E[X_i] = \frac{1}{n} \cdot (n\mu) = \mu$$</p>
+<p class="course-paragraph">*   <strong>Varyans:</strong></p>
+<p class="course-paragraph">    Varyansın özelliklerinden dolayı sabit sayı dışarıya karesi alınarak çıkar. Ayrıca değişkenler <strong>bağımsız</strong> olduğu için toplamın varyansı, varyansların toplamına eşittir (kovaryanslar sıfırdır):</p>
+<p class="course-paragraph">    $$Var(\bar{X}_n) = Var\left( \frac{1}{n}\sum_{i=1}^{n} X_i \right) = \frac{1}{n^2}\sum_{i=1}^{n} Var(X_i) = \frac{1}{n^2} \cdot (n\sigma^2) = \frac{\sigma^2}{n}$$</p>
+<h3 id="3-ebi-ev-e-itsizli-inin-hat-rlanmas" class="subsection-title">3. Çebişev Eşitsizliğinin Hatırlanması</h3>
+<p class="course-paragraph">Herhangi bir $Y$ rastgele değişkeni, herhangi bir $k > 0$ veya $\epsilon > 0$ sayısı için Çebişev eşitsizliği şu şekildedir:</p>
+<p class="course-paragraph">$$P(|Y - E[Y]| \ge \epsilon) \le \frac{Var(Y)}{\epsilon^2}$$</p>
+<h3 id="4-ebi-ev-e-itsizli-inin-rneklem-ortalamas-na-uygulanmas" class="subsection-title">4. Çebişev Eşitsizliğinin Örneklem Ortalamasına Uygulanması</h3>
+<p class="course-paragraph">Şimdi Çebişev eşitsizliğinde $Y$ yerine $\bar{X}_n$ koyalım. Bulduğumuz $E[\bar{X}_n] = \mu$ ve $Var(\bar{X}_n) = \frac{\sigma^2}{n}$ değerlerini formüle yerleştirelim:</p>
+<p class="course-paragraph">$$P(|\bar{X}_n - \mu| \ge \epsilon) \le \frac{\frac{\sigma^2}{n}}{\epsilon^2}$$</p>
+<p class="course-paragraph">İfadeyi düzenlersek:</p>
+<p class="course-paragraph">$$P(|\bar{X}_n - \mu| \ge \epsilon) \le \frac{\sigma^2}{n \epsilon^2}$$</p>
+<h3 id="5-limit-alma-ve-sonu-olas-l-kta-yak-nsama" class="subsection-title">5. Limit Alma ve Sonuç (Olasılıkta Yakınsama)</h3>
+<p class="course-paragraph">Olasılıkta yakınsamanın tanımı şudur: Herhangi bir $\epsilon > 0$ için, $n$ sonsuza giderken ortalamanın $\mu$'den $\epsilon$ kadar veya daha fazla uzaklaşma olasılığı sıfıra gitmelidir.</p>
+<p class="course-paragraph">Elde ettiğimiz eşitsizlikte $n \to \infty$ için limit alalım:</p>
+<p class="course-paragraph">$$\lim_{n \to \infty} P(|\bar{X}_n - \mu| \ge \epsilon) \le \lim_{n \to \infty} \frac{\sigma^2}{n \epsilon^2}$$</p>
+<p class="course-paragraph">Burada $\sigma^2$ ve $\epsilon^2$ sabit sayılardır. Payda sonsuza ($n \to \infty$) gittiği için sağ taraf <strong>sıfır</strong> olur.</p>
+<p class="course-paragraph">$$\lim_{n \to \infty} P(|\bar{X}_n - \mu| \ge \epsilon) \le 0$$</p>
+<p class="course-paragraph">Olasılık hiçbir zaman negatif olamayacağı için bu limit ancak 0'a eşit olabilir:</p>
+<p class="course-paragraph">$$\lim_{n \to \infty} P(|\bar{X}_n - \mu| \ge \epsilon) = 0$$</p>
+<h3 id="kar-m" class="subsection-title">Çıkarım</h3>
+<p class="course-paragraph">Bu matematiksel ifade, örneklem ortalaması $\bar{X}_n$'nin $n$ büyüdükçe beklenen değer $\mu$'ye <strong>olasılıkta yakınsadığını (converges in probability)</strong> gösterir. </p>
+<p class="course-paragraph">Gösterim olarak şu şekilde yazılır:</p>
+<p class="course-paragraph">$$\bar{X}_n \xrightarrow{p} \mu$$</p>
+<p class="course-paragraph">ör2</p>
+<p class="course-paragraph"><strong>Örnek 1:</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n$, $[0, \frac{1}{n}]$ aralığında Düzgün Dağılıma (Uniform Distribution) sahip olsun. Yani $X_n \sim U(0, \frac{1}{n})$. $X_n$'in 0'a olasılıkta yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Tanım gereği $P(|X_n - 0| \ge \epsilon)$ ifadesinin limitine bakmalıyız.</p>
+<p class="course-paragraph">2. $\epsilon > 0$ sabit bir sayı olsun. $X_n$ pozitif olduğu için $|X_n| = X_n$'dir. Yani $P(X_n \ge \epsilon)$ arıyoruz.</p>
+<p class="course-paragraph">3. $n$ çok büyüdüğünde $\frac{1}{n}$ küçülecek ve bir noktadan sonra $\frac{1}{n} < \epsilon$ olacaktır.</p>
+<p class="course-paragraph">4. $X_n$'in alabileceği maksimum değer $\frac{1}{n}$ olduğundan, $\frac{1}{n} < \epsilon$ olduğu andan itibaren $X_n$'in $\epsilon$'dan büyük olma ihtimali sıfırdır.</p>
+<p class="course-paragraph">5. $\lim_{n \to \infty} P(X_n \ge \epsilon) = 0$. Sonuç: $X_n \xrightarrow{P} 0$.</p>
+<p class="course-paragraph"><strong>Örnek 2:</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> Ayrık bir rassal değişken dizisi şu şekilde tanımlansın: $P(X_n = 1) = \frac{1}{n}$ ve $P(X_n = 0) = 1 - \frac{1}{n}$. $X_n$'in 0'a olasılıkta yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Herhangi bir $\epsilon > 0$ seçelim (Örneğin $\epsilon = 0.5$).</p>
+<p class="course-paragraph">2. $P(|X_n - 0| \ge \epsilon) = P(X_n \ge 0.5)$.</p>
+<p class="course-paragraph">3. $X_n$ sadece 0 ve 1 değerlerini alıyor. 0.5'ten büyük olan tek değeri 1'dir.</p>
+<p class="course-paragraph">4. Dolayısıyla $P(X_n \ge 0.5) = P(X_n = 1) = \frac{1}{n}$ olur.</p>
+<p class="course-paragraph">5. Limit alırsak: $\lim_{n \to \infty} \frac{1}{n} = 0$. Sonuç: $X_n \xrightarrow{P} 0$.</p>
+<p class="course-paragraph"><strong>Örnek 3: (Chebyshev Eşitsizliği Kullanımı)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n \sim N(0, \frac{1}{n})$ olsun (Ortalaması 0, varyansı $1/n$ olan Normal Dağılım). $X_n$'in 0'a olasılıkta yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Chebyshev Eşitsizliği der ki: Herhangi bir $Y$ değişkeni için $P(|Y - \mu| \ge \epsilon) \le \frac{Var(Y)}{\epsilon^2}$.</p>
+<p class="course-paragraph">2. Burada $Y = X_n$, $\mu = 0$ ve $Var(X_n) = \frac{1}{n}$.</p>
+<p class="course-paragraph">3. Eşitsizliği yazalım: $P(|X_n - 0| \ge \epsilon) \le \frac{1/n}{\epsilon^2} = \frac{1}{n\epsilon^2}$.</p>
+<p class="course-paragraph">4. $n \to \infty$ iken sağ taraf $\frac{1}{\infty} = 0$'a gider.</p>
+<p class="course-paragraph">5. Olasılık negatif olamayacağı için Sıkıştırma (Sandwich) Teoremi ile limit 0 olur. Sonuç: $X_n \xrightarrow{P} 0$.</p>
+<hr style="margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border-color);"/>
+<h3 id="2-hemen-hemen-kesin-yak-nsama-almost-sure-convergence" class="subsection-title">2. Hemen Hemen Kesin Yakınsama (Almost Sure Convergence)</h3>
+<p class="course-paragraph"><strong>Kavramsal Anlamı:</strong> Olasılık teorisindeki en güçlü yakınsamalardan biridir. Bir deneyi baştan sona sonsuz kere çalıştırdığını düşün. Elde ettiğin gerçek sayı dizisine bak. Tüm olasılık evreninde (gerçekleşme ihtimali sıfır olan istisnai durumlar hariç) olayların %100'ünde bu dizi hedefe tam olarak ulaşır.</p>
+<p class="course-paragraph"><strong>Matematiksel Tanımı:</strong></p>
+<p class="course-paragraph">$P(\lim_{n \to \infty} X_n = X) = 1$</p>
+<p class="course-paragraph">ile ifade edilir ve $X_n \xrightarrow{a.s.} X$ ile gösterilir. Genellikle ispatlarda <strong>Borel-Cantelli Lemması</strong> kullanılır.</p>
+<p class="course-paragraph"><strong>Örnek 1: (Deterministik Sınır)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $Y$, $U(0,1)$ dağılımından gelen bir rassal değişken olsun. $X_n = \frac{Y}{n}$ dizisinin hemen hemen kesin olarak 0'a yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Herhangi bir $\omega$ (örnek uzaydan bir olay/deney sonucu) seçelim. $Y(\omega)$, 0 ile 1 arasında sabit bir gerçek sayıdır (örneğin 0.7).</p>
+<p class="course-paragraph">2. $X_n(\omega) = \frac{Y(\omega)}{n}$ olur.</p>
+<p class="course-paragraph">3. Bu bildiğimiz analizdeki sayı dizisidir. $\lim_{n \to \infty} \frac{Sabit}{n} = 0$'dır.</p>
+<p class="course-paragraph">4. Bu durum $Y$'nin aldığı her değer (yani her $\omega$) için geçerli olduğundan, dizi istisnasız %100 ihtimalle 0'a yakınsar. $X_n \xrightarrow{a.s.} 0$.</p>
+<p class="course-paragraph"><strong>Örnek 2: (Borel-Cantelli ile Olasılıkta olup A.S. olan durum)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $P(X_n = 1) = \frac{1}{n^2}$ ve $P(X_n = 0) = 1 - \frac{1}{n^2}$ olsun. $X_n$'in 0'a hemen hemen kesin yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Borel-Cantelli 1. Lemması der ki: Eğer $\sum_{n=1}^{\infty} P(|X_n - X| \ge \epsilon) < \infty$ (seri yakınsaksa), o zaman $X_n \xrightarrow{a.s.} X$.</p>
+<p class="course-paragraph">2. $\epsilon = 0.5$ seçelim. $P(X_n \ge 0.5) = P(X_n = 1) = \frac{1}{n^2}$.</p>
+<p class="course-paragraph">3. Toplam serisine bakalım: $\sum_{n=1}^{\infty} \frac{1}{n^2}$. Bu p-serisidir ve $p=2 > 1$ olduğu için sonlu bir sayıya (yaklaşık 1.64) eşittir.</p>
+<p class="course-paragraph">4. Seri yakınsak olduğu için Borel-Cantelli gereği 1 gelme olayı sonsuz kere tekrar edemez. Yani dizi bir noktadan sonra hep 0 olmak zorundadır. $X_n \xrightarrow{a.s.} 0$.</p>
+<p class="course-paragraph"><strong>Örnek 3: (Kuvvetli Yasa Mantığı)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n$'ler bağımsız ve $P(X_n = \sqrt{n}) = \frac{1}{n^2}$, diğer durumlarda $X_n = 0$ olsun. $X_n$'in 0'a hemen hemen kesin yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Yine herhangi bir $\epsilon > 0$ alalım (mesela $\epsilon = 1$).</p>
+<p class="course-paragraph">2. $n \ge 2$ için $\sqrt{n} > 1$'dir. Dolayısıyla $P(X_n > 1) = P(X_n = \sqrt{n}) = \frac{1}{n^2}$.</p>
+<p class="course-paragraph">3. $\sum \frac{1}{n^2} < \infty$ olduğundan Borel-Cantelli gereği, $\sqrt{n}$ değerleri dizide sonsuz kere karşımıza çıkamaz.</p>
+<p class="course-paragraph">4. Belirli bir $N$ adımından sonra dizi KALICI OLARAK 0'a sabitlenir (olasılığı 1). Dolayısıyla limit 0'dır. $X_n \xrightarrow{a.s.} 0$.</p>
+<hr style="margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border-color);"/>
+<h3 id="3-momentlerde-ortalamada-yak-nsama-convergence-in-l-p-moments" class="subsection-title">3. Momentlerde (Ortalamada) Yakınsama (Convergence in $L^p$ / Moments)</h3>
+<p class="course-paragraph"><strong>Kavramsal Anlamı:</strong> Sadece hatanın olma olasılığının sıfıra gitmesi yetmez, aynı zamanda <em>"hata olduğunda bu hatanın boyutunun (büyüklüğünün)"</em> da ortalamada sıfıra gitmesi gerekir. Dağılımın kuyruklarında devasa büyüklükte değerler saklı olmamalıdır. En çok kullanılanı $p=1$ (Ortalamada) ve $p=2$'dir (Karesel Ortalamada).</p>
+<p class="course-paragraph"><strong>Matematiksel Tanımı:</strong> Belirli bir $p \ge 1$ için,</p>
+<p class="course-paragraph">$\lim_{n \to \infty} E[|X_n - X|^p] = 0$</p>
+<p class="course-paragraph">ise $X_n$, $X$'e $L^p$'de (p'ninci momentte) yakınsar. $X_n \xrightarrow{L^p} X$ ile gösterilir.</p>
+<p class="course-paragraph"><strong>Örnek 1:</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n \sim U(0, \frac{1}{n})$ dizisinin 0'a hem 1. momentte ($L^1$) hem de 2. momentte ($L^2$) yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. $L^1$ için beklentisine ($E[|X_n - 0|]$) bakalım: Sürekli düzgün dağılımın ortalaması $\frac{a+b}{2}$'dir. $E[X_n] = \frac{0 + 1/n}{2} = \frac{1}{2n}$.</p>
+<p class="course-paragraph">2. $\lim_{n \to \infty} \frac{1}{2n} = 0$. $L^1$'de yakınsar.</p>
+<p class="course-paragraph">3. $L^2$ için $E[(X_n - 0)^2]$'ye bakalım. Formül: $Var(X_n) + (E[X_n])^2$. Düzgün dağılım için $E[X_n^2] = \int_0^{1/n} x^2 \cdot n \,dx = n \cdot [\frac{x^3}{3}]_0^{1/n} = n \cdot \frac{1}{3n^3} = \frac{1}{3n^2}$.</p>
+<p class="course-paragraph">4. $\lim_{n \to \infty} \frac{1}{3n^2} = 0$. $L^2$'de de yakınsar.</p>
+<p class="course-paragraph"><strong>Örnek 2: (Olasılıkta yakınsayıp, Momentte YAKINSAMAYAN harika bir örnek)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $P(X_n = n) = \frac{1}{n}$ ve $P(X_n = 0) = 1 - \frac{1}{n}$ olsun. Bu dizi 0'a $L^1$ (ortalamada) yakınsar mı?</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. $X_n$'in olasılıkta 0'a yakınsadığı barizdir, çünkü 0'dan farklı olma ihtimali $1/n \to 0$'dır.</p>
+<p class="course-paragraph">2. Ancak $L^1$ yakınsama için $E[|X_n - 0|]$ limitine bakmalıyız.</p>
+<p class="course-paragraph">3. Beklenen değer: $E[X_n] = n \cdot P(X_n = n) + 0 \cdot P(X_n = 0) = n \cdot \frac{1}{n} + 0 = 1$.</p>
+<p class="course-paragraph">4. $\lim_{n \to \infty} E[X_n] = \lim_{n \to \infty} 1 = 1 \neq 0$.</p>
+<p class="course-paragraph">5. <strong>Sonuç:</strong> $X_n$, 0'a olasılıkta yakınsar ancak momentte YAKINSAMAZ. (Çünkü hata çok nadir olsa da, olduğunda hata boyutu '$n$' kadar olduğu için ortalamayı yukarı çeker).</p>
+<p class="course-paragraph"><strong>Örnek 3: (Ölçekleme ile $L^2$ yakınsaması)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n \sim N(0, 1)$ Standart Normal Dağılım olsun. $Y_n = \frac{X_n}{\sqrt{n}}$ dizisinin 0'a $L^2$'de (karesel ortalamada) yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. $Y_n$'nin 0'a $L^2$'de yakınsaması için $\lim_{n \to \infty} E[|Y_n - 0|^2] = 0$ olmalıdır.</p>
+<p class="course-paragraph">2. $E[Y_n^2] = E[(\frac{X_n}{\sqrt{n}})^2] = E[\frac{X_n^2}{n}] = \frac{1}{n} E[X_n^2]$.</p>
+<p class="course-paragraph">3. $X_n$ Standart Normal olduğu için varyansı 1, ortalaması 0'dır. Bu nedenle $E[X_n^2] = 1$'dir.</p>
+<p class="course-paragraph">4. İfadeyi yerine koyalım: $\frac{1}{n} \cdot 1 = \frac{1}{n}$.</p>
+<p class="course-paragraph">5. $\lim_{n \to \infty} \frac{1}{n} = 0$. Sonuç: $Y_n \xrightarrow{L^2} 0$.</p>
+<hr style="margin: 2.5rem 0; border: 0; border-top: 1px solid var(--border-color);"/>
+<h3 id="4-da-l-mda-yak-nsama-convergence-in-distribution-weak-convergence" class="subsection-title">4. Dağılımda Yakınsama (Convergence in Distribution / Weak Convergence)</h3>
+<p class="course-paragraph"><strong>Kavramsal Anlamı:</strong> En zayıf yakınsama türüdür. Rassal değişkenlerin "kendilerinin" birbirine yaklaşması gerekmez (örnek uzayda aynı noktaları göstermeyebilirler). Sadece oluşturdukları olasılık profilinin (Birikimli Dağılım Fonksiyonu - CDF, histogram şekli) hedef dağılımın şekline benzemesidir. Merkezi Limit Teoremi bunun en ünlü örneğidir.</p>
+<p class="course-paragraph"><strong>Matematiksel Tanımı:</strong> Her bir $n$ için $X_n$'in BDF'si $F_n(x)$ ve $X$'in BDF'si $F(x)$ olsun. $F(x)$'in sürekli olduğu her $x$ noktası için;</p>
+<p class="course-paragraph">$\lim_{n \to \infty} F_n(x) = F(x)$</p>
+<p class="course-paragraph">ise $X_n$, $X$'e dağılımda yakınsar denir. $X_n \xrightarrow{d} X$ ile gösterilir.</p>
+<p class="course-paragraph"><strong>Örnek 1: (Maksimum Değerin Üstel Dağılıma Yakınsaması)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $U_1, U_2, \dots, U_n$ bağımsız $U(0,1)$ değişkenleri olsun. $M_n = \max(U_1, U_2, \dots, U_n)$ olsun. $X_n = n(1 - M_n)$ rassal değişkeninin parametresi 1 olan Üstel Dağılıma (Exponential) dağılımda yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Önce $M_n$'nin BDF'sini bulalım: $P(M_n \le m) = P(\text{Tüm } U_i'ler \le m) = m^n$ ($0 \le m \le 1$).</p>
+<p class="course-paragraph">2. $X_n$'in BDF'sini $F_n(x)$ bulalım:</p>
+<p class="course-paragraph">   $F_n(x) = P(X_n \le x) = P(n(1 - M_n) \le x) = P(1 - M_n \le \frac{x}{n}) = P(M_n \ge 1 - \frac{x}{n})$</p>
+<p class="course-paragraph">3. Biliyoruz ki $P(M_n \ge k) = 1 - P(M_n \le k)$. Yani:</p>
+<p class="course-paragraph">   $F_n(x) = 1 - (1 - \frac{x}{n})^n$</p>
+<p class="course-paragraph">4. Limit alalım: Analizden biliyoruz ki $\lim_{n \to \infty} (1 - \frac{x}{n})^n = e^{-x}$'tir.</p>
+<p class="course-paragraph">5. $\lim_{n \to \infty} F_n(x) = 1 - e^{-x}$. Bu da tam olarak $\lambda = 1$ olan Üstel Dağılımın CDF'sidir. $X_n \xrightarrow{d} Exp(1)$.</p>
+<p class="course-paragraph"><strong>Örnek 2: (Normal Dağılımların Yakınsaması)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n \sim N(0, 1 + \frac{1}{n})$ olsun. $X_n$'in Standart Normal Dağılıma, yani $Z \sim N(0,1)$'e dağılımda yakınsadığını gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Standart Normal CDF'sini $\Phi(x)$ ile gösterelim.</p>
+<p class="course-paragraph">2. Normal dağılım kurallarına göre $X_n$'i standartlaştırmak için standart sapmasına (varyansın kareköküne) böleriz. Yani $\frac{X_n}{\sqrt{1 + 1/n}} \sim N(0,1)$ olur.</p>
+<p class="course-paragraph">3. $X_n$'in BDF'si: $F_n(x) = P(X_n \le x) = P(\frac{X_n}{\sqrt{1+1/n}} \le \frac{x}{\sqrt{1+1/n}}) = \Phi(\frac{x}{\sqrt{1+1/n}})$.</p>
+<p class="course-paragraph">4. $\Phi$ fonksiyonu süreklidir, limitini içine alabiliriz. Limit alalım:</p>
+<p class="course-paragraph">   $\lim_{n \to \infty} \frac{x}{\sqrt{1+1/n}} = \frac{x}{\sqrt{1+0}} = x$.</p>
+<p class="course-paragraph">5. Böylece $\lim_{n \to \infty} F_n(x) = \Phi(x)$ olur ki bu da $Z$'nin CDF'sidir. $X_n \xrightarrow{d} N(0,1)$.</p>
+<p class="course-paragraph"><strong>Örnek 3: (Sabit bir sayıya -Degenerate- Dağılımda Yakınsama)</strong></p>
+<p class="course-paragraph"><strong>Soru:</strong> $X_n \sim U(0, \frac{1}{n})$ olsun. $X_n$'in 0 sabitine dağılımda yakınsadığını BDF üzerinden gösterin.</p>
+<p class="course-paragraph"><strong>Çözüm:</strong></p>
+<p class="course-paragraph">1. Önce $X_n$'in $F_n(x)$ CDF'sini yazalım:</p>
+<p class="course-paragraph">   $x < 0$ için $0$,</p>
+<p class="course-paragraph">   $0 \le x \le 1/n$ için $nx$,</p>
+<p class="course-paragraph">   $x > 1/n$ için $1$.</p>
+<p class="course-paragraph">2. Limitine bakalım:</p>
+<p class="course-paragraph">   - Eğer $x < 0$ ise, her $n$ için $F_n(x) = 0$ olur. Limit $0$'dır.</p>
+<p class="course-paragraph">   - Eğer $x > 0$ ise, $n$ yeterince büyüdüğünde her zaman $\frac{1}{n} < x$ durumu gerçekleşecektir. Bu noktadan sonra $F_n(x)$ hep $1$'e eşit olacaktır. Limit $1$'dir.</p>
+<p class="course-paragraph">3. Limit BDF $F(x)$: $x<0$ için 0, $x>0$ için 1.</p>
+<p class="course-paragraph">4. Bu BDF, ihtimali %100 olan "0 gelme" olayının (Degenerate Distribution) BDF'sidir. Sürekli olmadığı $x=0$ noktasında tanımın işlemesi gerekmediği için tanımı tam olarak karşılar. $X_n \xrightarrow{d} 0$.</p>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Akademik Notlar ve Ders Kitapları Portalı</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller MathJax 3 ile işlenmekte ve LaTeX standartlarına uygun olarak sunulmaktadır.</p>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

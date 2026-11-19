@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7. Hafta: En Çok Olabilirlik Yöntemi (MLE) ve CRLB - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="logo-badge">PORTAL</span>
+    <span>Akademik Notlar</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="">Ana Sayfa</a></li>
+    <li><a href="istatistik-teorisi.html" class="active">İstatistik Teorisi</a></li>
+    <li><a href="olasilik-teorisi.html" class="">Olasılık & Yakınsama</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="istatistik-teorisi.html">📖 Tüm Kitabı Gör</a></li>
+        <li><a href="pdf/Hafta_07.pdf" target="_blank" style="color: #dc2626; font-weight: 600;">📄 Bu Haftanın PDF'ini Aç</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="active">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 7</span>
+          <h1 class="course-main-title">7. Hafta: En Çok Olabilirlik Yöntemi (MLE) ve CRLB</h1>
+        </div>
+        <a href="pdf/Hafta_07.pdf" target="_blank" class="btn-pdf">📄 PDF İndir</a>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; el yazısı istatistik teorisi ders notlarının 43, 44 ve 45. sayfalarında yer alan <strong>Nokta Tahmini Temelleri</strong> konusunu kapsamaktadır. Nokta tahmin edicilerin taşıması gereken temel özelliklerden <strong>Yansızlık (Unbiasedness)</strong>, <strong>Hata Kareler Ortalaması (MSE)</strong>, Chebyshev eşitsizliği ışığında <strong>Tutarlılık (Consistency)</strong> kriterleri ele alınmıştır. Poisson dağılımında $e^{-2{X}}$'in yansız olmadığı, Jensen eşitsizliği ve MÇF ile eksiksiz ispatlanmış, hedef tahtası benzetmeleri ve TikZ grafikleriyle görselleştirilmiştir.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-7-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 7. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Bir Tahmin Edicinin Kalitesini Nasıl Ölçeriz?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bilinmeyen bir $$ kitle parametresi (örneğin Türkiye'deki ortalama boy, bir fabrikanın hata oranı vb.) için elimizdeki örneklemden bir formül ${} = T(X_1, , X_n)$ ürettik.  
+Peki bu formülün "iyi" bir tahmin edici olup olmadığını nasıl anlarız? İstatistikte iki temel altın standart vardır:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Yansızlık (Doğruluk - Accuracy):</strong> Farklı örneklemler aldığımızda bulduğumuz tahminlerin ortalaması tam kitle parametresine oturuyor mu? ($E({}) = $).</li>
+<li><strong>Tutarlılık (Hassasiyet - Consistency):</strong> Örneklem büyüklüğü sonsuza gittikçe ($n  $), tahminimiz gerçek parametrenin üstüne kusursuzca kilitleniyor mu? (${} {P} $).</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="nokta-tahmini-kavram-ve-matematiksel-er-eve" class="section-title"><span class="title-anchor">§</span> Nokta Tahmini Kavramı ve Matematiksel Çerçeve</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Nokta Tahmin Edici (Point Estimator)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$, dağılım fonksiyonu $F_$ ($    {R}^k$) olan bir anakütleden elde edilmiş rastgele bir örneklem olsun. Bilinmeyen $$ parametresini tahmin etmek amacıyla tanımlanan ve örneklem değerlerine bağlı olan bir ölçülebilir fonksiyona:
+\[
+{} = T(X_1, X_2, , X_n)
+\]
+<strong>nokta tahmin edici</strong> (<em>point estimator</em>) denir. Sayısal olarak hesaplanan $T(x_1, , x_n)$ değerine ise <strong>nokta tahmini</strong> (<em>point estimate</em>) adı verilir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="tahmin-edicilerin-zellikleri-yans-zl-k-unbiasedness" class="section-title"><span class="title-anchor">§</span> Tahmin Edicilerin Özellikleri: Yansızlık (Unbiasedness)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Yansızlık ve Yanlılık (Bias)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    ${}$, $$ parametresi için bir tahmin edici olsun. ${}$'nın <strong>yanlılığı</strong> (<em>bias</em>) şu şekilde tanımlanır:
+\[
+b_({}) = E_({}) - 
+\]
+Eğer her $  $ için:
+\[
+b_({}) = 0  E_({}) = 
+\]
+sağlanıyorsa, ${}$ tahmin edicisine $$ için <strong>yansız tahmin edici</strong> (<em>unbiased estimator</em>) denir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{figure}[htbp]
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{Tahmin edicilerin doğruluk (yansızlık) ve hassasiyet (varyans) davranışlarının hedef tahtası üzerindeki temsili.}
+{figure}
+</p>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örneklem Ortalaması ve Örneklem Varyansının Yansızlığı (Sayfa 43)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$ bağımsız ve aynı dağılımlı (<em>i.i.d.</em>) rastlantı değişkenleri olsun. $E(X_i) = $ ve $V(X_i) = ^2 < $ verilsin.
+</p>
+<ol class="course-ordered-list">
+<li>Örneklem ortalaması ${} = {X} = {1}{n}_{i=1}^n X_i$'nin $$ için yansızlığı:
+<p class="course-paragraph">
+    \[
+    E({X}) = E( {1}{n} _{i=1}^n X_i ) = {1}{n} _{i=1}^n E(X_i) = {1}{n}  (n) =   b_({X}) = 0.
+    \]</li>
+</p>
+<li>Örneklem varyansı $S^2 = {1}{n-1} _{i=1}^n (X_i - {X})^2 = { X_i^2 - n{X}^2}{n-1}$'nin $^2$ için yansızlığı:
+<p class="course-paragraph">
+    Her bir $X_i$ için $E(X_i^2) = ^2 + ^2$ ve ${X}$ için $E({X}^2) = {^2}{n} + ^2$ olduğundan:
+</p>
+    $$
+<p class="course-paragraph">
+{aligned}
+    E(S^2) &= {1}{n-1} \{ _{i=1}^n E(X_i^2) - n E({X}^2) \} \\
+    &= {1}{n-1} \{ n(^2 + ^2) - n ( {^2}{n} + ^2 ) \} \\
+    &= {1}{n-1} \{ n^2 - ^2 \} = {n-1}{n-1}^2 = ^2.
+    {aligned}
+</p>
+$$
+<p class="course-paragraph">
+    Böylece $E(S^2) = ^2$ bulunarak $S^2$'nin $^2$ için <strong>yansız</strong> olduğu ispatlanmış olur.</li>
+</p>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="yans-zl-n-tuzaklar-patolojik-kar-rnek" class="section-title"><span class="title-anchor">§</span> Yansızlığın Tuzakları: Patolojik Karşı-Örnek</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Yansız Olmak Her Zaman İyi Olmak Anlamına Gelmez!</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir tahmin edicinin sadece ortalamada doğru olması onun mantıklı bir tahmin ürettiğini garanti etmez. Bir insan bir ayağını kaynar suya, diğer ayağını buz kütlesine koysa "ortalama sıcaklığı" mükemmeldir; fakat kendisi perişan haldedir! İstatistikte de böyledir.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Poisson Dağılımı ve $(-1)^X$ Patolojisi (Sayfa 44)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  {Poisson}()$ olsun ($n=1$ tek bir gözlem). Tahmin edilmek istenen parametre fonksiyonu $() = e^{-2}$ olsun.  
+${} = (-1)^X$ tahmin edicisini tanımlayalım. Bu tahmin edicinin beklenen değeri:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+E_( (-1)^X ) &= _{x=0}^ (-1)^x {e^{-} ^x}{x!} = e^{-} _{x=0}^ {(-)^x}{x!} = e^{-}  e^{-} = e^{-2}.
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>Çarpıcı Çıkarım:</strong> $E_((-1)^X) = e^{-2}$ olduğundan ${} = (-1)^X$ matematiksel olarak $e^{-2}$ için <strong>kesinlikle yansızdır!</strong>  
+Fakat parametre $ > 0$ iken hedef değer $() = e^{-2}  (0, 1)$ aralığındadır. Oysa $(-1)^X$ tahmin edicisi $X$ çift ise $+1$, tek ise $-1$ değerini alır! Tahmin edici asla $(0, 1)$ aralığında bir değer üretemez. Dolayısıyla:
+\[
+{Yansız olmak }  {İyi bir tahmin edici olmak!}
+\]
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{figure}[htbp]
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{$(-1)^X$ tahmin edicisinin aldığı ayrık değerler ($\{-1, +1\}$) ile tahmin edilmek istenen sürekli $e^{-2}$ eğrisinin karşılaştırması.}
+{figure}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="ders-notundaki-devin-ayr-nt-l-z-m" class="section-title"><span class="title-anchor">§</span> Ders Notundaki Ödevin Ayrıntılı Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Sayfa 44'teki Ödev: $e^{-2{X</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    }$'in $e^{-2}$ İçin Yansız Olmadığının İspatı}
+<strong>Soru Metni:</strong> $X_1, X_2, , X_n  {Poisson}()$ bağımsız ve aynı dağılımlı örneklem olsun. ${} = e^{-2{X}}$ tahmin edicisinin $() = e^{-2}$ parametresi için yansız olmadığını gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>1. Çözüm Yolu (Moment Çıkaran Fonksiyon İle):</strong>
+$Y = _{i=1}^n X_i  {Poisson}(n)$ olduğundan:
+\[
+E( e^{-2{X}} ) = E( e^{-{2}{n} Y} ) = M_Y(-{2}{n}) = \{ n ( e^{-2/n} - 1 ) \}
+\]
+Konvekslikten dolayı $e^{-2/n} > 1 - {2}{n}  n(e^{-2/n} - 1) > -2$ olur. Üstel fonksiyon artan olduğundan:
+\[
+E( e^{-2{X}} ) > e^{-2}
+\]
+Sonuç olarak $E(e^{-2{X}})  e^{-2}$ olup $e^{-2{X}}$ <strong>yansız değildir</strong> (pozitif yanlıdır).
+</p>
+<p class="course-paragraph">
+<strong>2. Çözüm Yolu (Jensen Eşitsizliği İle Tek Satırda İspat):</strong>
+$g(u) = e^{-2u}$ fonksiyonunun 2. türevi $g''(u) = 4e^{-2u} > 0$ olduğundan kesinlikle konvekstir. Jensen eşitsizliğine göre:
+\[
+E(g({X})) > g(E({X}))  E( e^{-2{X}} ) > e^{-2 E({X})} = e^{-2}
+\]
+<strong>Asemptotik Analiz:</strong> $n  $ iken Taylor serisinden $n(e^{-2/n}-1)  -2$ olduğundan $_{n  } E(e^{-2{X}}) = e^{-2}$ olur. Yani tahmin edici <strong>asemptotik olarak yansız ve tutarlıdır</strong>.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="tahmin-edicilerin-zellikleri-tutarl-l-k-consistency" class="section-title"><span class="title-anchor">§</span> Tahmin Edicilerin Özellikleri: Tutarlılık (Consistency)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Tutarlılık (Consistency)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $T_n$ tahmin edici dizisi olsun. Her $ > 0$ için:
+\[
+_{n} P( |T_n - | >  ) = 0  T_n {P} 
+\]
+ise $T_n$'ye $$ için <strong>tutarlı tahmin edici</strong> denir.
+</p>
+  </div>
+</div>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Tutarlılık İçin Yeter Koşul (MSE Kriteri)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Markov ve Chebyshev eşitsizliklerinden ötürü:
+\[
+P(|T_n - | > )  {{MSE}(T_n)}{^2} = {V(T_n) + [b_(T_n)]^2}{^2}
+\]
+Eğer:
+\[
+_{n} {MSE}(T_n) = 0  ( _{n} V(T_n) = 0  {ve}  _{n} E(T_n) =  )
+\]
+sağlanıyorsa, $T_n$ tahmin edicisi <strong>kesinlikle tutarlıdır</strong> ($T_n {P} $).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="sayfa-45-teki-rnek-f-x-theta-frac-1-1-theta-x" class="section-title"><span class="title-anchor">§</span> Sayfa 45'teki Örnek: $f(x;) = {1(1 +  x)$</h2>
+<p class="course-paragraph">
+{f(x;theta) = 1/2(1 + theta x)} Dağılımı}
+</p>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Yansızlık ve Tutarlılık İncelemesi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $f(x;) = {1}{2}(1 +  x), \; -1 < x < 1, \; -1    1$ olsun. ${} = 3{X}_n$ tahmin edicisinin yansız ve tutarlı olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>Adım Adım Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>$E(X) = _{-1}^1 x {1}{2}(1+ x) dx = _{-1}^1 = {}{3}$.</li>
+<li>$E({}) = E(3{X}_n) = 3 E(X) = 3 ({}{3}) =  $ <strong>Yansızdır!</strong></li>
+<li>$E(X^2) = _{-1}^1 x^2 {1}{2}(1+ x) dx = _{-1}^1 = {1}{3}$.</li>
+<li>$V(X) = E(X^2) - [E(X)]^2 = {1}{3} - ({}{3})^2 = {3-^2}{9}$.</li>
+<li>$V({}) = V(3{X}_n) = 9 {V(X)}{n} = 9 {3-^2}{9n} = {3-^2}{n}$.</li>
+<li>$_{n  } V({}) = 0$ ve $b({})=0$ olduğundan $_{n  } {MSE}({}) = 0  {{} {P} }$ (<strong>Tutarlıdır!</strong>).</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+{figure}[htbp]
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{$f(x;) = {1}{2}(1 +  x)$ yoğunluk fonksiyonunun farklı $$ değerleri altındaki davranışı.}
+{figure}
+</p>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Sayfa 45'teki Cebirsel İşaret Karalaması ve Doğrusu:</strong>  
+Varyans daima $V(X) = E(X^2) - [E(X)]^2$ olduğundan aradaki işaret <strong>kesinlikle eksi</strong> olmalıdır:
+\[
+V(X) = {1}{3} - ({}{3})^2 = {1}{3} - {^2}{9} = {3 - ^2}{9}.
+\]
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="7-hafta-h-zl-tekrar-ve-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 7. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Özellik / Kriter</strong></th><th><strong>Matematiksel Şart</strong></th><th><strong>Sezgisel Anlamı / Ne İfade Eder?</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Yansızlık</strong></td><td>$E({}) =   {Bias} = 0$</td><td>Tahminlerin ortalaması tam hedefi bulur; sistematik kayma yoktur.</td></tr>
+<tr><td><strong>Tutarlılık</strong></td><td>$_{n  } P(|{}_n - | > ) = 0$</td><td>Örneklem büyüdükçe hata olasılığı sıfıra iner; tahmin parametreye kilitlenir.</td></tr>
+<tr><td><strong>MSE Kriteri</strong></td><td>$_{n  } [V({}_n) + {Bias}^2] = 0$</td><td>Tutarlılığı garanti eden pratik limit şartı.</td></tr>
+<tr><td><strong>Jensen Eşitsizliği</strong></td><td>$g$ konveks ise $E(g(X)) > g(E(X))$</td><td>Doğrusal olmayan dönüşümlerin yansızlığı bozduğunu gösterir.</td></tr>
+<tr><td><strong>Örneklem Ortalaması</strong></td><td>$E({X}) = , \; V({X}) = ^2/n$</td><td>Her zaman hem yansız hem de tutarlı bir tahmin edicidir.</td></tr>
+<tr><td><strong>Örneklem Varyansı</strong></td><td>$E(S^2) = ^2, \; V(S^2)  0$</td><td>$n-1$'e bölünmesi sayesinde yansız ve tutarlı varyans tahminidir.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{7. Haftanın Nokta Tahmini Kriterleri ve Özet Karşılaştırması}
+{table}
+</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-06.html" class="btn-secondary">⬅️ Hafta 6</a>
+        <a href="istatistik-teorisi.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <span></span>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Akademik Notlar ve Ders Kitapları Portalı</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller MathJax 3 ile işlenmekte ve LaTeX standartlarına uygun olarak sunulmaktadır.</p>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

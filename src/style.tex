@@ -1,0 +1,77 @@
+% -------------------------------------------------
+% style.tex – Ortak paketler ve tcolorbox tanımları
+% -------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[turkish]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\geometry{top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm}
+\usepackage{xcolor}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{caption,booktabs,tabularx}
+
+% ---------- Renk tanımları ----------
+\definecolor{purp}{RGB}{102,51,153}
+\definecolor{tealblue}{RGB}{0,120,130}
+\definecolor{mainblue}{RGB}{26,82,118}
+\definecolor{alertred}{RGB}{180,40,40}
+\definecolor{okgreen}{RGB}{34,139,34}
+
+% ---------- Tek‑argümanlı kutular ----------
+\newtcolorbox{box}[2][]{
+  colback=white,
+  colframe=purp,
+  title={#2},
+  arc=2mm,
+  breakable,
+  #1
+}
+
+\newtcolorbox{uyari}[1][]{
+  colback=yellow!10,
+  colframe=orange,
+  title={Uyarı},
+  arc=2mm,
+  breakable,
+  #1
+}
+
+% ---------- Diğer yardımcı kutular (isteğe bağlı) ----------
+\newtcolorbox{ornek}[2][]{
+  colback=mainblue!5!white,
+  colframe=mainblue,
+  title={#2},
+  arc=2mm,
+  breakable,
+  #1
+}
+
+\newtcolorbox{odev}[2][]{
+  colback=okgreen!5!white,
+  colframe=okgreen,
+  title={Çözümü Olmayan Ödev ve Tam Çözümü: #2},
+  arc=2mm,
+  breakable,
+  #1
+}
+
+\newtcolorbox{tanim}[2][]{
+  colback=gray!5!white,
+  colframe=gray!60!black,
+  title={#2},
+  arc=2mm,
+  breakable,
+  #1
+}
+
+\newtcolorbox{sezgi}[2][]{
+  colback=tealblue!5!white,
+  colframe=tealblue,
+  title={Sezgisel Bakış ve Basit Anlatım: #2},
+  arc=2mm,
+  breakable,
+  #1
+}

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6. Hafta: Nokta Tahmini ve Yansızlık Kriteri - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="logo-badge">PORTAL</span>
+    <span>Akademik Notlar</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="">Ana Sayfa</a></li>
+    <li><a href="istatistik-teorisi.html" class="active">İstatistik Teorisi</a></li>
+    <li><a href="olasilik-teorisi.html" class="">Olasılık & Yakınsama</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="istatistik-teorisi.html">📖 Tüm Kitabı Gör</a></li>
+        <li><a href="pdf/Hafta_06.pdf" target="_blank" style="color: #dc2626; font-weight: 600;">📄 Bu Haftanın PDF'ini Aç</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="active">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 6</span>
+          <h1 class="course-main-title">6. Hafta: Nokta Tahmini ve Yansızlık Kriteri</h1>
+        </div>
+        <a href="pdf/Hafta_06.pdf" target="_blank" class="btn-pdf">📄 PDF İndir</a>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 6. haftasında yer alan <strong>Olabilirlik İlkesi</strong>, <strong>En Çok Olabilirlik Tahmini (MLE)</strong>, <strong>Zehna Değişmezlik Teoremi</strong>, <strong>Skor Fonksiyonu</strong>, <strong>Fisher Bilgisi</strong> ve <strong>Rao-Cramér Alt Sınırı (CRLB / UMVUE)</strong> konularını içermektedir. Nokta tahmininin bu en kritik araçları sezgisel benzetmeler ve tam çözümlü örneklerle ele alınmıştır.</div>
+<hr class="my-4"/>
+<h2 id="b-y-k-resim-6-haftada-ne-reniyoruz-ve-neden" class="section-title"><span class="title-anchor">§</span> Büyük Resim: 6. Haftada Ne Öğreniyoruz ve Neden?</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Nokta Tahmini ve Sherlock Holmes Mantığı (MLE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Olasılık teorisinde kitle parametresi ($$) bilinir ve *"elimdeki torbadan kırmızı bilye gelme olasılığı nedir?"* sorusu sorulur.  
+İstatistik teorisinde ise durum tam tersidir: **Torbanın içini bilmiyoruz!**  
+Elimizde sadece torbadan çekilmiş bir örneklem ($x_1, x_2, , x_n$) vardır.  
+Soru şudur: *"Mevcut veriyi üretmiş olma ihtimali en yüksek olan $$ parametresi hangisidir?"*  
+İşte bu soruya cevap veren yöntem <strong>En Çok Olabilirlik Yöntemi (MLE)</strong>'dir.  
+Peki bulduğumuz tahmin edicinin "en iyisi" olduğunu nereden biliriz? Evrende yapılabilecek en kusursuz tahminin varyansı için konulmuş bir fiziksel alt sınır vardır; buna da **Rao-Cramér Alt Sınırı (CRLB)** denir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olabilirlik-ve-en-ok-olabilirlik-y-ntemi-mle" class="section-title"><span class="title-anchor">§</span> Olabilirlik ve En Çok Olabilirlik Yöntemi (MLE)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Olabilirlik ve Log-Olabilirlik Fonksiyonu</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n {{i.i.d.}}{} f_(x)$ olsun. Örneklem verisi $x_1, , x_n$ toplandıktan sonra, parametre $$'nın <strong>Olabilirlik Fonksiyonu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    L() = L(; x_1, , x_n) = _{i=1}^n f_(x_i)
+</p>
+$$
+<p class="course-paragraph">
+ve çarpımları toplama çevirerek türev almayı kolaylaştıran <strong>Log-Olabilirlik Fonksiyonu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    () =  L() = _{i=1}^n  f_(x_i)
+</p>
+$$
+<p class="course-paragraph">
+şeklinde tanımlanır.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: En Çok Olabilirlik Tahmin Edicisi (MLE)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Gözlenen veriyi üretme olasılığını (olabilirliğini) maksimize eden parametre değeri ${}_{{MLE}}$'dir:
+</p>
+$$
+<p class="course-paragraph">
+    {}_{{MLE}} = _{  } L() = _{  } ()
+</p>
+$$
+<p class="course-paragraph">
+$()$ fonksiyonu içbükey (konkav) ve türevlenebilir ise en çok olabilirlik denklemi (skor denklemi):
+</p>
+$$
+<p class="course-paragraph">
+    {d()}{d} = 0
+</p>
+$$
+<p class="course-paragraph">
+ve tepe noktasını doğrulamak için ikinci mertebe koşulu $. {d^2()}{d^2} |_{ = {}} < 0$'dır.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Log-olabilirlik fonksiyonu ve tepe noktasında eğimin sıfır olduğu ($'()=0$) MLE çözümü.}
+{center}
+</p>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 1: $N(, 1)$ Dağılımında $$'nın MLE'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $f(x_i) = {1}{{2}} e^{-{1}{2}(x_i - )^2}$.
+</p>
+$$
+<p class="course-paragraph">
+    () = -{n}{2} (2) - {1}{2} _{i=1}^n (x_i - )^2
+</p>
+$$
+<p class="course-paragraph">
+Türevi sıfıra eşitleyelim:
+</p>
+$$
+<p class="course-paragraph">
+    {d()}{d} = _{i=1}^n (x_i - ) = 0  _{i=1}^n x_i - n = 0  {{}_{{MLE}} = {X}_n}
+</p>
+$$
+<p class="course-paragraph">
+İkinci türev ${d^2}{d^2} = -n < 0$ olduğundan yerel ve mutlak tepe noktasıdır.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 2: ${Bernoulli</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    (p)$ Dağılımında $p$'nin MLE'si}
+$P(X=x) = p^x (1-p)^{1-x}, \; x  \{0, 1\}$. Başarı sayısı $Y = _{i=1}^n X_i$ olsun:
+</p>
+$$
+<p class="course-paragraph">
+    L(p) = p^Y (1-p)^{n-Y}  (p) = Y (p) + (n-Y) (1-p)
+</p>
+$$
+<p class="course-paragraph">
+Türev:
+</p>
+$$
+<p class="course-paragraph">
+    {d(p)}{dp} = {Y}{p} - {n-Y}{1-p} = 0  Y(1-p) = p(n-Y)  Y = np  {{p}_{{MLE}} = {Y}{n} = {X}_n}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="mle-nin-temel-zellikleri" class="section-title"><span class="title-anchor">§</span> MLE'nin Temel Özellikleri</h2>
+<h3 id="1-de-i-mezlik-zelli-i-invariance-property-zehna-teoremi" class="subsection-title">1. Değişmezlik Özelliği (Invariance Property - Zehna Teoremi)</h3>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Zehna Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Eğer ${}$, $$ parametresinin en çok olabilirlik tahmin edicisi ise, herhangi bir $g()$ fonksiyonunun en çok olabilirlik tahmin edicisi de doğrudan:
+</p>
+$$
+<p class="course-paragraph">
+    {{g()}_{{MLE}} = g({}_{{MLE}})}
+</p>
+$$
+<p class="course-paragraph">
+olur.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Zehna Teoreminin Muazzam Pratikliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Yansız tahmin ediciler fonksiyon dönüşümlerinde bozulur: ${}$ yansız olsa bile $g({})$ genellikle $g()$ için yansız <strong>değildir</strong> ($E[g({})]  g(E[{}])$).  
+Fakat MLE'de böyle bir dert yoktur! Örneğin $$'nın MLE'si ${X}$ ise; $^2$'nin MLE'si doğrudan ${X}^2$, $e^{-}$'nın MLE'si ise doğrudan $e^{-{X}}$ olur.
+</p>
+  </div>
+</div>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: Poisson Sürecinde Boş Bırakılan Problem ve Çözümü</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Soru (Sayfa 39):</strong> $X_1, , X_n {{i.i.d.}}{} {Poisson}()$ olsun. $ = g() = e^{-2}$ parametresinin en çok olabilirlik tahmin edicisini bulunuz ve yansızlığını inceleyiniz. *(Notlarda soru sorulup çözümü boş bırakılmıştır).*
+</p>
+<p class="course-paragraph">
+<strong>Detaylı Çözüm Adımları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Önce ana parametre $$'nın MLE'sini bulalım:
+    $$
+<p class="course-paragraph">
+{aligned}
+        L() &= {e^{-n} ^{ x_i}}{ x_i!}  () = -n + (_{i=1}^n x_i)  - ( x_i!)  \\
+        {d()}{d} &= -n + { x_i}{} = 0  {}_{{MLE}} = {X}_n
+    {aligned}
+</p>
+$$</li>
+<li>Zehna değişmezlik özelliği gereğince $ = e^{-2}$'nın MLE'si:
+    $$
+<p class="course-paragraph">
+        {{}_{{MLE}} = e^{-2{}} = e^{-2{X}_n}}
+</p>
+$$</li>
+<li><strong>Yansızlık İncelemesi:</strong>  
+<p class="course-paragraph">
+    Beklenen değerini hesaplayalım ($Y =  X_i  {Poisson}(n)$):
+</p>
+    $$
+<p class="course-paragraph">
+{aligned}
+        E({}) &= E( e^{-{2}{n}_{i=1}^n X_i} ) = ^n = ^n = ( n(e^{-2/n} - 1) )
+    {aligned}
+</p>
+$$
+<p class="course-paragraph">
+    $n(e^{-2/n} - 1)  -2$ olduğundan sonlu örneklemde ${}$ <strong>yansız değildir</strong>.  
+    Ancak $n  $ iken Taylor açılımından $n(e^{-2/n} - 1)  -2$ olur:
+</p>
+    $$
+<p class="course-paragraph">
+        _{n  } E({}) = e^{-2} = 
+</p>
+$$
+<p class="course-paragraph">
+    Yani tahmin edici <strong>asemptotik olarak yansız ve tutarlıdır</strong>.</li>
+</p>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="fisher-bilgisi-ve-rao-cram-r-e-itsizli-i-crlb" class="section-title"><span class="title-anchor">§</span> Fisher Bilgisi ve Rao-Cramér Eşitsizliği (CRLB)</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Skor Fonksiyonu ve Fisher Bilgisi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Tek bir gözlem $X  f_(x)$ için <strong>Skor Fonksiyonu</strong>:
+</p>
+$$
+<p class="course-paragraph">
+    U_(X) = {d}{d}  f_(X)
+</p>
+$$
+<p class="course-paragraph">
+Regülerlik koşulları altında skor fonksiyonunun beklenen değeri sıfırdır:
+</p>
+$$
+<p class="course-paragraph">
+    E_ = 0
+</p>
+$$
+<p class="course-paragraph">
+<strong>Fisher Bilgisi (Fisher Information)</strong>, bu skor fonksiyonunun varyansıdır:
+</p>
+$$
+<p class="course-paragraph">
+    {I() = V_(U_(X)) = E_ = - E_}
+</p>
+$$
+<p class="course-paragraph">
+$n$ boyutlu bağımsız örneklem için toplam bilgi: $I_n() = n I()$'dır.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Fisher Bilgisinin Geometrik ve Sezgisel Anlamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    İkinci türev $-{d^2 }{d^2}$ log-olabilirlik eğrisinin tepe noktasındaki **eğriliğini (kavisini)** ölçer:
+</p>
+<ul class="course-list">
+<li>Eğer tepe çok sivri ve dik ise: Eğrilik büyüktür $$ Fisher Bilgisi büyüktür. Bu demektir ki veriler doğru parametreyi nokta atışı işaret eder; tahmin hatası ve varyansı küçüktür!</li>
+<li>Eğer tepe yayvan ve düz ise: Eğrilik küçüktür $$ Fisher Bilgisi azdır. Veriler parametre hakkında yetersiz bilgi taşır.</li>
+</ul>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Rao - Cramér Alt Sınırı (CRLB)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $T_n = T(X_1, , X_n)$ yansız bir tahmin edici ($E_(T_n) = $) ise, varyansı hiçbir zaman belirli bir sınırın altına inemez:
+</p>
+$$
+<p class="course-paragraph">
+    {V_(T_n)  {1}{n I()} = {CRLB}}
+</p>
+$$
+<p class="course-paragraph">
+Eğer yansız bir tahmin edicinin varyansı bu sınıra eşit çıkarsa ($V(T_n) = {CRLB}$), o tahmin ediciye <strong>En Küçük Varyanslı Düzgün Yansız Tahmin Edici (UMVUE / MVUE)</strong> veya <strong>Tam Etkin (Efficient)</strong> tahmin edici denir.
+</p>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Notlardaki Sembolik Düzeltme (Sayfa 42):</strong>
+Notta Poisson örneği çözülürken parametre için hem $$ hem $$ sembolleri birbirinin yerine kullanılmıştır. Standart kitle parametresi olarak $$ alınmıştır.
+</p>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Örnek 3: ${Poisson</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    ()$ Dağılımında CRLB ve UMVUE}
+$f(x) = {e^{-}^x}{x!}$ dağılımı için:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+     f(x) &= - + x  - (x!) \\
+    {d}{d}  f(x) &= -1 + {x}{} \\
+    {d^2}{d^2}  f(x) &= -{x}{^2}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Tek gözlemin Fisher bilgisi:
+</p>
+$$
+<p class="course-paragraph">
+    I() = -E( -{X}{^2} ) = {E(X)}{^2} = {}{^2} = {1}{}
+</p>
+$$
+<p class="course-paragraph">
+$n$ boyutlu örneklem için Rao-Cramer Alt Sınırı:
+</p>
+$$
+<p class="course-paragraph">
+    {CRLB} = {1}{n I()} = {1}{n (1/)} = {}{n}
+</p>
+$$
+<p class="course-paragraph">
+Şimdi örneklem ortalaması ${X}_n$'in varyansına bakalım:
+</p>
+$$
+<p class="course-paragraph">
+    V({X}_n) = {V(X)}{n} = {}{n}
+</p>
+$$
+<p class="course-paragraph">
+Görüldüğü üzere $V({X}_n) = {CRLB} = {}{n}$'dir.  
+Dolayısıyla ${X}_n$, $$ parametresi için <strong>UMVUE</strong>'dir (daha düşük varyanslı bir yansız tahmin edici bulmak matematiksel olarak imkansızdır!).
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Örneklem büyüklüğü arttıkça Rao-Cramer alt sınırının azalması ve UMVUE varyansının bu sınıra tam oturması.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="6-hafta-h-zl-tekrar-ve-kar-la-t-rma-tablosu" class="section-title"><span class="title-anchor">§</span> 6. Hafta Hızlı Tekrar ve Karşılaştırma Tablosu</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.35}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Kavram</strong></th><th><strong>Matematiksel Formül</strong></th><th><strong>Ne İşe Yarar / Sezgisel Anlamı</strong></th></tr></thead><tbody>
+</p>
+<tr><td><strong>Olabilirlik $L()$</strong></td><td>$_{i=1}^n f(x_i; )$</td><td>Verilen verinin gerçekleşme ihtimalini parametrenin fonksiyonu yapar.</td></tr>
+<tr><td><strong>MLE (${</strong>$)}</td><td>$ ()  '() = 0$</td><td>Veriyi en olası kılan parametre değerini bulur.</td></tr>
+<tr><td><strong>Zehna Teoremi</strong></td><td>${g()}_{{MLE}} = g({}_{{MLE}})$</td><td>Parametre tahmini biliniyorsa fonksiyonunun tahmini doğrudan yerine koymadır.</td></tr>
+<tr><td><strong>Skor Fonksiyonu</strong></td><td>$U() = {d}{d} f(X)$</td><td>Log-olabilirliğin eğimidir; beklenen değeri daima sıfırdır ($E(U)=0$).</td></tr>
+<tr><td><strong>Fisher Bilgisi</strong></td><td>$I() = -E[''()]$</td><td>Log-olabilirliğin tepe sivrilğidir; parametre hakkındaki bilgi miktarını ölçer.</td></tr>
+<tr><td><strong>CRLB</strong></td><td>${Alt Sınır} = {1}{n I()}$</td><td>Yansız bir tahmin edicinin sahip olabileceği teorik minimum varyanstır.</td></tr>
+<tr><td><strong>UMVUE</strong></td><td>$V({}) = {CRLB}$</td><td>Alt sınıra ulaşan, en küçük varyanslı kusursuz yansız tahmin edici.</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{6. Haftanın Temel Olabilirlik ve Optimal Tahmin Kavramları Özeti}
+{table}
+</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <a href="hafta-05.html" class="btn-secondary">⬅️ Hafta 5</a>
+        <a href="istatistik-teorisi.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-07.html" class="btn-primary">Hafta 7 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Akademik Notlar ve Ders Kitapları Portalı</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller MathJax 3 ile işlenmekte ve LaTeX standartlarına uygun olarak sunulmaktadır.</p>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

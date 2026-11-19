@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1. Hafta: Momentler, Eşitsizlikler ve MÇF - İstatistik Teorisi</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="logo-badge">PORTAL</span>
+    <span>Akademik Notlar</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="">Ana Sayfa</a></li>
+    <li><a href="istatistik-teorisi.html" class="active">İstatistik Teorisi</a></li>
+    <li><a href="olasilik-teorisi.html" class="">Olasılık & Yakınsama</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Konu, teorem ara...">
+    </div>
+    <button class="btn-icon" id="theme-toggle" title="Tema Değiştir">🌙</button>
+  </div>
+</nav>
+
+
+  <div class="layout-container">
+    <aside class="sidebar">
+      <div class="sidebar-title">Gezinti</div>
+      <ul class="sidebar-menu" style="margin-bottom: 1.5rem;">
+        <li><a href="istatistik-teorisi.html">📖 Tüm Kitabı Gör</a></li>
+        <li><a href="pdf/Hafta_01.pdf" target="_blank" style="color: #dc2626; font-weight: 600;">📄 Bu Haftanın PDF'ini Aç</a></li>
+      </ul>
+      <div class="sidebar-title">Tüm Haftalar</div>
+      <ul class="sidebar-menu">
+        <li><a href="hafta-01.html" class="active">Hafta 1</a></li><li><a href="hafta-02.html" class="">Hafta 2</a></li><li><a href="hafta-03.html" class="">Hafta 3</a></li><li><a href="hafta-04.html" class="">Hafta 4</a></li><li><a href="hafta-05.html" class="">Hafta 5</a></li><li><a href="hafta-06.html" class="">Hafta 6</a></li><li><a href="hafta-07.html" class="">Hafta 7</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">İSTATİSTİK TEORİSİ • BÖLÜM 1</span>
+          <h1 class="course-main-title">1. Hafta: Momentler, Eşitsizlikler ve MÇF</h1>
+        </div>
+        <a href="pdf/Hafta_01.pdf" target="_blank" class="btn-pdf">📄 PDF İndir</a>
+      </div>
+
+      <div class="week-body">
+        <div class="course-abstract"><strong>📌 Bölüm Özeti:</strong> Bu çalışma; İstatistik Teorisi dersinin 1. haftasında yer alan <strong>Moment Kavramı (Orijine ve Ortalamaya Göre Momentler)</strong>, <strong>Çarpıklık ve Basıklık</strong>, <strong>Markov, Chebyshev ve Jensen Eşitsizlikleri</strong>, <strong>Moment Çıkaran Fonksiyon (MÇF)</strong>, <strong>Bağımsız Toplamlar ve Teklik Teoremi</strong>, <strong>Euler Gamma Fonksiyonu</strong> ve $(1/2) = {}$ ispatını içermektedir. Ağır matematiksel integrallerin yanında her kavramın arkasındaki sezgisel mantık, el yazısı ders notlarındaki kritik işlem hatalarının düzeltmeleri, vektörel TikZ grafikleri ve adım adım sınav tipi çözümlerle desteklenmiştir.</div>
+<hr class="my-4"/>
+<h2 id="giri-ve-moment-kavram" class="section-title"><span class="title-anchor">§</span> Giriş ve Moment Kavramı</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Moment Nedir ve Neden İhtiyaç Duyarız?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir olasılık dağılımı ($f(x)$) elimizde sonsuz sayıda noktadan oluşan karmaşık bir eğri veya veri yığını olarak bulunur. Bu eğrinin tüm geometrik ve istatistiksel karakterini birkaç kritik sayı ile özetlemek isteriz:
+</p>
+<ul class="course-list">
+<li><strong>1. Moment ($$ - Ortalama):</strong> Dağılımın sayı doğrusundaki <strong>ağırlık merkezidir</strong>. Eğri homojen ağırlıklı bir tahterevalli olsaydı, parmağımızı tam nereye koyarsak dengede kalırdı? İşte bu denge noktası $E(X)$'tir.</li>
+<li><strong>2. Merkezsel Moment ($^2$ - Varyans):</strong> Verilerin bu ağırlık merkezinden ne kadar uzağa saçıldığını, yani <strong>belirsizliğin ve riskin büyüklüğünü</strong> ölçer.</li>
+<li><strong>3. Moment (Çarpıklık / Skewness):</strong> Dağılımın simetrisini inceler. Kuyruk sağa doğru mu uzanıyor (pozitif çarpık), yoksa sola doğru mu (negatif çarpık)?</li>
+<li><strong>4. Moment (Basıklık / Kurtosis):</strong> Dağılımın tepe noktasının sivriliğini ve kuyrukların kalınlığını (uç değer riskini / black swan olaylarını) ölçer.</li>
+</ul>
+<p class="course-paragraph">
+Kısacası momentler, bir olasılık dağılımının boyunu, kilosunu ve karakteristik hatlarını belirleyen <strong>biyometrik kimlik kartıdır</strong>.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Moment Tanımları</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir $X$ rastgele değişkeni için:
+</p>
+<ol class="course-ordered-list">
+<li><strong>Orijine Göre $k$. Moment ($k$. Ham / Merkezsel Olmayan Moment - Raw Moment):</strong>
+    $$
+<p class="course-paragraph">
+        '_k = E(X^k) = 
+        {cases}
+            _x x^k P(X = x), & {kesikli durumda} \\[0.5em]
+            _{-}^{} x^k f(x) \, dx, & {sürekli durumda}
+        {cases}
+</p>
+$$
+<p class="course-paragraph">
+    Özel olarak $k=1$ için 1. ham moment kitle ortalamasını ($$) verir:
+</p>
+    $$
+<p class="course-paragraph">
+        '_1 = E(X) = 
+</p>
+$$</li>
+<li><strong>$k$. Merkezsel Moment (Central Moment):</strong>
+<p class="course-paragraph">
+    Ortalama ($$) etrafındaki sapmaların kuvvetlerinin beklenen değeridir:
+</p>
+    $$
+<p class="course-paragraph">
+        _k = E = 
+        {cases}
+            _x (x - )^k P(X = x), & {kesikli durumda} \\[0.5em]
+            _{-}^{} (x - )^k f(x) \, dx, & {sürekli durumda}
+        {cases}
+</p>
+$$
+<p class="course-paragraph">
+    Özel olarak:
+</p>
+    <ul class="course-list">
+<li>$k=1$ için: $_1 = E[X - ] = E(X) -  = 0$ (Ortalamadan sapmaların beklenen değeri daima sıfırdır).</li>
+<li>$k=2$ için: $_2 = E = V(X) = ^2$ (Varyans).</li>
+</ul></li>
+</ol>
+  </div>
+</div>
+<h3 id="merkezsel-momentler-ile-ham-momentler-aras-ndaki-cebirsel-i-li-ki" class="subsection-title">Merkezsel Momentler ile Ham Momentler Arasındaki Cebirsel İlişki</h3>
+<p class="course-paragraph">
+Binom açılımı $(X - )^k = _{j=0}^k {k}{j} X^j (-)^{k-j}$ kullanılarak merkezsel momentler ham momentler cinsinden yazılabilir:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    _2 &= E = E(X^2 - 2 X + ^2) = E(X^2) - 2 E(X) + ^2 = '_2 - ('_1)^2 \\
+    _3 &= E = '_3 - 3'_2 '_1 + 2('_1)^3 \\
+    _4 &= E = '_4 - 4'_3 '_1 + 6'_2 ('_1)^2 - 3('_1)^4
+{aligned}
+</p>
+$$
+<h3 id="standartla-t-r-lm-momentler-arp-kl-k-ve-bas-kl-k" class="subsection-title">Standartlaştırılmış Momentler: Çarpıklık ve Basıklık</h3>
+<ul class="course-list">
+<li><strong>Çarpıklık Katsayısı (Skewness - $_3$):</strong>
+    $$
+<p class="course-paragraph">
+        _3 = {_3}{^3} = {E}{^3}
+</p>
+$$
+<p class="course-paragraph">
+    $_3 = 0$ ise dağılım simetriktir (örn: Normal dağılım). $_3 > 0$ ise sağa uzun kuyruklu (pozitif çarpık), $_3 < 0$ ise sola uzun kuyrukludur (negatif çarpık).</li>
+</p>
+<li><strong>Basıklık Katsayısı (Kurtosis - $_4$):</strong>
+    $$
+<p class="course-paragraph">
+        _4 = {_4}{^4} = {E}{^4}
+</p>
+$$
+<p class="course-paragraph">
+    Standart normal dağılım için $_4 = 3$'tür. Bu nedenle fazlalık basıklık (excess kurtosis) $_2 = _4 - 3$ olarak tanımlanır. $_4 > 3$ ise sivri ve kalın kuyruklu (leptokurtik), $_4 < 3$ ise basık ve ince kuyrukludur (platikurtik).</li>
+</p>
+</ul>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Normal Dağılımın Ortalamasının Doğrudan İntegralle Hesaplanması</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X  N(, ^2)$ dağılımına sahip sürekli bir rastgele değişkenin olasılık yoğunluk fonksiyonu:
+</p>
+$$
+<p class="course-paragraph">
+    f(x) = {1}{{2^2}} (-{1}{2}({x - }{})^2),  - < x < 
+</p>
+$$
+<p class="course-paragraph">
+şeklindedir. $E(X)$ beklenen değerini doğrudan integral tanımıyla hesaplayınız.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm Adımları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Beklenen değer tanımını yazalım:
+    $$
+<p class="course-paragraph">
+        E(X) = _{-}^{} x f(x) \, dx = {1}{{2^2}} _{-}^{} x \, e^{-{1}{2}({x - }{})^2} dx
+</p>
+$$</li>
+<li>Standartlaştırma ($z$-dönüşümü) uygulayalım:
+    $$
+<p class="course-paragraph">
+        z = {x - }{}  x =  z +   dx =  \, dz
+</p>
+$$</li>
+<li>Bu değişken dönüşümünü integrale yerleştirelim (${^2} = $ çarpanı diferansiyeldeki $$ ile tam sadeleşir):
+    $$
+<p class="course-paragraph">
+{aligned}
+        E(X) &= {1}{{2}} _{-}^{} ( z + ) \, e^{-{1}{2}z^2} ( \, dz)  \\
+        &= {{}{{2}} _{-}^{} z \, e^{-{1}{2}z^2} dz}_{I_1} + { _{-}^{} {1}{{2}} e^{-{1}{2}z^2} dz}_{I_2}
+    {aligned}
+</p>
+$$</li>
+<li><strong>$I_2$ İntegralinin Hesabı:</strong>  
+<p class="course-paragraph">
+    Standart normal yoğunluk fonksiyonunun ($N(0,1)$) tüm reel eksendeki toplam alanı olasılık aksiyomları gereği 1'dir:
+</p>
+    $$
+<p class="course-paragraph">
+        _{-}^{} {1}{{2}} e^{-{1}{2}z^2} dz = 1  I_2 =   1 = 
+</p>
+$$</li>
+<li><strong>$I_1$ İntegrali ve Tek Fonksiyon Püf Noktası:</strong>  
+<p class="course-paragraph">
+    $g(z) = z \, e^{-{1}{2}z^2}$ fonksiyonunda $z$ yerine $-z$ yazalım:
+</p>
+    $$
+<p class="course-paragraph">
+        g(-z) = (-z) e^{-{1}{2}(-z)^2} = -z e^{-{1}{2}z^2} = -g(z)
+</p>
+$$
+<p class="course-paragraph">
+    $g(z)$ bir <strong>tek (odd) fonksiyondur</strong>. Simetrik $[-, ]$ aralığında mutlak integrallenebilir bir tek fonksiyonun negatif taraftaki alanı ile pozitif taraftaki alanı birbirini tam olarak sıfırlar:
+</p>
+    $$
+<p class="course-paragraph">
+        I_1 = {}{{2}} _{-}^{} z e^{-{1}{2}z^2} dz = 0
+</p>
+$$</li>
+</ol>
+<p class="course-paragraph">
+Sonuç olarak:
+</p>
+$$
+<p class="course-paragraph">
+    E(X) = I_1 + I_2 = 0 +  = 
+</p>
+$$
+<p class="course-paragraph">
+bulunur.
+</p>
+  </div>
+</div>
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>El Yazısı Notlardaki Yaklaşım ve Matematiksel Düzeltme:</strong>
+</p>
+<ul class="course-list">
+<li>2. sayfadaki el yazısı notlarda $I_1$ integrali için $u = z^2$ dönüşümü yapılarak integral $(-, 0)$ ve $(0, )$ aralıklarına bölünmeye çalışılmıştır.</li>
+<li>Ancak $z < 0$ iken $u = z^2  z = -{u}$ olduğundan diferansiyel adımı işaret karmaşasına yol açmaktadır.</li>
+<li>Sonuç $-{}{{2}} + {}{{2}} = 0$ olarak doğru tamamlansa da; $z e^{-z^2/2}$ integrandı tek fonksiyon olduğundan simetriden dolayı doğrudan $I_1 = 0$ yazmak hem matematiksel açıdan en şık hem de sınav puanlama standartlarında en risksiz yöntemdir.</li>
+</ul>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Tek Fonksiyon Özelliği: Kırmızı eğri $g(-z) = -g(z)$ simetrisine sahiptir. Negatif bölgedeki alan (kırmızı taralı) ile pozitif bölgedeki alan (yeşil taralı) eşit büyüklükte ve zıt işaretli olduğundan integral net sıfır verir.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="olas-l-k-teorisinde-temel-e-itsizlikler" class="section-title"><span class="title-anchor">§</span> Olasılık Teorisinde Temel Eşitsizlikler</h2>
+<p class="course-paragraph">
+Momentler dağılım hakkında genel sınırlar çizmemize olanak tanır. Dağılımın tam fonksiyonel formunu bilmesek dahi sadece ortalama ve varyans bilgisiyle olasılık sınırları hesaplayabiliriz.
+</p>
+<h3 id="1-markov-e-itsizli-i" class="subsection-title">1. Markov Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Markov Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X$ negatif değer almayan ($X  0$) bir rastgele değişken ve $a > 0$ herhangi bir pozitif reel sayı olsun. Bu durumda:
+</p>
+$$
+<p class="course-paragraph">
+    P(X  a)  {E(X)}{a}
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Markov Eşitsizliğinin Anlamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    "Bir şirkette çalışanların maaş ortalaması 20.000 TL ise, çalışanların en fazla kaçta kaçı 100.000 TL veya üzerinde kazanıyor olabilir?"  
+Markov kuralına göre: $P(X  100.000)  {20.000}{100.000} = {1}{5} = \%20$.  
+Eğer çalışanların \%20'sinden fazlası 100.000 TL alsaydı, sadece onların getireceği pay bile ortalamayı 20.000 TL'nin üzerine fırlatırdı! Dağılım ne olursa olsun bu sınır aşılamaz.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Matematiksel İspat:</strong>
+$X  0$ sürekli bir değişken olsun (kesikli durum tamamen paraleldir):
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    E(X) &= _0^ x f(x) \, dx = _0^a x f(x) \, dx + _a^ x f(x) \, dx  \\
+    & _a^ x f(x) \, dx  ({çünkü } x  0 { ve } f(x)  0 { olduğundan } _0^a  0)  \\
+    & _a^ a f(x) \, dx  ({çünkü integral bölgesinde } x  a)  \\
+    &= a _a^ f(x) \, dx = a P(X  a)
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Her iki taraf $a > 0$'a bölündüğünde $P(X  a)  {E(X)}{a}$ elde edilir. $$
+</p>
+<h3 id="2-chebyshev-e-itsizli-i" class="subsection-title">2. Chebyshev Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Chebyshev Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Ortalaması $$ ve sonlu varyansı $^2$ olan herhangi bir $X$ rastgele değişkeni için, her $k > 0$ veya her $ > 0$ için:
+</p>
+$$
+<p class="course-paragraph">
+    P(|X - |  k)  {1}{k^2}    P(|X - | < k)  1 - {1}{k^2}
+</p>
+$$
+<p class="course-paragraph">
+Benzer şekilde $ = k$ alınırsa:
+</p>
+$$
+<p class="course-paragraph">
+    P(|X - |  )  {^2}{^2}
+</p>
+$$
+  </div>
+</div>
+<p class="course-paragraph">
+<strong>Matematiksel İspat:</strong>
+$Y = (X - )^2$ rastgele değişkenini tanımlayalım. $Y  0$'dır ve $E(Y) = E[(X-)^2] = ^2$'dir.  
+Şimdi $Y$ değişkenine $a = ^2 > 0$ için Markov eşitsizliğini uygulayalım:
+</p>
+$$
+<p class="course-paragraph">
+    P(Y  ^2)  {E(Y)}{^2}  P((X - )^2  ^2)  {^2}{^2}
+</p>
+$$
+<p class="course-paragraph">
+$(X - )^2  ^2$ olayı ile $|X - |  $ olayı tamamen özdeştir. Dolayısıyla:
+</p>
+$$
+<p class="course-paragraph">
+    P(|X - |  )  {^2}{^2}
+</p>
+$$
+<p class="course-paragraph">
+ispatlanır. $$
+</p>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Chebyshev Eşitsizliği: Dağılımın şekli ne olursa olsun verilerin en az $\%75$'i $  2$ aralığında, en az $\%88.9$'u $  3$ aralığında bulunmak zorundadır.}
+{center}
+</p>
+<h3 id="3-jensen-e-itsizli-i" class="subsection-title">3. Jensen Eşitsizliği</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Jensen Eşitsizliği</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $g(x)$ dışbükey (convex, yani $g''(x)  0$) bir fonksiyon ve $X$ beklenen değeri sonlu bir rastgele değişken olsun. Bu durumda:
+</p>
+$$
+<p class="course-paragraph">
+    E[g(X)]  g(E[X])
+</p>
+$$
+<p class="course-paragraph">
+Eğer $g(x)$ içbükey (concave, yani $g''(x)  0$) ise eşitsizlik yön değiştirir: $E[g(X)]  g(E[X])$.
+</p>
+  </div>
+</div>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Jensen Eşitsizliği Neden Doğrudur? (Teğet Doğrusu İspatı)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Dışbükey bir fonksiyonun (örneğin $g(x) = x^2$ veya $g(x) = e^x$) grafiği her zaman herhangi bir noktasından çizilen teğet doğrusunun <strong>üzerinde kalır</strong>.  
+Fonksiyona tam $ = E(X)$ noktasından teğet çizelim. Teğet doğrusunun denklemi $L(x) = g() + g'()(x - )$'dir.  
+Dışbükeylik nedeniyle her $x$ için $g(x)  L(x)$ olur:
+</p>
+$$
+<p class="course-paragraph">
+    g(X)  g() + g'()(X - )
+</p>
+$$
+<p class="course-paragraph">
+Her iki tarafın beklenen değerini alırsak:
+</p>
+$$
+<p class="course-paragraph">
+    E[g(X)]  g() + g'() {E(X - )}_{0} = g() = g(E[X])
+</p>
+$$
+<p class="course-paragraph">
+İşte bu kadar zarif bir geometrik gerçek!
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Jensen Eşitsizliği Geometrisi: Dışbükey eğri daima teğetinin üstünde kaldığından ortalama değerin fonksiyonu $g(E[X])$, fonksiyonun ortalaması $E[g(X)]$'ten küçük veya eşittir.}
+{center}
+</p>
+<p class="course-paragraph">
+<strong>Jensen Eşitsizliğinin Doğrudan Sonuçları:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>$g(x) = x^2$ dışbükeydir $ E(X^2)  [E(X)]^2  V(X) = E(X^2) - [E(X)]^2  0$. (Varyansın negatif olamayacağının en temel ispatı!)</li>
+<li>$g(x) = 1/x$ ($x > 0$ için dışbükey) $ E({1}{X})  {1}{E(X)}$.</li>
+<li>$g(x) = -(x)$ dışbükey $ E[ X]  (E[X])$. (Aritmetik Ortalama $$ Geometrik Ortalama eşitsizliğinin temeli).</li>
+</ol>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="moment-karan-fonksiyon-m-f-mgf" class="section-title"><span class="title-anchor">§</span> Moment Çıkaran Fonksiyon (MÇF / MGF)</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Neden MÇF? (Türevle Moment Üreten Tohum Fonksiyon)</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Her bir $k$. moment için ayrı ayrı zorlu integraller ($ x^k f(x) dx$) çözmek yerine, bütün momentleri bünyesinde bir katsayı olarak saklayan fonksiyon:
+</p>
+$$
+<p class="course-paragraph">
+    M_X(t) = E(e^{tX})
+</p>
+$$
+<p class="course-paragraph">
+şeklinde tanımlanır. Bu fonksiyondan $t$'ye göre $k$ kez türev alıp $t=0$ koyduğumuzda doğrudan $k$. moment önümüze düşer.
+</p>
+  </div>
+</div>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Moment Çıkaran Fonksiyon Tanımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Bir $X$ rastgele değişkeni için moment çıkaran fonksiyon $M_X(t)$ şu şekilde tanımlanır:
+</p>
+$$
+<p class="course-paragraph">
+    M_X(t) = E(e^{tX}) = 
+    {cases}
+        _x e^{tx} P(X = x), & {kesikli durumda} \\[0.5em]
+        _{-}^{} e^{tx} f(x) \, dx, & {sürekli durumda}
+    {cases}
+</p>
+$$
+<p class="course-paragraph">
+<em>Varlık Koşulu:</em> $M_X(t)$'nin var olması için $0$ civarında en az bir $(-h, h)$ aralığında ($h > 0$) bu beklenen değerin sonlu olması şarttır.
+</p>
+  </div>
+</div>
+<h3 id="moment-karan-fonksiyonun-temel-zellikleri" class="subsection-title">Moment Çıkaran Fonksiyonun Temel Özellikleri</h3>
+<ol class="course-ordered-list">
+<li><strong>Sıfır Noktasındaki Değer:</strong>
+    $$
+<p class="course-paragraph">
+        M_X(0) = E(e^{0  X}) = E(1) = 1
+</p>
+$$
+<p class="course-paragraph">
+    Bu özellik MÇF türetimlerinde sağlama yapmak için harika bir kontrol aracıdır.</li>
+</p>
+<li><strong>Momentleri Türetme Mekanizması:</strong>
+<p class="course-paragraph">
+    $e^u = _{k=0}^ {u^k}{k!}$ Maclaurin seri açılımından:
+</p>
+    $$
+<p class="course-paragraph">
+        M_X(t) = E = _{k=0}^ {t^k}{k!} E(X^k) = 1 + t E(X) + {t^2}{2!} E(X^2) +  + {t^k}{k!} E(X^k) + 
+</p>
+$$
+<p class="course-paragraph">
+    Dolayısıyla $t$'ye göre $k$. türev alınıp $t=0$ yazıldığında:
+</p>
+    $$
+<p class="course-paragraph">
+        . {d^k M_X(t)}{dt^k} |_{t=0} = E(X^k) = '_k
+</p>
+$$</li>
+<li><strong>Doğrusal Dönüşüm Kuralı:</strong>
+<p class="course-paragraph">
+    Eğer $Y = aX + b$ ise ($a, b  {R}$):
+</p>
+    $$
+<p class="course-paragraph">
+        M_Y(t) = E(e^{t(aX+b)}) = E(e^{bt} e^{(at)X}) = e^{bt} E(e^{(at)X}) = e^{bt} M_X(at)
+</p>
+$$</li>
+<li><strong>Teklik Teoremi (Uniqueness Theorem):</strong>
+<p class="course-paragraph">
+    Eğer iki rastgele değişkenin bir $(-h, h)$ aralığında MÇF'leri eşitse ($M_X(t) = M_Y(t)$), bu iki değişkenin kitle olasılık dağılımları birebir aynıdır ($F_X(x) = F_Y(x)$). MÇF bir dağılımın genetik parmak izidir.</li>
+</p>
+</ol>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Standart Normal $N(0,1)$ ve Genel Normal $N(, ^2)$ MÇF'si</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>Adım 1: Standart Normal $Z  N(0,1)$ için:</strong>
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    M_Z(t) &= E(e^{tZ}) = _{-}^{} e^{tz} {1}{{2}} e^{-{z^2}{2}} dz = {1}{{2}} _{-}^{} e^{-{1}{2}(z^2 - 2tz)} dz  \\
+    &= {1}{{2}} _{-}^{} e^{-{1}{2}[(z-t)^2 - t^2]} dz = e^{{t^2}{2}} {_{-}^{} {1}{{2}} e^{-{(z-t)^2}{2}} dz}_{1} = e^{{t^2}{2}}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>Adım 2: Genel Normal $X =  Z +   N(, ^2)$ için Doğrusal Dönüşümle:</strong>  
+Doğrusal dönüşüm kuralı $M_{aZ+b}(t) = e^{bt} M_Z(at)$ kullanılarak integral çözmeden anında:
+</p>
+$$
+<p class="course-paragraph">
+    {M_X(t) = e^{ t} M_Z( t) = e^{ t} e^{{( t)^2}{2}} = (  t + {1}{2}^2 t^2 )}
+</p>
+$$
+<p class="course-paragraph">
+bulunur.
+</p>
+  </div>
+</div>
+<h3 id="k-m-lan-karan-fonksiyon-cumulant-generating-function" class="subsection-title">Kümülan Çıkaran Fonksiyon (Cumulant Generating Function)</h3>
+<p class="course-paragraph">
+MÇF'nin doğal logaritması <strong>Kümülan Çıkaran Fonksiyon</strong> olarak adlandırılır:
+</p>
+$$
+<p class="course-paragraph">
+    K_X(t) =  M_X(t)
+</p>
+$$
+<p class="course-paragraph">
+Bu fonksiyon özellikle varyans ve yüksek momentlerin hesabında türev işlemlerini olağanüstü kolaylaştırır:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    K'_X(t) &= {M'_X(t)}{M_X(t)}  K'_X(0) = {M'_X(0)}{M_X(0)} = {E(X)}{1} =  \\
+    K''_X(t) &= {M''_X(t) M_X(t) - [M'_X(t)]^2}{[M_X(t)]^2}  K''_X(0) = {E(X^2)  1 - [E(X)]^2}{1^2} = ^2
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+Normal dağılım için $K_X(t) = ( e^{ t + {1}{2}^2 t^2} ) =  t + {1}{2}^2 t^2$ olur.  
+Görüldüğü üzere $K'_X(0) = $ ve $K''_X(0) = ^2$ anında çıkar!
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="bile-ik-m-f-ba-ms-zl-k-ve-toplamlar-n-da-l-m" class="section-title"><span class="title-anchor">§</span> Bileşik MÇF, Bağımsızlık ve Toplamların Dağılımı</h2>
+<div class="callout callout-tanim">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📘</span>
+    <span class="callout-title">Tanım: Bileşik Moment Çıkaran Fonksiyon</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $<u>X</u> = (X_1, X_2, , X_n)$ sürekli rastgele değişkenler vektörü ve ortak olasılık yoğunluğu $f(x_1, , x_n)$ olsun:
+</p>
+$$
+<p class="course-paragraph">
+    M_{<u>X</u>}(t_1, , t_n) = E( e^{t_1 X_1 +  + t_n X_n} ) = _{-}^  _{-}^ e^{_{i=1}^n t_i x_i} f(x_1, , x_n) dx_1  dx_n
+</p>
+$$
+  </div>
+</div>
+<h3 id="ba-ms-zl-k-durumu" class="subsection-title">Bağımsızlık Durumu</h3>
+<p class="course-paragraph">
+Eğer $X_1, , X_n$ rastgele değişkenleri bağımsız ise ortak yoğunluk marjinal yoğunlukların çarpımıdır: $f(x_1,,x_n) = _{i=1}^n f_{X_i}(x_i)$.  
+Bu durumda bileşik MÇF, marjinal MÇF'lerin basit bir çarpımına ayrışır:
+</p>
+$$
+<p class="course-paragraph">
+    M_{<u>X</u>}(t_1, , t_n) = _{i=1}^n M_{X_i}(t_i)
+</p>
+$$
+<h3 id="ba-ms-z-de-i-kenlerin-toplam" class="subsection-title">Bağımsız Değişkenlerin Toplamı</h3>
+<div class="callout callout-teorem">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">🟣</span>
+    <span class="callout-title">Teorem: Toplamın MÇF Teoremi</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, X_2, , X_n$ karşılıklı bağımsız rastgele değişkenler ve toplamları $Y = _{i=1}^n X_i$ olsun:
+</p>
+$$
+<p class="course-paragraph">
+    M_Y(t) = E(e^{tY}) = E(e^{t  X_i}) = E( _{i=1}^n e^{t X_i} ) = _{i=1}^n E(e^{t X_i}) = _{i=1}^n M_{X_i}(t)
+</p>
+$$
+<p class="course-paragraph">
+Eğer bu değişkenler bağımsız ve özdeş dağılımlı (i.i.d.) ise:
+</p>
+$$
+<p class="course-paragraph">
+    M_Y(t) = ^n
+</p>
+$$
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Bağımsız Poisson Değişkenlerinin Toplamı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1  {Poisson}(_1)$ ve $X_2  {Poisson}(_2)$ bağımsız olsun. $Y = X_1 + X_2$'nin dağılımını MÇF yöntemiyle bulunuz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir Poisson($$) değişkeninin MÇF'si:
+    $$
+<p class="course-paragraph">
+{aligned}
+        M_X(t) &= E(e^{tX}) = _{x=0}^ e^{tx} {e^{-}^x}{x!} = e^{-} _{x=0}^ {( e^t)^x}{x!}  \\
+        &= e^{-} e^{ e^t} = ( (e^t - 1) )
+    {aligned}
+</p>
+$$</li>
+<li>Bağımsız toplamın MÇF'si:
+    $$
+<p class="course-paragraph">
+{aligned}
+        M_Y(t) &= M_{X_1}(t)  M_{X_2}(t) = (_1(e^t - 1))  (_2(e^t - 1))  \\
+        &= ( (_1 + _2)(e^t - 1) )
+    {aligned}
+</p>
+$$</li>
+<li><strong>Teklik Teoremi:</strong> Bu ifade parametresi $(_1 + _2)$ olan bir Poisson MÇF'sidir. Dolayısıyla:
+    $$
+<p class="course-paragraph">
+        {X_1 + X_2  {Poisson}(_1 + _2)}
+</p>
+$$</li>
+</ol>
+  </div>
+</div>
+<div class="callout callout-ornek">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">📝</span>
+    <span class="callout-title">Örnek: Üstel Dağılımlı Değişkenlerin Toplamı ve Gamma Dağılımı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    $X_1, , X_n {{i.i.d.}}{} {Üstel}()$ olsun: $f(x) =  e^{- x}, \; x > 0$. $Y = _{i=1}^n X_i$'nin dağılımını belirleyiniz.
+</p>
+<p class="course-paragraph">
+<strong>Çözüm:</strong>
+</p>
+<ol class="course-ordered-list">
+<li>Tek bir üstel değişkenin MÇF'si:
+    $$
+<p class="course-paragraph">
+        M_X(t) = _0^ e^{tx}  e^{- x} dx =  _0^ e^{-( - t)x} dx = {}{ - t} = ( 1 - {t}{} )^{-1},  (t < )
+</p>
+$$</li>
+<li>$n$ bağımsız değişkenin toplamı için:
+    $$
+<p class="course-paragraph">
+        M_Y(t) = [M_X(t)]^n = ( 1 - {t}{} )^{-n} = ( {}{ - t} )^n
+</p>
+$$</li>
+<li>Bu formül şekil parametresi $n$ ve oran parametresi $$ olan <strong>Gamma Dağılımı</strong>'nın MÇF'sidir:
+    $$
+<p class="course-paragraph">
+        {Y = _{i=1}^n X_i  {Gamma}(n, )}
+</p>
+$$</li>
+</ol>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{Bağımsız $n$ adet ${Exp}(1)$ değişkeninin toplamı ${Gamma}(n, 1)$ dağılımına dönüşür. $n$ büyüdükçe tepe noktası sağa kayar ve çan eğrisine simetrikleşir.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="gamma-fonksiyonu-ve-euler-i-ntegrali" class="section-title"><span class="title-anchor">§</span> Gamma Fonksiyonu ve Euler İntegrali</h2>
+<div class="callout callout-sezgi">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">💡</span>
+    <span class="callout-title">Sezgisel Bakış & Mantık: Gamma Fonksiyonu Nedir?</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    Gamma fonksiyonu, faktöriyel kavramının tam sayılardan tüm pozitif reel ve karmaşık sayılara genelleştirilmiş halidir:
+</p>
+<ul class="course-list">
+<li>Pozitif tam sayılar için: $(n) = (n-1)!$ (Örn: $(4) = 3! = 6$, $(1) = 0! = 1$).</li>
+<li>Peki kesirli bir sayının faktöriyeli nedir? Örneğin $(1/2) = {}$ çıkar. Bu ${}$ sabiti, normal dağılımın ve Ki-Kare dağılımlarının kalbindeki temel normalize edicidir.</li>
+</ul>
+  </div>
+</div>
+<p class="course-paragraph">
+Euler Gamma fonksiyonu şu integral ile tanımlanır:
+</p>
+$$
+<p class="course-paragraph">
+    () = _{0}^{} x^{ - 1} e^{-x} \, dx,  ( > 0)
+</p>
+$$
+<p class="course-paragraph">
+Ölçek parametresi $$ eklendiğinde genel Gamma integrali elde edilir:
+</p>
+$$
+<p class="course-paragraph">
+    _{0}^{} x^{ - 1} e^{- x} \, dx = {()}{^}
+</p>
+$$
+<div class="callout callout-uyari">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">⚠️</span>
+    <span class="callout-title">Önemli Uyarı</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    <strong>El Yazısı Notlardaki Çok Önemli Hata ve Doğrusu (Sayfa 5):</strong>
+</p>
+<ul class="course-list">
+<li><strong>Notta Yazılan İfade:</strong> $(n) = n \, (n-1)$ <strong>{alertred</strong>{(HATALI!)}}</li>
+<li><strong>Matematiksel Gerçek:</strong> 
+    $$
+<p class="course-paragraph">
+        {(n) = (n-1)(n-1)}  {veya}  {(n+1) = n(n)}
+</p>
+$$</li>
+<li><strong>Neden Hatalı?</strong>  
+<p class="course-paragraph">
+    Kısmi integrasyon uygulandığında:
+</p>
+    $$
+<p class="course-paragraph">
+{aligned}
+        (n) &= _0^ x^{n-1} e^{-x} dx  (u = x^{n-1}  du = (n-1)x^{n-2}dx, \; dv = e^{-x}dx  v = -e^{-x})  \\
+        &= {_0^}_{0} + (n-1) _0^ x^{n-2} e^{-x} dx = (n-1)(n-1)
+    {aligned}
+</p>
+$$
+<p class="course-paragraph">
+    Nitekim notun hemen altındaki tam sayılarda $(n) = (n-1)!$ eşitliği ancak $(n) = (n-1)(n-1)$ indirgemesiyle tutarlıdır.</li>
+</p>
+</ul>
+  </div>
+</div>
+<h3 id="kesirli-de-erlerin-hesaplanmas" class="subsection-title">Kesirli Değerlerin Hesaplanması</h3>
+<p class="course-paragraph">
+Yineleme bağıntısı $(+1) =  ()$ kullanılarak:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    ({3}{2}) &= {1}{2} ({1}{2}) = {{}}{2} \\
+    ({5}{2}) &= {3}{2} ({3}{2}) = {3}{2}  {{}}{2} = {3{}}{4} \\
+    ({7}{2}) &= {5}{2} ({5}{2}) = {15{}}{8}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+---
+</p>
+<h2 id="haftal-k-dev-ve-2-farkl-yoldan-detayl-z-m" class="section-title"><span class="title-anchor">§</span> Haftalık Ödev ve 2 Farklı Yoldan Detaylı Çözümü</h2>
+<div class="callout callout-odev">
+  <div class="callout-header">
+<p class="course-paragraph">
+    <span class="callout-icon">✏️</span>
+    <span class="callout-title">Çözümlü Ödev & Alıştırma: $({1</span>
+</p>
+  </div>
+  <div class="callout-body">
+<p class="course-paragraph">
+    {2}) = {}$ Eşitliğinin Gösterilmesi}
+<strong>Problem:</strong> $({1}{2}) = {}$ olduğunu gösteriniz.
+</p>
+<p class="course-paragraph">
+<strong>1. Yöntem (Ders Notundaki İpucu: Standart Normal Dağılım Yardımıyla):</strong>  
+Standart normal yoğunluğun simetrisi gereği:
+</p>
+$$
+<p class="course-paragraph">
+    _{0}^{} {1}{{2}} e^{-{x^2}{2}} dx = {1}{2}
+</p>
+$$
+<p class="course-paragraph">
+$u = {x^2}{2}$ değişken dönüşümü yapalım:
+</p>
+$$
+<p class="course-paragraph">
+    x = {2} u^{1/2}  dx = {{2}}{2} u^{-1/2} du = {1}{{2}} u^{-1/2} du
+</p>
+$$
+<p class="course-paragraph">
+İntegrale yerleştirelim:
+</p>
+$$
+<p class="course-paragraph">
+{aligned}
+    _{0}^{} {1}{{2}} e^{-u} ( {1}{{2}} u^{-1/2} du ) &= {1}{2}  \\
+    {1}{2{}} _{0}^{} u^{{1}{2} - 1} e^{-u} du &= {1}{2}  \\
+    {1}{{}} ({1}{2}) = 1 & {({1}{2}) = {}}
+{aligned}
+</p>
+$$
+<p class="course-paragraph">
+<strong>2. Yöntem (Kutupsal Koordinatlarla Çift Katlı İntegral Yolu):</strong>  
+Tanımdan: $(1/2) = _0^ t^{-1/2} e^{-t} dt$. $t = y^2  dt = 2y \, dy$ dönüşümüyle:
+</p>
+$$
+<p class="course-paragraph">
+    ({1}{2}) = 2 _0^ e^{-y^2} dy
+</p>
+$$
+<p class="course-paragraph">
+Aynı integrali $x$ değişkeniyle çarpalım:
+</p>
+$$
+<p class="course-paragraph">
+    ^2 = ( 2 _0^ e^{-x^2} dx ) ( 2 _0^ e^{-y^2} dy ) = 4 _0^ _0^ e^{-(x^2 + y^2)} dx \, dy
+</p>
+$$
+<p class="course-paragraph">
+1. bölgede kutupsal koordinatlara ($x = r, y = r, dx dy = r dr d, r  [0, ),   [0, /2]$) geçelim:
+</p>
+$$
+<p class="course-paragraph">
+    ^2 = 4 ( _0^{/2} d ) ( _0^ r e^{-r^2} dr ) = 4 ( {}{2} ) _0^ = 2 ({1}{2}) = 
+</p>
+$$
+<p class="course-paragraph">
+Karekök alındığında:
+</p>
+$$
+<p class="course-paragraph">
+    {({1}{2}) = {}}
+</p>
+$$
+<p class="course-paragraph">
+elde edilir.
+</p>
+  </div>
+</div>
+<p class="course-paragraph">
+{center}
+</p>
+<div class="tikz-diagram-card">
+  <div class="tikz-diagram-header">📈 Vektörel Dağılım Grafiği & Görsel İspat</div>
+<p class="course-paragraph">
+  <p><em>(Bu grafik LaTeX TikZ/PGFPlots ile vektörel olarak oluşturulmuştur. Orijinal yüksek çözünürlüklü çizimi indirdiğiniz PDF dosyasında inceleyebilirsiniz.)</em></p>
+</p>
+</div>
+<p class="course-paragraph">
+{figure}{$(1/2)$ integrandı: $u  0^+$ iken fonksiyon sonsuza ıraksasa da integral yakınsaktır ve toplam alanı tam olarak ${}$ değerine eşittir.}
+{center}
+</p>
+<p class="course-paragraph">
+---
+</p>
+<h2 id="1-hafta-h-zl-tekrar-ve-kar-la-t-rma-kart" class="section-title"><span class="title-anchor">§</span> 1. Hafta Hızlı Tekrar ve Karşılaştırma Kartı</h2>
+<p class="course-paragraph">
+{table}[ht]
+</p>
+<p class="course-paragraph">
+{}{1.4}
+</p>
+<div class="table-responsive"><table class="academic-table">
+<thead><tr><th>{@{}l l X@{}}
+<p class="course-paragraph">
+<strong>Kavram / Teorem</strong></th><th><strong>Matematiksel Formül</strong></th><th><strong>Sezgisel Anlamı / Ne İşe Yarar?</strong></th></tr></thead><tbody>
+</p>
+<tr><td>1. Ham Moment</td><td>$'_1 = E(X)$</td><td>Dağılımın sayı doğrusundaki ağırlık merkezi (Ortalama)</td></tr>
+<tr><td>2. Merkezsel Moment</td><td>$_2 = E[(X-)^2] = ^2$</td><td>Ağırlık merkezinden saçılma ve belirsizlik ölçüsü (Varyans)</td></tr>
+<tr><td>Markov Eşitsizliği</td><td>$P(X  a)  {E(X)}{a}$ ($X  0$)</td><td>Sadece ortalamayı bilerek kuyruk olasılığına evrensel üst sınır</td></tr>
+<tr><td>Chebyshev Eşitsizliği</td><td>$P(|X - |  k)  {1}{k^2}$</td><td>Şekil ne olursa olsun verilerin $ \%75$'i $  2$ içindedir</td></tr>
+<tr><td>Jensen Eşitsizliği</td><td>$E[g(X)]  g(E[X])$ ($g''  0$)</td><td>Dışbükey fonksiyonların beklenen değeri, beklenen değerin fonksiyonundan büyüktür</td></tr>
+<tr><td>MÇF Tanımı</td><td>$M_X(t) = E(e^{tX})$</td><td>Bütün momentleri türev katsayısı olarak saklayan tohum fonksiyon</td></tr>
+<tr><td>$k$. Moment Çıkarma</td><td>$E(X^k) = . {d^k M_X(t)}{dt^k} |_{t=0}$</td><td>İntegralsiz, yalnızca $k$ kez türev alarak moment bulma</td></tr>
+<tr><td>Doğrusal Dönüşüm</td><td>$M_{aX+b}(t) = e^{bt} M_X(at)$</td><td>Değişken ölçeklendiğinde ve kaydırıldığında MÇF'nin davranışı</td></tr>
+<tr><td>Bağımsız Toplam</td><td>$M_{ X_i}(t) =  M_{X_i}(t)$</td><td>Zor konvolüsyon integrallerini basit çarpmaya dönüştürür</td></tr>
+<tr><td>Teklik Teoremi</td><td>$M_X(t) = M_Y(t)  F_X = F_Y$</td><td>MÇF dağılımın genetik parmak izidir; tek bir dağılımı temsil eder</td></tr>
+<tr><td>Gamma İndirgeme</td><td>$(n) = (n-1)(n-1)$</td><td>Faktöriyelin reel genellemesi: Tam sayılarda $(n) = (n-1)!$</td></tr>
+<tr><td>Kritik Özel Değer</td><td>$(1/2) = {}$</td><td>Normal ve Ki-Kare dağılımlarının temel normalize edici sabiti</td></tr>
+<p class="course-paragraph">
+</tbody>
+</p>
+</table></div>
+<p class="course-paragraph">
+{1. Haftanın Temel Formül ve Teorem Referans Kartı}
+{table}
+</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+        <span></span>
+        <a href="istatistik-teorisi.html" class="btn-secondary">📚 Ders Ana Sayfası</a>
+        <a href="hafta-02.html" class="btn-primary">Hafta 2 ➡️</a>
+      </div>
+    </main>
+  </div>
+
+  
+<footer>
+  <div class="container" style="max-width: 960px; margin: 0 auto; padding: 0 1rem;">
+    <p><strong>Akademik Notlar ve Ders Kitapları Portalı</strong> • GitHub Pages ile Barındırılmaktadır</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Tüm matematiksel formüller MathJax 3 ile işlenmekte ve LaTeX standartlarına uygun olarak sunulmaktadır.</p>
+  </div>
+</footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
